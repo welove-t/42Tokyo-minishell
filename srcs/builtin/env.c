@@ -1,6 +1,6 @@
-#include "../../includes/minishell.h"
+// #include "../../includes/minishell.h"
 
-char *bl_env(char *str)
-{
-    getenv()
-}
+// char *bl_env(char *str)
+// {
+//     getenv()
+// }
