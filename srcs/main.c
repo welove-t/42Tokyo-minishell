@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: subarunrun <subarunrun@student.42.fr>      +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/03/27 14:59:50 by subarunrun       ###   ########.fr       */
+/*   Updated: 2023/04/01 10:26:43 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 // グローバル変数
+// test
 char **g_environ;
 
 int main(void)
@@ -35,7 +36,7 @@ int main(void)
 		//入力内容を履歴に追加する。
 		if (input != NULL)
 			add_history(input);
-		
+
 		//NULLの場合、何もしない
 		if (input == NULL)
 		{
@@ -62,7 +63,7 @@ int main(void)
 				printf("Parent PPID = %d,",getppid());
 				//自身のPIDを出力
 				printf("Child PID = %d\n",getpid());
-			
+
 				line_matches_cmd(input);
 				//子プロセスの処理終了
 				exit(0);
