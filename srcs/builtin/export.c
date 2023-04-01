@@ -1,6 +1,6 @@
-#include "../../includes/minishell.h"
+// #include "../../includes/minishell.h"
 
-void bl_export(char *name)
-{
+// void bl_export(char *name)
+// {
     
-}
+// }
