@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/03/26 15:40:17 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/01 14:02:58 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@
 #include <sys/param.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "../srcs/lib/libft/libft.h"
 
+extern char	**environ;
 
 //main.c
 
@@ -32,6 +34,9 @@ void bi_echo(char *str);
 
 //pwd.c
 int bi_pwd(void);
+
+// utils
+char	**get_cmd_array(char *cmd_line);
 
 
 #endif

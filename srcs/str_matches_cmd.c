@@ -17,14 +17,16 @@ void line_matches_cmd(char *line)
 main.cで記述したグローバル変数を使用したいため
 extern宣言する
 */
-    extern char **environ;
-    char *argv[] = {line,NULL};
+    char	**cmd_line;
 
     //空白とtabは読み飛ばす
     while (*line == ' ' || *line == '\t')
         line++;
     printf("line = %s\n",line);
     //cmdがある場合
+
+    // 入力されたコマンドからexecvで実行できる形で取得
+    cmd_line = get_cmd_array(line);
     if (strncmp("cd", line, 2) == 0)
     {
         printf("\x1b[32m文字列が\"cd\"と一致してます\x1b[0m\n");
@@ -60,9 +62,10 @@ extern宣言する
 	bult in cmd だけ、その処理を書いている関数を渡してあげる。
     */
    // TODO:システムコマンドだった場合
-   else if (strncmp("ls", line, 2) == 0)
+
+   else if (cmd_line != NULL)
    {
-       if (execve("/bin/ls", argv, environ) == -1)
+       if (execve(cmd_line[0], cmd_line, environ) == -1)
        {
            printf("\x1b[31mError: execve()\x1b[0m\n");
        }
