@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
+#    By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/01 14:07:40 by terabu           ###   ########.fr        #
+#    Updated: 2023/04/01 16:59:50 by susasaki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ LIBFT_DIR = ./srcs/lib/libft
 SOURCES = $(SOURCES_DIR)/main.c\
 		  $(SOURCES_DIR)/str_matches_cmd.c\
 		  $(BUILTIN_DIR)/echo.c\
+		  $(BUILTIN_DIR)/env.c\
+		  $(BUILTIN_DIR)/export.c\
 		  $(BUILTIN_DIR)/pwd.c\
 		  $(BUILTIN_DIR)/unset.c\
 		  $(UTILS_DIR)/get_cmd_line.c\

@@ -23,11 +23,11 @@ void bi_unset(char *var_name)
         {
             j = i;
             // 見つかったらリストから削除する
-            while (g_environ[j] != NULL)
-            {
-                g_environ[j] = g_environ[j + 1];
-                j++;
-            }
+            // while (g_environ[j] != NULL)
+            // {
+            //     g_environ[j] = g_environ[j + 1];
+            //     j++;
+            // }
             break;
         }
     }
