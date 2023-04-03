@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/02 16:39:09 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/03 10:31:10 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,24 +160,53 @@ t_token	*word(char **rest, char *line)
 	return (new_token(word, TK_WORD));
 }
 
+/*
+lineのトークン化
+headは空のトークン
+tokはheadのアドレスを指す
+	→トークンリストは最初の要素としてheadを持つことができる
+
+-----------------------------------------------------
+例：line = ls -al | grep main.c
+「ls」「-al」「|」「grep」「main.c」の順に、t_token型の要素が繋がったリストがhead.nextに入る。
+具体的には、
+head.next->wordは「ls」、
+head.next->kindはTK_WORD、
+-
+head.next->next->wordは「-al」、
+head.next->next->kindはTK_WORD、
+-
+head.next->next->next->wordは「|」、
+head.next->next->next->kindはTK_OP、
+-
+head.next->next->next->next->wordは「grep」、
+head.next->next->next->next->kindはTK_WORD、
+-
+head.next->next->next->next->next->wordは「main.c」、
+head.next->next->next->next->next->kindはTK_WORD
+となる。
+
+*/
+
+
 t_token	*tokenize(char *line)
 {
 	t_token	head;
-	t_token	*tok;
+	t_token	*token;
 
 	head.next = NULL;
-	tok = &head;
+	token = &head;
 	while (*line)
 	{
 		if (consume_blank(&line, line))
 			continue ;
 		else if (is_operator(line))
-			tok = tok->next = operator(&line, line);
+			token = token->next = operator(&line, line);
 		else if (is_word(line))
-			tok = tok->next = word(&line, line);
+			token = token->next = word(&line, line);
 		else
 			assert_error("Unexpected Token");
 	}
-	tok->next = new_token(NULL, TK_EOF);
+	token->next = new_token(NULL, TK_EOF);
 	return (head.next);
 }
