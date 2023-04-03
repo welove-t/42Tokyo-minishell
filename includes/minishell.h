@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/03 11:42:11 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/03 13:24:41 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include "../srcs/lib/libft/libft.h"
 
 #define SINGLE_QUOTE_CHAR '\''
+#define DOUBLE_QUOTE_CHAR '"'
 
 extern char	**environ;
 

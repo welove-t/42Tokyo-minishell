@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/03 12:44:06 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/03 13:26:06 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,18 @@ t_token	*word(char **rest, char *line)
 		{
 			if (*line == '\0')
 				perror("Unclosed single quote");
+			line++;
+		}
+		// slip quote
+		line++;
+	}
+	else if (*line == DOUBLE_QUOTE_CHAR)
+	{
+		line++;
+		while (*line != DOUBLE_QUOTE_CHAR)
+		{
+			if (*line == '\0')
+				perror("Unclosed double quote");
 			line++;
 		}
 		// slip quote
