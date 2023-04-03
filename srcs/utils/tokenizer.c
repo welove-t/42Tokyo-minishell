@@ -6,30 +6,11 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/03 10:31:10 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/03 11:42:16 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-typedef struct s_token		t_token;
-typedef enum e_token_kind	t_token_kind;
-
-t_token	*new_token(char *word, t_token_kind kind);
-
-// トークンの種類
-enum e_token_kind {
-	TK_WORD,	// ワード
-	TK_RESERVED, // 記号
-	TK_OP,		// 制御文字
-	TK_EOF,		// 入力終わり
-};
-// `word` is zero terminated string.
-struct s_token {
-	char			*word;
-	t_token_kind	kind;
-	t_token			*next;
-};
 
 // 新しいトークンの作成
 t_token	*new_token(char *word, t_token_kind kind)
@@ -38,7 +19,7 @@ t_token	*new_token(char *word, t_token_kind kind)
 
 	tok = calloc(1, sizeof(*tok));
 	if (tok == NULL)
-		fatal_error("calloc");
+		perror("calloc");
 	tok->word = word;
 	tok->kind = kind;
 	return (tok);
@@ -137,13 +118,13 @@ t_token	*operator(char **rest, char *line)
 		{
 			op = strdup(operators[i]);
 			if (op == NULL)
-				fatal_error("strdup");
+				perror("strdup");
 			*rest = line + strlen(op);
 			return (new_token(op, TK_OP));
 		}
 		i++;
 	}
-	assert_error("Unexpected operator");
+	perror("Unexpected operator");
 }
 
 t_token	*word(char **rest, char *line)
@@ -153,9 +134,23 @@ t_token	*word(char **rest, char *line)
 
 	while (*line && !is_metacharacter(*line))
 		line++;
+	if (*line == SINGLE_QUOTE_CHAR)
+	{
+		line++;
+		while (*line != SINGLE_QUOTE_CHAR)
+		{
+			if (*line == '\0')
+				perror("Unclosed single quote");
+			line++;
+		}
+		// slip quote
+		line++;
+	}
+	else
+		line++;
 	word = strndup(start, line - start);
 	if (word == NULL)
-		fatal_error("strndup");
+		perror("strndup");
 	*rest = line;
 	return (new_token(word, TK_WORD));
 }
@@ -205,7 +200,7 @@ t_token	*tokenize(char *line)
 		else if (is_word(line))
 			token = token->next = word(&line, line);
 		else
-			assert_error("Unexpected Token");
+			perror("Unexpected Token");
 	}
 	token->next = new_token(NULL, TK_EOF);
 	return (head.next);
