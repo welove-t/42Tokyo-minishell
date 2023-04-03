@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/03 11:42:16 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/03 12:44:06 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ t_token	*word(char **rest, char *line)
 
 	while (*line && !is_metacharacter(*line))
 		line++;
+	// single_quoteが閉じているかチェック
 	if (*line == SINGLE_QUOTE_CHAR)
 	{
 		line++;
