@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/02 16:39:35 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/03 11:42:11 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,28 @@
 #include <readline/history.h>
 #include "../srcs/lib/libft/libft.h"
 
+#define SINGLE_QUOTE_CHAR '\''
+
 extern char	**environ;
+
+typedef struct s_token		t_token;
+typedef enum e_token_kind	t_token_kind;
+
+t_token	*new_token(char *word, t_token_kind kind);
+
+// トークンの種類
+enum e_token_kind {
+	TK_WORD,	// ワード
+	TK_RESERVED, // 記号
+	TK_OP,		// 制御文字
+	TK_EOF,		// 入力終わり
+};
+// `word` is zero terminated string.
+struct s_token {
+	char			*word;
+	t_token_kind	kind;
+	t_token			*next;
+};
 
 //main.c
 
@@ -38,6 +59,9 @@ int bi_pwd(void);
 
 // utils
 char	**get_cmd_array(char *cmd_line);
+
+// tokenizer
+t_token	*tokenize(char *line);
 
 
 #endif
