@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/04 10:56:57 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/04 16:50:20 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	quote_removal(t_token *tok)
 			p++;
 			while (*p != SINGLE_QUOTE_CHAR)
 			{
-				if (*p == '\0')
-					perror("Unclosed single quote");
+				// if (*p == '\0')
+				// 	perror("Unclosed single quote");
 				append_char(&new_word, *p++);
 			}
 			// skip quote

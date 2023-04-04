@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/04 13:30:46 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/04 17:16:59 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,34 +139,38 @@ t_token	*word(char **rest, char *line)
 	char		*word;
 
 	while (*line && !is_metacharacter(*line))
-		line++;
-	// single_quoteが閉じているかチェック
-	if (*line == SINGLE_QUOTE_CHAR)
 	{
-		line++;
-		while (*line != SINGLE_QUOTE_CHAR)
+		// single_quoteが閉じているかチェック
+		if (*line == SINGLE_QUOTE_CHAR)
 		{
-			if (*line == '\0')
-				perror("Unclosed single quote");
+			line++;
+
+			while (*line != SINGLE_QUOTE_CHAR)
+			{
+				if (*line == '\0')
+					tokenize_error("Unclosed single quote", rest, line);
+				line++;
+			}
+			// slip quote
 			line++;
 		}
-		// slip quote
-		line++;
-	}
-	else if (*line == DOUBLE_QUOTE_CHAR)
-	{
-		line++;
-		while (*line != DOUBLE_QUOTE_CHAR)
+		else if (*line == DOUBLE_QUOTE_CHAR)
 		{
-			if (*line == '\0')
-				perror("Unclosed double quote");
+			line++;
+			puts("double");
+			while (*line != DOUBLE_QUOTE_CHAR)
+			{
+				if (*line == '\0')
+					tokenize_error("Unclosed double quote", rest, line);
+				line++;
+			}
+			// slip quote
 			line++;
 		}
-		// slip quote
-		line++;
+		else
+			line++;
 	}
-	else
-		line++;
+
 	word = strndup(start, line - start);
 	if (word == NULL)
 		perror("strndup");
@@ -202,6 +206,16 @@ head.next->next->next->next->next->kindはTK_WORD
 
 */
 
+
+void	tokenize_error(const char *location, char **rest, char *line)
+{
+	syntax_error = true;
+	dprintf(STDERR_FILENO, "minishell: syntax error near %s\n", location);
+	exit(1); // いらない方がいい？
+	while (*line)
+		line++;
+	*rest = line;
+}
 
 t_token	*tokenize(char *line)
 {

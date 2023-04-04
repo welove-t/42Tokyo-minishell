@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/04 13:20:10 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/04 16:47:04 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #define DOUBLE_QUOTE_CHAR '"'
 
 extern char	**environ;
+bool		syntax_error;
 
 typedef struct s_token		t_token;
 typedef enum e_token_kind	t_token_kind;
@@ -64,6 +65,7 @@ char	*get_cmd_array(char *cmd_line);
 // tokenizer
 t_token	*tokenize(char *line);
 char	**token_list_to_array(t_token *token);
+void	tokenize_error(const char *location, char **rest, char *line);
 bool	is_metacharacter(char c);
 
 // expantion
