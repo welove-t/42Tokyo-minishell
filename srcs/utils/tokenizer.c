@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/03 13:26:06 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/04 10:55:35 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ t_token	*operator(char **rest, char *line)
 		i++;
 	}
 	perror("Unexpected operator");
+	exit(1);
 }
 
 t_token	*word(char **rest, char *line)
@@ -218,3 +219,44 @@ t_token	*tokenize(char *line)
 	token->next = new_token(NULL, TK_EOF);
 	return (head.next);
 }
+
+size_t get_token_count(t_token *token)
+{
+	size_t	count;
+	t_token	*cursor;
+
+	count = 0;
+	cursor = token;
+	while (token->word != NULL && token->kind != TK_EOF)
+	{
+		cursor = cursor->next;
+		count++;
+	}
+	return (count);
+}
+
+char	**token_list_to_array(t_token *token)
+{
+	size_t	count;
+	size_t	i;
+	char	**tok_array;
+	t_token	*cursor;
+
+	count = get_token_count(token);
+	tok_array = ft_calloc(count + 1, sizeof(char *));
+	if (!tok_array)
+		perror("calloc");
+	cursor = token;
+	i = 0;
+	while(cursor->word != NULL && cursor->kind != TK_EOF)
+	{
+		tok_array[i] = ft_strdup(cursor->word);
+		if (!tok_array[i])
+			perror("strdup");
+		i++;
+		cursor = cursor->next;
+	}
+	tok_array[i] = NULL;
+	return (tok_array);
+}
+

@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/03 13:27:30 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/04 10:56:57 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	append_char(char **s, char c)
 		size += strlen(*s);
 	new = malloc(size);
 	if (new == NULL)
-		fatal_error("malloc");
+		perror("malloc");
 	if (*s)
 		strlcpy(new, *s, size);
 	new[size - 2] = c;
@@ -62,7 +62,7 @@ void	quote_removal(t_token *tok)
 			while (*p != SINGLE_QUOTE_CHAR)
 			{
 				if (*p == '\0')
-					todo("Unclosed single quote");
+					perror("Unclosed single quote");
 				append_char(&new_word, *p++);
 			}
 			// skip quote
@@ -75,7 +75,7 @@ void	quote_removal(t_token *tok)
 			while (*p != DOUBLE_QUOTE_CHAR)
 			{
 				if (*p == '\0')
-					todo("Unclosed double quote");
+					perror("Unclosed double quote");
 				append_char(&new_word, *p++);
 			}
 			// skip quote
