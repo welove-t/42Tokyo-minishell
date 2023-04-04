@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/03 13:24:41 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/04 10:59:15 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ char	**get_cmd_array(char *cmd_line);
 
 // tokenizer
 t_token	*tokenize(char *line);
-
+bool	is_metacharacter(char c);
 
 #endif
