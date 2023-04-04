@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/04 10:59:15 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/04 13:20:10 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,14 @@ void bi_echo(char *str);
 int bi_pwd(void);
 
 // utils
-char	**get_cmd_array(char *cmd_line);
+char	*get_cmd_array(char *cmd_line);
 
 // tokenizer
 t_token	*tokenize(char *line);
+char	**token_list_to_array(t_token *token);
 bool	is_metacharacter(char c);
+
+// expantion
+void	expand(t_token *tok);
 
 #endif

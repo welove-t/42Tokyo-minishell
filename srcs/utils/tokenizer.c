@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/04 10:55:35 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/04 13:30:46 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,12 @@ DEFINITIONS
 // メタキャラクタだったらtrue
 bool	is_metacharacter(char c)
 {
-	return (c && strchr("|&;()<> \t\n", c));
+	// return (c && strchr("|&;()<>\t\n", c));
+	if (c && (c == '|' || c == '&' || c == ';' || c == '(' || c == ')'
+			|| c == '<' || c == '>' || c == ' ' || c == '\t' || c == '\n'))
+			return(true);
+	else
+		return(false);
 }
 
 // ワードチェック
@@ -227,7 +232,7 @@ size_t get_token_count(t_token *token)
 
 	count = 0;
 	cursor = token;
-	while (token->word != NULL && token->kind != TK_EOF)
+	while (cursor->word != NULL && cursor->kind != TK_EOF)
 	{
 		cursor = cursor->next;
 		count++;
@@ -259,4 +264,3 @@ char	**token_list_to_array(t_token *token)
 	tok_array[i] = NULL;
 	return (tok_array);
 }
-

@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:10:07 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/01 14:04:33 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/04 13:31:13 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ static char	*get_cmd(char *cmd);
 static char	*get_path(char *cmd);
 static int	get_env_index(const char *key, int index_start);
 
-char	**get_cmd_array(char *cmd_line)
+char	*get_cmd_array(char *cmd_line)
 {
-	char	**r_str_array;
+	char	*r_str_array;
 
-	r_str_array = ft_split(cmd_line, ' ');
-	if (ft_strchr(r_str_array[0], '/'))
-		r_str_array[0] = get_path(r_str_array[0]);
+	r_str_array = NULL;
+	if (ft_strchr(cmd_line, '/'))
+		r_str_array = get_path(cmd_line);
 	else
-		r_str_array[0] = get_cmd(r_str_array[0]);
+		r_str_array = get_cmd(cmd_line);
 	return (r_str_array);
 }
 
