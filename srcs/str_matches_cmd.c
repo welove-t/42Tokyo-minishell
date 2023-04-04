@@ -17,16 +17,13 @@ void line_matches_cmd(char *line)
 main.cで記述したグローバル変数を使用したいため
 extern宣言する
 */
-    char	**cmd_line;
+    char	**cmd_line = NULL;
+    t_token *token;
 
-    //空白とtabは読み飛ばす
-    while (*line == ' ' || *line == '\t')
-        line++;
-    printf("line = %s\n",line);
-    //cmdがある場合
-
-    // 入力されたコマンドからexecvで実行できる形で取得
-    cmd_line = get_cmd_array(line);
+    token = tokenize(line);
+    expand(token);
+    cmd_line = token_list_to_array(token);
+    cmd_line[0] = get_cmd_array(ft_strtrim(cmd_line[0], " "));
     if (strncmp("cd", line, 2) == 0)
     {
         printf("\x1b[32m文字列が\"cd\"と一致してます\x1b[0m\n");
