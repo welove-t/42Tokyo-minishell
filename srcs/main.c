@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/01 10:26:43 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/04 13:51:54 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main(void)
 		//ctrl-Dが押されたら、EOFが代入され、whileから抜ける。
 		if (input == NULL)
 		{
-			printf("\nProgram exited\n");
+			// printf("\nProgram exited\n");
 			break;
 		}
 		//入力内容を履歴に追加する。
@@ -58,11 +58,11 @@ int main(void)
 			//子プロセスの場合
 			if (pid == 0)
 			{
-				printf("\x1b[32m[Child Process]\x1b[0m\n");
+				// printf("\x1b[32m[Child Process]\x1b[0m\n");
 				//子プロセスの親プロセスPID
-				printf("Parent PPID = %d,",getppid());
+				// printf("Parent PPID = %d,",getppid());
 				//自身のPIDを出力
-				printf("Child PID = %d\n",getpid());
+				// printf("Child PID = %d\n",getpid());
 
 				line_matches_cmd(input);
 				//子プロセスの処理終了
@@ -70,13 +70,13 @@ int main(void)
 			}
 			else if(pid > 0)
 			{
-				printf("\x1b[32m[Parent Process]\x1b[0m\n");
+				// printf("\x1b[32m[Parent Process]\x1b[0m\n");
 				// 親プロセスのPIDを出力
-				printf("Parent PPID = %d\n",getpid());
-				printf("Wait for Child Process to finish\n");
+				// printf("Parent PPID = %d\n",getpid());
+				// printf("Wait for Child Process to finish\n");
 				// 子プロセスの処理終了を待つ
 				wait(NULL);
-				printf("Child process finished\n");
+				// printf("Child process finished\n");
 			}
 			else
 			{

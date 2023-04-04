@@ -31,5 +31,22 @@ assert()
 }
 
 # ここの中身を変更する
-# Empty line (EOF)
-assert 'test'
+#########
+# 引数なし
+#########
+echo '------------'
+echo '引数なし'
+assert 'ls'
+assert 'uname'
+assert 'pwd'
+assert 'ls'
+
+# #########
+# # 引数あり
+# #########
+echo '------------'
+echo '引数あり'
+assert 'ls -l'
+assert 'uname -a'
+assert 'echo hoge'
+
