@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/04 16:47:04 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/05 21:53:51 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,48 @@ struct s_token {
 	t_token			*next;
 };
 
+typedef struct s_environ
+{
+	char			*name;
+	char 			*value;
+	struct s_environ *next;
+}	t_environ;
+
+typedef struct s_envinfo
+{
+	//先頭ノード
+	t_environ *head;
+}	t_envinfo;
+
 //main.c
 
 //line_matches_cmd.c
 void line_matches_cmd(char *line);
 
+
+// init_environ_list
+int 	first_strlen(char *str);
+int 	latter_strlen(char *str);
+t_environ    *init_environ_list();
+
 //buliin
 //echo.c
 void bi_echo(char *str);
 
+//env.c
+void bi_env(t_environ *environ);
+
 //pwd.c
 int bi_pwd(void);
+
+//export_utils.c
+void environ_nodeadd_back(t_environ *env, t_environ *new);
+t_environ *environ_node_new(char *name, char *value);
+
+//export.c
+void bi_only_export_env(t_environ *env);
+void bi_export(t_environ *env, char *str);
+
 
 // utils
 char	*get_cmd_array(char *cmd_line);
