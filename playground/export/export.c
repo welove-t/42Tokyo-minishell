@@ -22,7 +22,7 @@ typedef struct s_envinfo
 
 int first_strlen(char *str)
 {
-     printf("\x1b[32m~~~first_strlen~~~\x1b[0m\n");
+    //  printf("\x1b[32m~~~first_strlen~~~\x1b[0m\n");
         int i;
 
         i = 0;
@@ -30,7 +30,7 @@ int first_strlen(char *str)
         {
             i++;
         }
-        printf("first_strlen = %d\n",i);
+        // printf("first_strlen = %d\n",i);
         return (i);
 }
 
@@ -45,6 +45,8 @@ int latter_strlen(char *str)
         {
             i++;
         }
+        if (str[i] == '\0')
+            return (-1);
         i++;
         while (str[i] != ' ' && str[i] != '\t' && str[i] != '\0')
         {
@@ -57,7 +59,7 @@ int latter_strlen(char *str)
 
 static void bi_env(t_environ *environ)
 {
-    printf("\x1b[32m~~~bi_env~~~\x1b[0m\n");
+    // printf("\x1b[32m~~~bi_env~~~\x1b[0m\n");
     t_environ *tmp;
     tmp = environ;
     // 環境変数を1行ずつ出力
@@ -68,34 +70,18 @@ static void bi_env(t_environ *environ)
         // write(1, "]NAME END!\n", 1);
         // printf("tmp->name = [%s][%p]\n",tmp->name, tmp->name);
         // printf("tmp->value = [%s][%p]\n",tmp->value, tmp->value);
-        printf("%s=%s\n",tmp->name,tmp->value);
+        printf("%s",tmp->name);
+        if (tmp->value != NULL)
+            printf("=%s",tmp->value);
+        printf("\n");
         tmp = tmp->next;
     }
-}
-//単体のとき
-static void bi_only_export_env(t_environ *env)
-{
-    printf("~~bi_only_export_env~~\n");
-    t_environ *print_env;
-
-    print_env = env;
-    printf("print_env->name = %s\n",print_env->name);
-    printf("print_env->value = %s\n",print_env->value);
-    printf("print_env->next->name = %s\n",print_env->next->name);
-    printf("print_env->next->value = %s\n",print_env->next->value);
-    while (print_env != NULL)
-    {
-        printf("declare -x %s",print_env->name);
-        printf("=%s\n",print_env->value);
-        print_env = print_env->next;
-    }
-    // env = env->next;
 }
 
 //最後尾にノードを追加する。
 static void environ_nodeadd_back(t_environ *env, t_environ *new)
 {
-    printf("\x1b[32m~~~environ_nodeadd_back~~~\x1b[0m\n");
+    // printf("\x1b[32m~~~environ_nodeadd_back~~~\x1b[0m\n");
 
     if (env == NULL)
         return ;
@@ -106,41 +92,17 @@ static void environ_nodeadd_back(t_environ *env, t_environ *new)
         // printf("env = %p\n",env);
         env = env->next;
     }
-    printf("new->name = %s\n",new->name);
-    printf("new->value = %s\n",new->value);
+    // printf("new->name = %s\n",new->name);
+    // printf("new->value = %s\n",new->value);
     env->next = new;
     env = env->next;
     // env = tmp;
 }
 
-// static void environ_nodeadd_back(t_environ *env, t_environ *new)
-// {
-//     printf("\x1b[32m~~~environ_nodeadd_back~~~\x1b[0m\n");
-//     t_environ *tmp;
-
-//     // int i = 0;
-//     tmp = env;
-//     while (tmp->next != NULL)
-//     {
-//         // printf("i = %d\n",i);
-//         // i++;
-//         // printf("tmp = %p\n",tmp);
-//         tmp = tmp->next;
-//     }
-//     printf("new->name = %s\n",new->name);
-//     printf("new->value = %s\n",new->value);
-//     tmp->next = new;
-//     tmp = tmp->next;
-//     printf("tmpにnewを代入後\n");
-//     printf("tmp->name = %s\n",tmp->name);
-//     printf("tmp->value = %s\n",tmp->value);
-//     // env = tmp;
-// }
-
 //新たにノードを作る
 static t_environ *environ_node_new(char *name, char *value)
 {
-    printf("\x1b[32m~~~environ_node_new~~~\x1b[0m\n");
+    // printf("\x1b[32m~~~environ_node_new~~~\x1b[0m\n");
     t_environ *new;
 
     new = (t_environ *)malloc(sizeof(t_environ));
@@ -149,10 +111,10 @@ static t_environ *environ_node_new(char *name, char *value)
     // printf("%s=%s\n",name,value);
     if (new == NULL)
         return (NULL);
-    printf("name = %s\n",name);
+    // printf("name = %s\n",name);
     new->name = name; // name == "USAGI"
     new->value = value;
-    printf("%s(%p)=%s(%p\n",new->name,new->name,new->value,new->value);
+    // printf("%s(%p)=%s(%p\n",new->name,new->name,new->value,new->value);
     new->next = NULL;
     return (new);
 }
@@ -179,17 +141,40 @@ char    *make_value(char *str)
 
     fir_len = first_strlen(str);
     lat_len = latter_strlen(str);
-
+    if (lat_len == -1)
+        return NULL;
     value = (char *)malloc(lat_len + 1);
     strncpy(value, str + fir_len + 1, lat_len);
     value[lat_len] = '\0';
     return (value);
 }
 
+//単体のとき
+static void bi_only_export_env(t_environ *env)
+{
+    // printf("~~bi_only_export_env~~\n");
+    t_environ *print_env;
+
+    print_env = env;
+    // printf("print_env->name = %s\n",print_env->name);
+    // printf("print_env->value = %s\n",print_env->value);
+    // printf("print_env->next->name = %s\n",print_env->next->name);
+    // printf("print_env->next->value = %s\n",print_env->next->value);
+    while (print_env != NULL)
+    {
+        printf("declare -x %s",print_env->name);
+        if (print_env->value != NULL)
+            printf("=%s",print_env->value);
+        printf("\n");
+        print_env = print_env->next;
+    }
+    // env = env->next;
+}
+
 //複数の場合分岐する。
 static void bi_export(t_environ *env, char *str)
 {
-    printf("\x1b[32m~~~bi_export~~~\x1b[0m\n");
+    // printf("\x1b[32m~~~bi_export~~~\x1b[0m\n");
     char *name;
     char *value;
     int i;
@@ -200,12 +185,12 @@ static void bi_export(t_environ *env, char *str)
     name = make_name(str);
     value = make_value(str);
 
-    printf("name = %s\n",name);
-    printf("value = %s\n",value);
+    // printf("name = %s\n",name);
+    // printf("value = %s\n",value);
     new = environ_node_new(name,value);
     environ_nodeadd_back(env, new);
     
-    printf("\x1b[32m~~~hoge~~~\x1b[0m\n");
+    // printf("\x1b[32m~~~hoge~~~\x1b[0m\n");
     t_environ *tmp;
     tmp = env;
     while (tmp != NULL)
@@ -215,8 +200,8 @@ static void bi_export(t_environ *env, char *str)
         // printf("tmp = %p\n",tmp);
         tmp = tmp->next;
     }
-    printf("new->name = %s\n",new->name);
-    printf("new->value = %s\n",new->value);
+    // printf("new->name = %s\n",new->name);
+    // printf("new->value = %s\n",new->value);
 
 
 }
@@ -269,10 +254,10 @@ static t_environ    *init_environ_list()
         new = environ_node_new(name, value);
         // new->name = (char *)malloc(sizeof(char) * (first_strlen(tmp[i]) + 1));
         new->name = name;
-        printf("%s",new->name);
+        // printf("%s",new->name);
         // new->value= (char *)malloc(sizeof(char) * (latter_strlen(tmp[i]) + 1));
         new->value = value;
-        printf("=%s\n",new->value);
+        // printf("=%s\n",new->value);
         // printf("\x1b[31m空だ\x1b[0m\n");
         if (flag == 0)
         {
@@ -289,9 +274,9 @@ static t_environ    *init_environ_list()
         i++;
     }
     env_list = NULL;
-    printf("env_info->head->name = %s\n",env_info->head->name);
+    // printf("env_info->head->name = %s\n",env_info->head->name);
     env_list = env_info->head;
-    printf("env_list->name = %s\n",env_list->name);
+    // printf("env_list->name = %s\n",env_list->name);
     return (env_list);
 }
 //TODO:指しているノードを先頭に戻す必要がる
