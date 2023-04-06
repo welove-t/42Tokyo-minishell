@@ -20,6 +20,10 @@ extern宣言する
 	char	**cmd_line = NULL;
 	t_token *token;
 
+
+//自作builtinコマンドを試すだけなら、ここにif文を書いて関数を呼ぶ
+
+
 	token = tokenize(line);
 	expand(token);
 	cmd_line = token_list_to_array(token);
@@ -32,7 +36,7 @@ extern宣言する
 			// printf("\x1b[31mError: execve()\x1b[0m\n");
 		}
 	}
-	else
+	// else
 		// printf("bash: %s: command not found\n",line);
 
 
