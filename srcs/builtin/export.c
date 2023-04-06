@@ -6,13 +6,13 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/05 21:52:41 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/06 14:44:47 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char    *make_name(char *str)
+char    *make_name(char *str)
 {
     char *name;
     int fir_len;
@@ -24,7 +24,7 @@ static char    *make_name(char *str)
     return (name);
 }
 
-static char    *make_value(char *str)
+char    *make_value(char *str)
 {
     char *value;
     int lat_len;
