@@ -181,22 +181,8 @@ static t_environ    *init_environ_list()
         n = 0;
         t_environ *new;
 
-        name = (char *)malloc(sizeof(char) * (first_strlen(tmp[i]) + 1));
-        value=(char *)malloc(sizeof(char) * (latter_strlen(tmp[i]) + 1));
-        while(tmp[i][j] != '=')
-        {
-            name[j] = tmp[i][j];
-            j++;
-        }
-        name[j] = '\0';
-        j++;
-        while (tmp[i][j] != '\0')
-        {
-            value[n] = tmp[i][j];
-            n++;
-            j++;
-        }
-        value[n] = '\0';
+        name = make_name(tmp[i]);
+        value = make_value(tmp[i]);
         new = environ_node_new(name, value);
         new->name = name;
         new->value = value;
@@ -215,8 +201,6 @@ static t_environ    *init_environ_list()
     }
     env_list = NULL;
     env_list = env_info->head;
-    // free(name);
-    // free(value);
     return (env_list);
 }
 
@@ -224,28 +208,23 @@ int main(int argc,char **argv)
 {
     t_environ *environ;
     environ = init_environ_list();
-    if (argc == 1)
-    {
-        bi_only_export_env(environ);
-        return 0;
-    }
-    bi_export(environ,argv[1]);
-    bi_env(environ);
+    (void)argv;
+    (void)argc;
+    // if (argc == 1)
+    // {
+    //     bi_only_export_env(environ);
+    //     // memory leak確認
+    //     printf("\n\n\n");
+    //     system("leaks a.out");
+    //     return 0;
+    // }
+    // bi_export(environ,argv[1]);
+    // bi_env(environ);
     // memory leak確認
     printf("\n\n\n");
     system("leaks a.out");
     return (0);
 }
-
-
-
-
-
-
-
-
-
-
 
 /*
 //setenv関数を再実装する
