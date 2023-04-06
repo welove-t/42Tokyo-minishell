@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/06 14:43:59 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/06 21:03:15 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,9 @@ char    *make_name(char *str);
 char    *make_value(char *str);
 void bi_only_export_env(t_environ *env);
 void bi_export(t_environ *env, char *str);
+
+// unset.c
+void bi_unset(t_environ *environ, char *str);
 
 
 // utils

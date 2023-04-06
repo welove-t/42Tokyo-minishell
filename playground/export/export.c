@@ -210,19 +210,19 @@ int main(int argc,char **argv)
     environ = init_environ_list();
     (void)argv;
     (void)argc;
-    // if (argc == 1)
-    // {
-    //     bi_only_export_env(environ);
-    //     // memory leak確認
-    //     printf("\n\n\n");
-    //     system("leaks a.out");
-    //     return 0;
-    // }
-    // bi_export(environ,argv[1]);
-    // bi_env(environ);
+    if (argc == 1)
+    {
+        bi_only_export_env(environ);
+        // memory leak確認
+        // printf("\n\n\n");
+        // system("leaks a.out");
+        return 0;
+    }
+    bi_export(environ,argv[1]);
+    bi_env(environ);
     // memory leak確認
-    printf("\n\n\n");
-    system("leaks a.out");
+    // printf("\n\n\n");
+    // system("leaks a.out");
     return (0);
 }
 
