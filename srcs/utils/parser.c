@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:31:19 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/08 12:06:42 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/08 13:15:44 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,12 @@ t_node	*parse(t_token *tok)
 	while (tok && tok->kind != TK_EOF)
 	{
 		if (tok->kind == TK_WORD)
+		{
 			append_tok(&node->args, tokdup(tok));
+			tok = tok->next;
+		}
 		else
-			printf("Implement parser");
-		tok = tok->next;
+			parse_error("Unexpected Token", &tok, tok);
 	}
 	append_tok(&node->args, tokdup(tok));
 	return (node);
