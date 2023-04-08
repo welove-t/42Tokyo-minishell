@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/08 11:58:12 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/08 13:41:51 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	append_char(char **s, char c)
 		size += strlen(*s);
 	new = malloc(size);
 	if (new == NULL)
-		perror("malloc");
+		fatal_error("malloc");
 	if (*s)
 		strlcpy(new, *s, size);
 	new[size - 2] = c;
