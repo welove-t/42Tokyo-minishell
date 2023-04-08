@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/04 17:16:59 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/08 13:37:31 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,28 +144,28 @@ t_token	*word(char **rest, char *line)
 		if (*line == SINGLE_QUOTE_CHAR)
 		{
 			line++;
-
-			while (*line != SINGLE_QUOTE_CHAR)
-			{
-				if (*line == '\0')
-					tokenize_error("Unclosed single quote", rest, line);
+			while (*line && *line != SINGLE_QUOTE_CHAR)
 				line++;
+			if (*line == '\0')
+			{
+				tokenize_error("Unclosed single quote", rest, line);
+				break;
 			}
-			// slip quote
-			line++;
+			else
+				line++;
 		}
 		else if (*line == DOUBLE_QUOTE_CHAR)
 		{
 			line++;
-			puts("double");
-			while (*line != DOUBLE_QUOTE_CHAR)
-			{
-				if (*line == '\0')
-					tokenize_error("Unclosed double quote", rest, line);
+			while (*line && *line != DOUBLE_QUOTE_CHAR)
 				line++;
+			if (*line == '\0')
+			{
+				tokenize_error("Unclosed double quote", rest, line);
+				break;
 			}
-			// slip quote
-			line++;
+			else
+				line++;
 		}
 		else
 			line++;
@@ -173,7 +173,7 @@ t_token	*word(char **rest, char *line)
 
 	word = strndup(start, line - start);
 	if (word == NULL)
-		perror("strndup");
+		fatal_error("strndup");
 	*rest = line;
 	return (new_token(word, TK_WORD));
 }
@@ -206,22 +206,12 @@ head.next->next->next->next->next->kindはTK_WORD
 
 */
 
-
-void	tokenize_error(const char *location, char **rest, char *line)
-{
-	syntax_error = true;
-	dprintf(STDERR_FILENO, "minishell: syntax error near %s\n", location);
-	exit(1); // いらない方がいい？
-	while (*line)
-		line++;
-	*rest = line;
-}
-
 t_token	*tokenize(char *line)
 {
 	t_token	head;
 	t_token	*token;
 
+	syntax_error = false;
 	head.next = NULL;
 	token = &head;
 	while (*line)
@@ -233,7 +223,7 @@ t_token	*tokenize(char *line)
 		else if (is_word(line))
 			token = token->next = word(&line, line);
 		else
-			perror("Unexpected Token");
+			tokenize_error("Unexpected Token", &line, line);
 	}
 	token->next = new_token(NULL, TK_EOF);
 	return (head.next);

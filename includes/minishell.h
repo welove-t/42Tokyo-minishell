@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/08 10:34:25 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/08 13:18:37 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 
 extern char	**environ;
 bool		syntax_error;
+extern bool	g_syntax_error;
 
 typedef struct s_token		t_token;
 typedef struct s_node		t_node;
@@ -115,7 +116,6 @@ char	*get_cmd_array(char *cmd_line);
 // tokenizer
 t_token	*tokenize(char *line);
 char	**token_list_to_array(t_token *token);
-void	tokenize_error(const char *location, char **rest, char *line);
 bool	is_metacharacter(char c);
 
 // parser
@@ -123,5 +123,15 @@ t_node	*parse(t_token *tok);
 
 // expantion
 void	expand(t_node *node);
+
+// error
+void	fatal_error(const char *msg);
+void	assert_error(const char *msg);
+void	err_exit(const char *location, const char *msg, int status);
+void	todo(const char *msg);
+void	tokenize_error(const char *location, char **rest, char *line);
+void	parse_error(const char *location, t_token **rest, t_token *tok);
+void	xperror(const char *location);
+
 
 #endif
