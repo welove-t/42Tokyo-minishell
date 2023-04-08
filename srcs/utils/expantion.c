@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/04 16:50:20 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/08 11:58:12 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ void	append_char(char **s, char c)
 	*s = new;
 }
 
-// quoteを除外してtok->wordを更新する
-void	quote_removal(t_token *tok)
+void remove_quote(t_token *tok)
 {
 	char	*new_word;
 	char	*p;
@@ -57,7 +56,7 @@ void	quote_removal(t_token *tok)
 	{
 		if (*p == SINGLE_QUOTE_CHAR)
 		{
-			// skip quote
+			// skip quote;
 			p++;
 			while (*p != SINGLE_QUOTE_CHAR)
 			{
@@ -86,10 +85,18 @@ void	quote_removal(t_token *tok)
 	}
 	free(tok->word);
 	tok->word = new_word;
-	quote_removal(tok->next);
 }
 
-void	expand(t_token *tok)
+// quoteを除外してtok->wordを更新する
+void	expand_quote_removal(t_token *token)
 {
-	quote_removal(tok);
+	if (token == NULL)
+		return ;
+	remove_quote(token);
+	expand_quote_removal(token->next);
+}
+
+void	expand(t_node *node)
+{
+	expand_quote_removal(node->args);
 }

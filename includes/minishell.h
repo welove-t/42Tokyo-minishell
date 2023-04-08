@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/06 21:03:15 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/08 10:34:25 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ extern char	**environ;
 bool		syntax_error;
 
 typedef struct s_token		t_token;
+typedef struct s_node		t_node;
 typedef enum e_token_kind	t_token_kind;
+typedef enum e_node_kind	t_node_kind;
 
 t_token	*new_token(char *word, t_token_kind kind);
 
@@ -39,6 +41,18 @@ enum e_token_kind {
 	TK_RESERVED, // 記号
 	TK_OP,		// 制御文字
 	TK_EOF,		// 入力終わり
+};
+
+// ノードの種類
+enum e_node_kind {
+	ND_SIMPLE_CMD,
+};
+
+// ノード
+struct s_node {
+	t_token		*args;
+	t_node_kind	kind;
+	t_node		*next;
 };
 // `word` is zero terminated string.
 struct s_token {
@@ -104,7 +118,10 @@ char	**token_list_to_array(t_token *token);
 void	tokenize_error(const char *location, char **rest, char *line);
 bool	is_metacharacter(char c);
 
+// parser
+t_node	*parse(t_token *tok);
+
 // expantion
-void	expand(t_token *tok);
+void	expand(t_node *node);
 
 #endif

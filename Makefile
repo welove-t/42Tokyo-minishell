@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+         #
+#    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/05 21:57:43 by susasaki         ###   ########.fr        #
+#    Updated: 2023/04/08 12:06:56 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(UTILS_DIR)/get_cmd_line.c\
 		  $(UTILS_DIR)/tokenizer.c\
 		  $(UTILS_DIR)/expantion.c\
+		  $(UTILS_DIR)/parser.c\
 
 OBJS = $(SOURCES:.c=.o)
 LIBFT = -L$(LIBFT_DIR) -lft

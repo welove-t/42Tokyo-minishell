@@ -18,15 +18,18 @@ main.cで記述したグローバル変数を使用したいため
 extern宣言する
 */
 	char	**cmd_line = NULL;
-	t_token *token;
+	t_token	*token;
+	t_node	*node;
 
 
 //自作builtinコマンドを試すだけなら、ここにif文を書いて関数を呼ぶ
 
 
 	token = tokenize(line);
-	expand(token);
-	cmd_line = token_list_to_array(token);
+	node =	parse(token);
+	expand(node);
+
+	cmd_line = token_list_to_array(node->args);
 	cmd_line[0] = get_cmd_array(ft_strtrim(cmd_line[0], " "));
 
 	if (cmd_line != NULL)
