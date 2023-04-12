@@ -6,7 +6,7 @@
 #    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/08 13:17:12 by terabu           ###   ########.fr        #
+#    Updated: 2023/04/12 11:31:47 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(UTILS_DIR)/tokenizer.c\
 		  $(UTILS_DIR)/expantion.c\
 		  $(UTILS_DIR)/parser.c\
+		  $(UTILS_DIR)/redirect.c\
 
 OBJS = $(SOURCES:.c=.o)
 LIBFT = -L$(LIBFT_DIR) -lft

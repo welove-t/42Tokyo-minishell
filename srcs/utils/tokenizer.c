@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/08 13:37:31 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/12 10:19:38 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,20 @@ bool	is_operator(const char *s)
 	return (false);
 }
 
+bool	is_redirection_operator(const char *s)
+{
+	static char *const	operators[] = {">", "<", ">>", "<<"};
+	size_t	i = 0;
+
+	while (i < sizeof(operators) / sizeof(*operators))
+	{
+		if (startswith(s, operators[i]))
+			return (true);
+		i++;
+	}
+	return(false);
+}
+
 /*
 DEFINITIONS
        The following definitions are used throughout the rest of this document.
@@ -113,7 +127,8 @@ bool	is_word(const char *s)
 // 制御文字のトークン作成
 t_token	*operator(char **rest, char *line)
 {
-	static char	*const	operators[] = {"||", "&", "&&", ";", ";;", "(", ")", "|", "\n"};
+	static char	*const	operators[] = {">>", "<<", "||", "&", "&&", ";", ";;",
+		">", "<", "(", ")", "|", "\n"};
 	size_t				i = 0;
 	char				*op;
 
@@ -129,7 +144,7 @@ t_token	*operator(char **rest, char *line)
 		}
 		i++;
 	}
-	perror("Unexpected operator");
+	assert_error("Unexpected operator");
 	exit(1);
 }
 
@@ -218,7 +233,7 @@ t_token	*tokenize(char *line)
 	{
 		if (consume_blank(&line, line))
 			continue ;
-		else if (is_operator(line))
+		else if (is_metacharacter(*line))
 			token = token->next = operator(&line, line);
 		else if (is_word(line))
 			token = token->next = word(&line, line);

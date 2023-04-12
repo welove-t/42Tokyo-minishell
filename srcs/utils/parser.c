@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:31:19 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/08 13:15:44 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/12 11:09:51 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,59 @@ t_node	*parse(t_token *tok)
 	t_node	*node;
 
 	node = new_node(ND_SIMPLE_CMD);
+	append_command_element(node, &tok, tok);
 	while (tok && tok->kind != TK_EOF)
-	{
-		if (tok->kind == TK_WORD)
-		{
-			append_tok(&node->args, tokdup(tok));
-			tok = tok->next;
-		}
-		else
-			parse_error("Unexpected Token", &tok, tok);
-	}
-	append_tok(&node->args, tokdup(tok));
+		append_command_element(node, &tok, tok);
+	append_command_element(node, &tok, tok);
 	return (node);
+}
+
+//
+t_node	*redirect_out(t_token **rest, t_token *tok)
+{
+	t_node	*node;
+
+	node = new_node(ND_REDIR_OUT);
+	node->filename = tokdup(tok->next);
+	node->targetfd = STDOUT_FILENO;
+	*rest = tok->next->next; //">"の次がwordなのでさらにその次のノードに設定
+	return (node);
+}
+
+bool	equal_op(t_token *tok, char *op)
+{
+	if (tok->kind != TK_OP)
+		return (false);
+	return (strcmp(tok->word, op) == 0);
+}
+
+//
+void	append_command_element(t_node *command, t_token **rest, t_token *tok)
+{
+	if (tok->kind == TK_WORD)
+	{
+		append_tok(&command->args, tokdup(tok));
+		tok = tok->next;
+	}
+	else if (equal_op(tok, ">") && tok->next->kind == TK_WORD)
+		append_node(&command->redirects, redirect_out(&tok, tok));
+	else if (tok->kind == TK_EOF)
+	{
+		append_tok(&command->args, tokdup(tok));
+		tok = NULL;
+	}
+	else
+		todo("Unexpected Token");
+	// append_tok(&command->args, tokdup(tok));
+	*rest = tok;
+}
+
+void	append_node(t_node **node, t_node *elm)
+{
+	if (*node == NULL)
+	{
+		*node = elm;
+		return ;
+	}
+	append_node(&(*node)->next, elm);
 }
