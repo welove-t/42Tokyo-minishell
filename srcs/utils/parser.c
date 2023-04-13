@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:31:19 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/13 08:54:59 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/13 11:30:34 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_node	*parse(t_token *tok)
 	return (node);
 }
 
-// ノードリスト(リダイレクト用)の作成
+// ノードリスト(リダイレクト-アウト用)の作成
 t_node	*redirect_out(t_token **rest, t_token *tok)
 {
 	t_node	*node;
@@ -70,6 +70,18 @@ t_node	*redirect_out(t_token **rest, t_token *tok)
 	node->filename = tokdup(tok->next);
 	node->targetfd = STDOUT_FILENO;
 	*rest = tok->next->next; //">"の次がwordなのでさらにその次のノードを設定
+	return (node);
+}
+
+// ノードリスト(リダイレクト-イン用)の作成
+t_node	*redirect_in(t_token **rest, t_token *tok)
+{
+	t_node	*node;
+
+	node = new_node(ND_REDIR_IN);
+	node->filename = tokdup(tok->next);
+	node->targetfd = STDIN_FILENO;
+	*rest = tok->next->next; //"<"の次がwordなのでさらにその次のノードを設定
 	return (node);
 }
 
@@ -91,6 +103,8 @@ void	append_command_element(t_node *command, t_token **rest, t_token *tok)
 	}
 	else if (is_operator(tok, ">") && tok->next->kind == TK_WORD)
 		append_node(&command->redirects, redirect_out(&tok, tok));
+	else if (is_operator(tok, "<") && tok->next->kind == TK_WORD)
+		append_node(&command->redirects, redirect_in(&tok, tok));
 	else if (tok->kind == TK_EOF)
 	{
 		append_tok(&command->args, tokdup(tok));
