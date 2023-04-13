@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/13 11:27:03 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/13 12:13:15 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ void	open_redir_file(t_node *redir)
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else if (redir->kind == ND_REDIR_IN)
 		redir->filefd = open(redir->filename->word, O_RDONLY);
+	else if (redir->kind == ND_REDIR_APPEND)
+		redir->filefd = open(redir->filename->word, \
+				O_WRONLY | O_CREAT | O_APPEND, \
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else
 		todo("open_redir_file");
 	redir->filefd = stashfd(redir->filefd);
@@ -44,7 +48,8 @@ void	do_redirect(t_node *redir)
 {
 	if (redir == NULL)
 		return ;
-	if (redir->kind == ND_REDIR_OUT || redir->kind == ND_REDIR_IN)
+	if (redir->kind == ND_REDIR_OUT || redir->kind == ND_REDIR_IN \
+		|| redir->kind == ND_REDIR_APPEND)
 	{
 		redir->stashed_targetfd = stashfd(redir->targetfd);
 		dup2(redir->filefd, redir->targetfd);
@@ -59,7 +64,8 @@ void	reset_redirect(t_node *redir)
 	if (redir == NULL)
 		return ;
 	reset_redirect(redir->next);
-	if (redir->kind == ND_REDIR_OUT || redir->kind == ND_REDIR_IN)
+	if (redir->kind == ND_REDIR_OUT || redir->kind == ND_REDIR_IN \
+		|| redir->kind == ND_REDIR_IN)
 	{
 		close(redir->filefd);
 		close(redir->targetfd);
