@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/12 11:33:13 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/13 10:49:19 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ void	append_char(char **s, char c)
 	*s = new;
 }
 
+/*
+quoteを除外してtok->wordを更新する
+quoteの開閉チェックはtokenizerで実施済みのため閉じられていることは保障されている
+*/
 void remove_quote(t_token *tok)
 {
 	char	*new_word;
@@ -58,11 +62,7 @@ void remove_quote(t_token *tok)
 		{
 			p++;
 			while (*p != SINGLE_QUOTE_CHAR)
-			{
-				// if (*p == '\0')
-				// 	perror("Unclosed single quote");
 				append_char(&new_word, *p++);
-			}
 			// skip quote
 			p++;
 		}
@@ -71,11 +71,7 @@ void remove_quote(t_token *tok)
 			// skip quote
 			p++;
 			while (*p != DOUBLE_QUOTE_CHAR)
-			{
-				if (*p == '\0')
-					perror("Unclosed double quote");
 				append_char(&new_word, *p++);
-			}
 			// skip quote
 			p++;
 		}
@@ -87,7 +83,9 @@ void remove_quote(t_token *tok)
 	remove_quote(tok->next);
 }
 
-// quoteを除外してtok->wordを更新する
+/*
+
+*/
 void	expand_quote_removal(t_node *node)
 {
 	if (node == NULL)
