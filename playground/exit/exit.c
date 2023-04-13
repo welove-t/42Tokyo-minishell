@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 20:01:07 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/13 09:08:51 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/13 09:17:04 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static void bi_exit(char **argv)
         }
         printf("exit: too many arguments\n");
         g_status = 1;
-        exit(1) ;
+        exit(g_status);
     }
     if (argv[1])
     {
