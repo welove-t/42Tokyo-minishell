@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 20:01:07 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/12 20:04:00 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/13 09:08:51 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,24 @@ static int int_overflow__check(char *str, long *num)
     {
         *num *= 10;
         *num += str[i] - '0';        
-        // printf("i = %d\n*num = %ld\n",i,*num);
         i++;
     }
-    // printf("str[%d] = %c\n",i,str[i]);
     if ((str[i] < '0' || '9' < str[i]) && str[i] != '\0' && str[i] != ' ' && str[i] != '\t')
         return (1);
     *num *= flag;
-    // printf("*num = %ld\n",*num);
-    // printf("%ld < %ld ||\n %ld < %ld",*num,LLONG_MIN,*num,LLONG_MAX);
     if (*num < INT_MIN || INT_MAX < *num)
         return (1);
     return (0);
 }
 
-static void bi_single_multiple_exit(char *str)
+static void bi_single_exit_multiple(char *str)
 {
     long num;
     num = 0;
     
     if (int_overflow__check(str,&num) == 1)
     {
-        printf("exit: numeric argument required\n");
+        printf("exit: %s: numeric argument required\n",str);
         exit(255);
     }
     if (num < 0)
@@ -71,20 +67,21 @@ static void bi_single_multiple_exit(char *str)
         exit(num);
     }
 }
-static void bi_multiple_exit(char *str)
+static void bi_exit_multiple(char *str)
 {
     long num;
     num = 0;
     
     if (int_overflow__check(str,&num) == 1)
     {
-        printf("exit: numeric argument required\n");
+        printf("exit: %s: numeric argument required\n",str);
         exit(255);
     }
     return ;
 }
 
-//tokenの引数を貰う
+//TODO:tokenの引数を貰う
+//TODO:グローバル変数を導入して実装する
 static void bi_exit(char **argv)
 {
     g_status = 0;
@@ -97,7 +94,7 @@ static void bi_exit(char **argv)
     {
         if (argv[1])
         {
-            bi_multiple_exit(argv[1]);
+            bi_exit_multiple(argv[1]);
         }
         printf("exit: too many arguments\n");
         g_status = 1;
@@ -105,7 +102,7 @@ static void bi_exit(char **argv)
     }
     if (argv[1])
     {
-        bi_single_multiple_exit(argv[1]);
+        bi_single_exit_multiple(argv[1]);
     }
 }
 
