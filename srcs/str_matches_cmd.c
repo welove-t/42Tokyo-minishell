@@ -27,7 +27,6 @@ void	line_matches_cmd(char *line)
 	do_redirect(node->redirects);
 	cmd_line = token_list_to_array(node->args);
 	cmd_line[0] = get_cmd_array(ft_strtrim(cmd_line[0], " "));
-
 	if (cmd_line != NULL)
 	{
 		if (execve(cmd_line[0], cmd_line, environ) == -1)

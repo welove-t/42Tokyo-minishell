@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/12 10:19:38 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/13 09:08:31 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_token	*new_token(char *word, t_token_kind kind)
 	return (tok);
 }
 
-// ブランクだったらtrue
+// ブランクチェック
 bool	is_blank(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n');
@@ -61,13 +61,13 @@ control operator
 	  || & && ; ;; ( ) | <newline>
 */
 
-// 制御演算子チェック
-// 制御演算子だったらtrue
-bool	is_operator(const char *s)
+// リダイレクション文字のチェック
+bool	is_redirection_operator(const char *s)
 {
-	static char	*const operators[] = {"||", "&", "&&", ";", ";;", "(", ")", "|", "\n"};
-	size_t				i = 0;
+	static char *const	operators[] = {">", "<", ">>", "<<"};
+	size_t				i;
 
+	i = 0;
 	while (i < sizeof(operators) / sizeof(*operators))
 	{
 		if (startswith(s, operators[i]))
@@ -75,20 +75,6 @@ bool	is_operator(const char *s)
 		i++;
 	}
 	return (false);
-}
-
-bool	is_redirection_operator(const char *s)
-{
-	static char *const	operators[] = {">", "<", ">>", "<<"};
-	size_t	i = 0;
-
-	while (i < sizeof(operators) / sizeof(*operators))
-	{
-		if (startswith(s, operators[i]))
-			return (true);
-		i++;
-	}
-	return(false);
 }
 
 /*
@@ -106,19 +92,16 @@ DEFINITIONS
               || & && ; ;; ( ) | <newline>
 */
 // メタキャラクタチェック
-// メタキャラクタだったらtrue
 bool	is_metacharacter(char c)
 {
-	// return (c && strchr("|&;()<>\t\n", c));
 	if (c && (c == '|' || c == '&' || c == ';' || c == '(' || c == ')'
 			|| c == '<' || c == '>' || c == ' ' || c == '\t' || c == '\n'))
-			return(true);
+		return (true);
 	else
-		return(false);
+		return (false);
 }
 
-// ワードチェック
-// メタキャラクタでなければtrue
+// ワードチェック（メタキャラではないか）
 bool	is_word(const char *s)
 {
 	return (*s && !is_metacharacter(*s));
@@ -129,16 +112,17 @@ t_token	*operator(char **rest, char *line)
 {
 	static char	*const	operators[] = {">>", "<<", "||", "&", "&&", ";", ";;",
 		">", "<", "(", ")", "|", "\n"};
-	size_t				i = 0;
+	size_t				i;
 	char				*op;
 
+	i = 0;
 	while (i < sizeof(operators) / sizeof(*operators))
 	{
 		if (startswith(line, operators[i]))
 		{
 			op = strdup(operators[i]);
 			if (op == NULL)
-				perror("strdup");
+				fatal_error("strdup");
 			*rest = line + strlen(op);
 			return (new_token(op, TK_OP));
 		}
@@ -164,7 +148,7 @@ t_token	*word(char **rest, char *line)
 			if (*line == '\0')
 			{
 				tokenize_error("Unclosed single quote", rest, line);
-				break;
+				break ;
 			}
 			else
 				line++;
@@ -177,7 +161,7 @@ t_token	*word(char **rest, char *line)
 			if (*line == '\0')
 			{
 				tokenize_error("Unclosed double quote", rest, line);
-				break;
+				break ;
 			}
 			else
 				line++;
@@ -185,7 +169,6 @@ t_token	*word(char **rest, char *line)
 		else
 			line++;
 	}
-
 	word = strndup(start, line - start);
 	if (word == NULL)
 		fatal_error("strndup");
@@ -269,14 +252,14 @@ char	**token_list_to_array(t_token *token)
 	count = get_token_count(token);
 	tok_array = ft_calloc(count + 1, sizeof(char *));
 	if (!tok_array)
-		perror("calloc");
+		fatal_error("calloc");
 	cursor = token;
 	i = 0;
-	while(cursor->word != NULL && cursor->kind != TK_EOF)
+	while (cursor->word != NULL && cursor->kind != TK_EOF)
 	{
 		tok_array[i] = ft_strdup(cursor->word);
 		if (!tok_array[i])
-			perror("strdup");
+			fatal_error("strdup");
 		i++;
 		cursor = cursor->next;
 	}
