@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/08 13:41:51 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/13 10:49:19 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ void	append_char(char **s, char c)
 	*s = new;
 }
 
+/*
+quoteを除外してtok->wordを更新する
+quoteの開閉チェックはtokenizerで実施済みのため閉じられていることは保障されている
+*/
 void remove_quote(t_token *tok)
 {
 	char	*new_word;
@@ -56,14 +60,9 @@ void remove_quote(t_token *tok)
 	{
 		if (*p == SINGLE_QUOTE_CHAR)
 		{
-			// skip quote;
 			p++;
 			while (*p != SINGLE_QUOTE_CHAR)
-			{
-				// if (*p == '\0')
-				// 	perror("Unclosed single quote");
 				append_char(&new_word, *p++);
-			}
 			// skip quote
 			p++;
 		}
@@ -72,11 +71,7 @@ void remove_quote(t_token *tok)
 			// skip quote
 			p++;
 			while (*p != DOUBLE_QUOTE_CHAR)
-			{
-				if (*p == '\0')
-					perror("Unclosed double quote");
 				append_char(&new_word, *p++);
-			}
 			// skip quote
 			p++;
 		}
@@ -85,18 +80,23 @@ void remove_quote(t_token *tok)
 	}
 	free(tok->word);
 	tok->word = new_word;
+	remove_quote(tok->next);
 }
 
-// quoteを除外してtok->wordを更新する
-void	expand_quote_removal(t_token *token)
+/*
+
+*/
+void	expand_quote_removal(t_node *node)
 {
-	if (token == NULL)
+	if (node == NULL)
 		return ;
-	remove_quote(token);
-	expand_quote_removal(token->next);
+	remove_quote(node->args);
+	remove_quote(node->filename);
+	expand_quote_removal(node->redirects);
+	expand_quote_removal(node->next);
 }
 
 void	expand(t_node *node)
 {
-	expand_quote_removal(node->args);
+	expand_quote_removal(node);
 }

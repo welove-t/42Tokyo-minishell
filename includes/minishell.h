@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/08 13:18:37 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/13 12:08:57 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <sys/param.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -47,13 +48,23 @@ enum e_token_kind {
 // ノードの種類
 enum e_node_kind {
 	ND_SIMPLE_CMD,
+	ND_REDIR_OUT,
+	ND_REDIR_IN,
+	ND_REDIR_APPEND,
 };
 
 // ノード
 struct s_node {
-	t_token		*args;
 	t_node_kind	kind;
 	t_node		*next;
+	//CMD
+	t_token		*args;
+	t_node		*redirects;
+	//REDIR
+	int			targetfd;
+	t_token		*filename;
+	int			filefd;
+	int			stashed_targetfd;
 };
 // `word` is zero terminated string.
 struct s_token {
@@ -120,9 +131,16 @@ bool	is_metacharacter(char c);
 
 // parser
 t_node	*parse(t_token *tok);
+void	append_node(t_node **node, t_node *elm);
+void	append_command_element(t_node *command, t_token **rest, t_token *tok);
 
 // expantion
 void	expand(t_node *node);
+
+// redirect
+void	open_redir_file(t_node *redir);
+void	do_redirect(t_node *redir);
+void	reset_redirect(t_node *redir);
 
 // error
 void	fatal_error(const char *msg);
@@ -132,6 +150,5 @@ void	todo(const char *msg);
 void	tokenize_error(const char *location, char **rest, char *line);
 void	parse_error(const char *location, t_token **rest, t_token *tok);
 void	xperror(const char *location);
-
 
 #endif
