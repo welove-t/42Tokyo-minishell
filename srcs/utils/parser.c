@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:31:19 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/13 12:15:41 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/15 12:39:30 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,18 @@ t_node	*redirect_append(t_token **rest, t_token *tok)
 	return (node);
 }
 
+// ノードリスト(リダイレクト-ヒアドキュ用)の作成
+t_node	*redirect_heredoc(t_token **rest, t_token *tok)
+{
+	t_node	*node;
+
+	node = new_node(ND_REDIR_HEREDOC);
+	node->delimiter = tokdup(tok->next);
+	node->targetfd = STDIN_FILENO;
+	*rest = tok->next->next; //"<"の次がwordなのでさらにその次のノードを設定
+	return (node);
+}
+
 // 制御文字のチェック
 bool	is_operator(t_token *tok, char *op)
 {
@@ -119,6 +131,8 @@ void	append_command_element(t_node *command, t_token **rest, t_token *tok)
 		append_node(&command->redirects, redirect_in(&tok, tok));
 	else if (is_operator(tok, ">>") && tok->next->kind == TK_WORD)
 		append_node(&command->redirects, redirect_append(&tok, tok));
+	else if (is_operator(tok, "<<") && tok->next->kind == TK_WORD)
+		append_node(&command->redirects, redirect_heredoc(&tok, tok));
 	else if (tok->kind == TK_EOF)
 	{
 		append_tok(&command->args, tokdup(tok));
