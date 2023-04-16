@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/04 16:21:36 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/16 22:10:39 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char **g_environ;
 int main(void)
 {
 	char *input;
+	int	wstatus;
 
 	//pidを宣言
 	pid_t	pid;
@@ -61,31 +62,38 @@ int main(void)
 			//子プロセスの場合
 			if (pid == 0)
 			{
-				// printf("\x1b[32m[Child Process]\x1b[0m\n");
-				//子プロセスの親プロセスPID
-				// printf("Parent PPID = %d,",getppid());
-				//自身のPIDを出力
-				// printf("Child PID = %d\n",getpid());
-
 				line_matches_cmd(input);
 				//子プロセスの処理終了
 				exit(0);
 			}
 			else if(pid > 0)
 			{
-				// printf("\x1b[32m[Parent Process]\x1b[0m\n");
 				// 親プロセスのPIDを出力
-				// printf("Parent PPID = %d\n",getpid());
-				// printf("Wait for Child Process to finish\n");
 				// 子プロセスの処理終了を待つ
-				wait(NULL);
-				// printf("Child process finished\n");
+				wait(&wstatus);
+				/*
+				子プロセスが正常に終了した場合に真を返す。
+				*/
+				// printf("status: %08x\n", wstatus);
+				if (WIFEXITED(wstatus))
+				{
+					g_status = WEXITSTATUS(wstatus);
+					// printf("status parse: %d\n", g_status);
+				}
+				/*
+				シグナルで終了した時
+				*/
+				// else if (WIFSIGNALED(wstatus))
+				else
+				{
+					g_status = WTERMSIG(wstatus);
+					// printf("status parse: %d\n", g_status);
+				}
 			}
 			else
 			{
 				printf("\x1b[31mError fork()\x1b[0m\n");
 			}
-			// str_matches_cmd(input);
 		}
 		//readline関数で割り当てたメモリを解放する。
 		free(input);

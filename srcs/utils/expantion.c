@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expantion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/13 10:49:19 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/16 19:56:22 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,34 @@ void	append_char(char **s, char c)
 	*s = new;
 }
 
+static void last_exit_status(char **new_word)
+{
+	char *str;
+	//グローバル変数を代入して、char型に変えて代入
+	str = ft_itoa(g_status);
+	while (*str != '\0')
+		append_char(new_word, *str++);
+}
+
+static void expand_env(char **new_word,char *p)
+{
+	char *value;
+	if (*p == '?')
+	{
+		last_exit_status(new_word);
+		return ;
+	}
+	value = getenv(p);
+	if (value == NULL)
+	{
+		printf("\n"); // 改行を出力して新しい行を開始
+		append_char(new_word, '\0');
+	}
+	while (*value != '\0')
+		append_char(new_word, *value++);
+}
+
+
 /*
 quoteを除外してtok->wordを更新する
 quoteの開閉チェックはtokenizerで実施済みのため閉じられていることは保障されている
@@ -51,14 +79,23 @@ void remove_quote(t_token *tok)
 {
 	char	*new_word;
 	char	*p;
+	char	*exp_tmp;
+	int		dol_flag;
 
 	if (tok == NULL || tok->kind != TK_WORD || tok->word == NULL)
 		return ;
 	p = tok->word;
 	new_word = NULL;
+	dol_flag = 0;
 	while (*p && !is_metacharacter(*p))
 	{
-		if (*p == SINGLE_QUOTE_CHAR)
+		if (*p == DOLLAR_SIGN)
+		{
+			p++;
+			expand_env(&new_word, p);
+			break;
+		}
+		else if (*p == SINGLE_QUOTE_CHAR)
 		{
 			p++;
 			while (*p != SINGLE_QUOTE_CHAR)
@@ -68,10 +105,34 @@ void remove_quote(t_token *tok)
 		}
 		else if (*p == DOUBLE_QUOTE_CHAR)
 		{
+			// "$PATH"
 			// skip quote
 			p++;
 			while (*p != DOUBLE_QUOTE_CHAR)
-				append_char(&new_word, *p++);
+			{
+				dol_flag = 0;
+				if(*p == DOLLAR_SIGN)
+				{
+					p++;
+					dol_flag = 1;
+					//環境変数をnew_wordに追加
+					if (*p != '?')
+					{
+						while (*p != DOUBLE_QUOTE_CHAR && *p != ' ')
+							append_char(&exp_tmp, *p++);
+					}
+					else
+					{
+						append_char(&exp_tmp, *p++);
+					}
+					//環境変数を展開
+					expand_env(&new_word, exp_tmp);
+					free(exp_tmp);
+					exp_tmp = NULL;
+				}
+				if (dol_flag == 0 && *p != DOLLAR_SIGN)
+					append_char(&new_word, *p++);
+			}
 			// skip quote
 			p++;
 		}

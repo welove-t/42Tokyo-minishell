@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 18:54:42 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/13 12:19:24 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/16 19:42:39 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+//TODO:./bash> echo -nnnn の処理をする
 void bi_echo(char **argv)
 {
     int i;
