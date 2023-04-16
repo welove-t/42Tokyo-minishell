@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
+#    By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/12 11:31:47 by terabu           ###   ########.fr        #
+#    Updated: 2023/04/16 14:35:54 by susasaki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(MAKE) -C ${LIBFT_DIR}
-	$(CC) $(OBJS) -o $(NAME) $(LIBFT) -Iincludes -lreadline
+	$(CC) $(OBJS) -o $(NAME) $(LIBFT) -L$(HOME)/.brew/opt/readline/include -L$(HOME)/.brew/opt/readline/lib -lreadline
 
 clean:
 	rm -f $(OBJS)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expantion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/13 10:49:19 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/16 14:53:19 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,22 @@ void	append_char(char **s, char c)
 	*s = new;
 }
 
+static void expand_env(char **new_word,char *str)
+{
+	char *value;
+	value = getenv(str);
+	//環境変数の取得にgetenvを使う
+	if (value == NULL)
+	{
+		printf("\n"); // 改行を出力して新しい行を開始
+		append_char(new_word, '\0');
+	}
+	while (*value != '\0')
+		append_char(new_word, *value++);
+	// printf("new_word = %s\n",*new_word);
+	// exit(0);
+}
+
 /*
 quoteを除外してtok->wordを更新する
 quoteの開閉チェックはtokenizerで実施済みのため閉じられていることは保障されている
@@ -56,9 +72,21 @@ void remove_quote(t_token *tok)
 		return ;
 	p = tok->word;
 	new_word = NULL;
+	//ドルマークだったら環境変数に飛んで展開する。
+	//ここで呼ばれるのを前提にして関数を作成していく。
+	//"と'は↑の処理が終わってからやる。
+	//bashでパターンを分析する
+	//echo "a$PATH b"
+	//echo "a$PATHb"
+	// printf("*p = %c\n",*p);
 	while (*p && !is_metacharacter(*p))
 	{
-		if (*p == SINGLE_QUOTE_CHAR)
+		if (*p == DOLLAR_SIGN)
+		{
+			p++;
+			expand_env(&new_word, p);
+		}
+		else if (*p == SINGLE_QUOTE_CHAR)
 		{
 			p++;
 			while (*p != SINGLE_QUOTE_CHAR)
