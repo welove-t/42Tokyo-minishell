@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/16 14:53:19 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/16 15:33:57 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	append_char(char **s, char c)
 static void expand_env(char **new_word,char *str)
 {
 	char *value;
+
 	value = getenv(str);
 	//環境変数の取得にgetenvを使う
 	if (value == NULL)
@@ -55,6 +56,7 @@ static void expand_env(char **new_word,char *str)
 	}
 	while (*value != '\0')
 		append_char(new_word, *value++);
+	
 	// printf("new_word = %s\n",*new_word);
 	// exit(0);
 }
@@ -67,6 +69,7 @@ void remove_quote(t_token *tok)
 {
 	char	*new_word;
 	char	*p;
+	char	*env_tmp;
 
 	if (tok == NULL || tok->kind != TK_WORD || tok->word == NULL)
 		return ;
@@ -85,6 +88,7 @@ void remove_quote(t_token *tok)
 		{
 			p++;
 			expand_env(&new_word, p);
+			break;
 		}
 		else if (*p == SINGLE_QUOTE_CHAR)
 		{
@@ -96,8 +100,22 @@ void remove_quote(t_token *tok)
 		}
 		else if (*p == DOUBLE_QUOTE_CHAR)
 		{
+			// "$PATH"
 			// skip quote
 			p++;
+			if(*p == DOLLAR_SIGN)
+			{
+				p++;
+				while (*p != DOUBLE_QUOTE_CHAR)
+					append_char(&new_word, *p++);
+				// printf("append:new_word = %s\n",new_word);
+				env_tmp = new_word;
+				free(new_word);
+				new_word = NULL;
+				expand_env(&new_word, env_tmp);
+				// printf("expand:new_word = %s\n",new_word);
+				break;
+			}
 			while (*p != DOUBLE_QUOTE_CHAR)
 				append_char(&new_word, *p++);
 			// skip quote
