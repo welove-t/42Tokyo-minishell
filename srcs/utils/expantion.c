@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/16 15:33:57 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/16 16:20:27 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,14 @@ void remove_quote(t_token *tok)
 {
 	char	*new_word;
 	char	*p;
-	char	*env_tmp;
+	char	*exp_tmp;
+	int		dol_flag;
 
 	if (tok == NULL || tok->kind != TK_WORD || tok->word == NULL)
 		return ;
 	p = tok->word;
 	new_word = NULL;
+	dol_flag = 0;
 	//ドルマークだったら環境変数に飛んで展開する。
 	//ここで呼ばれるのを前提にして関数を作成していく。
 	//"と'は↑の処理が終わってからやる。
@@ -103,21 +105,27 @@ void remove_quote(t_token *tok)
 			// "$PATH"
 			// skip quote
 			p++;
-			if(*p == DOLLAR_SIGN)
-			{
-				p++;
-				while (*p != DOUBLE_QUOTE_CHAR)
-					append_char(&new_word, *p++);
-				// printf("append:new_word = %s\n",new_word);
-				env_tmp = new_word;
-				free(new_word);
-				new_word = NULL;
-				expand_env(&new_word, env_tmp);
-				// printf("expand:new_word = %s\n",new_word);
-				break;
-			}
 			while (*p != DOUBLE_QUOTE_CHAR)
-				append_char(&new_word, *p++);
+			{
+				dol_flag = 0;
+				if(*p == DOLLAR_SIGN)
+				{
+					printf("DOLLAR_SIGNに入った。*p = %c\n",*p);
+					p++;
+					dol_flag = 1;
+					//環境変数をnew_wordに追加
+					while (*p != DOUBLE_QUOTE_CHAR && *p != ' ')
+						append_char(&exp_tmp, *p++);
+					printf("new_word = %s\n",new_word);
+					//環境変数を展開
+					expand_env(&new_word, exp_tmp);
+					free(exp_tmp);
+					exp_tmp = NULL;
+				}
+				if (dol_flag == 0 && *p != DOLLAR_SIGN)
+					append_char(&new_word, *p++);
+				printf("*p = %c\n",*p);
+			}
 			// skip quote
 			p++;
 		}
