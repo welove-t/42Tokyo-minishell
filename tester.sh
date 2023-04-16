@@ -39,7 +39,6 @@ echo '引数なし'
 assert 'ls'
 assert 'uname'
 assert 'pwd'
-assert 'ls'
 
 # #########
 # # 引数あり
