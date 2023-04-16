@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/16 19:46:19 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/16 22:10:39 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char **g_environ;
 int main(void)
 {
 	char *input;
+	int	wstatus;
 
 	//pidを宣言
 	pid_t	pid;
@@ -69,8 +70,25 @@ int main(void)
 			{
 				// 親プロセスのPIDを出力
 				// 子プロセスの処理終了を待つ
-				wait(&g_status);
-				g_status = WEXITSTATUS(g_status);
+				wait(&wstatus);
+				/*
+				子プロセスが正常に終了した場合に真を返す。
+				*/
+				// printf("status: %08x\n", wstatus);
+				if (WIFEXITED(wstatus))
+				{
+					g_status = WEXITSTATUS(wstatus);
+					// printf("status parse: %d\n", g_status);
+				}
+				/*
+				シグナルで終了した時
+				*/
+				// else if (WIFSIGNALED(wstatus))
+				else
+				{
+					g_status = WTERMSIG(wstatus);
+					// printf("status parse: %d\n", g_status);
+				}
 			}
 			else
 			{
