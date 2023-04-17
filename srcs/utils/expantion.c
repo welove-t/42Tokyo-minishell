@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/16 19:56:22 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/17 16:38:43 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void expand_env(char **new_word,char *p)
 quoteを除外してtok->wordを更新する
 quoteの開閉チェックはtokenizerで実施済みのため閉じられていることは保障されている
 */
-void remove_quote(t_token *tok)
+void process_word_token(t_token *tok)
 {
 	char	*new_word;
 	char	*p;
@@ -105,7 +105,6 @@ void remove_quote(t_token *tok)
 		}
 		else if (*p == DOUBLE_QUOTE_CHAR)
 		{
-			// "$PATH"
 			// skip quote
 			p++;
 			while (*p != DOUBLE_QUOTE_CHAR)
@@ -141,7 +140,7 @@ void remove_quote(t_token *tok)
 	}
 	free(tok->word);
 	tok->word = new_word;
-	remove_quote(tok->next);
+	process_word_token(tok->next);
 }
 
 /*
@@ -151,8 +150,8 @@ void	expand_quote_removal(t_node *node)
 {
 	if (node == NULL)
 		return ;
-	remove_quote(node->args);
-	remove_quote(node->filename);
+	process_word_token(node->args);
+	process_word_token(node->filename);
 	expand_quote_removal(node->redirects);
 	expand_quote_removal(node->next);
 }
