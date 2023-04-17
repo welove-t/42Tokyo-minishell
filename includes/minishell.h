@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/16 18:54:43 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:50:32 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ enum e_token_kind {
 // ノードの種類
 enum e_node_kind {
 	ND_SIMPLE_CMD,
-	ND_REDIR_OUT,
-	ND_REDIR_IN,
-	ND_REDIR_APPEND,
-	ND_REDIR_HEREDOC,
+	ND_REDIR_OUT,	//>
+	ND_REDIR_IN,	//<
+	ND_REDIR_APPEND,//>>
+	ND_REDIR_HEREDOC,//<<
 };
 
 // ノード
