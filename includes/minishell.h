@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/17 14:50:32 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/18 12:17:56 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,8 @@ void	append_node(t_node **node, t_node *elm);
 void	append_command_element(t_node *command, t_token **rest, t_token *tok);
 
 // expantion
+void	append_char(char **s, char c);
+void 	expand_env(char **new_word,char *p);
 void	expand(t_node *node);
 
 // redirect

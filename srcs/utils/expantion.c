@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/17 16:38:43 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/18 14:36:05 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void last_exit_status(char **new_word)
 		append_char(new_word, *str++);
 }
 
-static void expand_env(char **new_word,char *p)
+void expand_env(char **new_word,char *p)
 {
 	char *value;
 	if (*p == '?')

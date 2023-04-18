@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/17 16:48:49 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/18 14:44:26 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,19 +90,72 @@ void	reset_redirect(t_node *redir)
 void	do_heredoc(t_node *redir)
 {
 	char	*buff;
+	char 	*exp_tmp;
+	char 	*new_word;
+	new_word = NULL;
+	exp_tmp = NULL;
+	char 	*str;
 
 	if (redir == NULL || redir->kind != ND_REDIR_HEREDOC)
 		return ;
 	while (1)
 	{
 		buff = readline("heredoc> ");
-		if (!buff)
+		if (buff == NULL)
+			break;
+		str = buff;
+		if (!strcmp(str, redir->delimiter->word))
 			break ;
-		if (!strcmp(buff, redir->delimiter->word))
-			break ;
-		write(redir->filefd, buff, strlen(buff));
+		while (*str)
+		{
+			if (*str == DOLLAR_SIGN)
+			{
+				str++;
+				// printf("*str = %c\n",*str);
+				if (*str == '?')
+				{
+					append_char(&exp_tmp, *str);
+					str++;
+					// printf("if (*str == '?')に通った\n");
+				}
+				else
+				{
+					while(*str != ' ' && *str != '\t' &&
+						*str != '\'' && *str != '\"' && *str != '\0')
+					{
+						append_char(&exp_tmp, *str);
+						str++;
+						// printf("whileが回った\n");
+					}
+				}
+				// printf("exp_tmp = %s\n",exp_tmp);
+				// 環境変数を展開
+				expand_env(&new_word, exp_tmp);
+				if (exp_tmp != NULL)
+				{
+					free(exp_tmp);
+					exp_tmp = NULL;
+				}
+				int i;
+				i = 0;
+				// printf("new_word = %s\n",new_word);
+				while (new_word[i] != '\0')
+				{
+					write(redir->filefd, &new_word[i],1);
+					i++;
+				}
+				
+			}
+			else
+			{
+				write(redir->filefd, str++,1);
+			}
+		}
+		// write(redir->filefd, buff, strlen(buff));
 		write(redir->filefd, "\n", 1);
 		free (buff);
+		buff = NULL;
 	}
-	free(buff);
+	if (buff != NULL)
+		free(buff);
 }
