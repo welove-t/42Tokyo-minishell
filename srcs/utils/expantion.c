@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/18 14:36:05 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/18 20:58:32 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,30 @@ void expand_env(char **new_word,char *p)
 		append_char(new_word, *value++);
 }
 
+void dollar_sign(char **p,char **new_word,int *do_flag)
+{
+	char *exp_tmp;
+	if(**p == DOLLAR_SIGN)
+	{
+		p++;
+		*do_flag = 1;
+		//環境変数をnew_wordに追加
+		if (**p != '?')
+		{
+			while (**p != DOUBLE_QUOTE_CHAR && **p != ' ')
+				append_char(&exp_tmp, **p++);
+		}
+		else
+		{
+			append_char(&exp_tmp, **p++);
+		}
+		//環境変数を展開
+		expand_env(new_word, exp_tmp);
+		free(exp_tmp);
+		exp_tmp = NULL;
+	}
+}
+
 
 /*
 quoteを除外してtok->wordを更新する
@@ -89,6 +113,7 @@ void process_word_token(t_token *tok)
 	dol_flag = 0;
 	while (*p && !is_metacharacter(*p))
 	{
+		printf("*p = %c\n",*p);
 		if (*p == DOLLAR_SIGN)
 		{
 			p++;
@@ -134,7 +159,7 @@ void process_word_token(t_token *tok)
 			}
 			// skip quote
 			p++;
-		}
+			}
 		else
 			append_char(&new_word, *p++);
 	}

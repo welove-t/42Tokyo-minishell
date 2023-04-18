@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/18 14:44:26 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/18 19:28:57 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	do_heredoc(t_node *redir)
 						// printf("whileが回った\n");
 					}
 				}
-				// printf("exp_tmp = %s\n",exp_tmp);
+				printf("exp_tmp = %s\n",exp_tmp);
 				// 環境変数を展開
 				expand_env(&new_word, exp_tmp);
 				if (exp_tmp != NULL)
@@ -138,13 +138,12 @@ void	do_heredoc(t_node *redir)
 				}
 				int i;
 				i = 0;
-				// printf("new_word = %s\n",new_word);
+				printf("new_word = %s\n",new_word);
 				while (new_word[i] != '\0')
 				{
 					write(redir->filefd, &new_word[i],1);
 					i++;
 				}
-				
 			}
 			else
 			{
