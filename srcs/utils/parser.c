@@ -6,14 +6,14 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:31:19 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/19 10:07:21 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/19 12:28:29 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 // トークン種類を設定
-t_node	*new_node(t_node_kind kind)
+t_node	*new_node(t_node_kind kind, t_node *prev)
 {
 	t_node	*node;
 
@@ -21,6 +21,8 @@ t_node	*new_node(t_node_kind kind)
 	if (node == NULL)
 		perror("calloc");
 	node->kind = kind;
+	node->prev = prev;
+
 	return (node);
 }
 
@@ -62,7 +64,7 @@ t_node	*parse(t_token *tok)
 	t_node	*node;
 	t_node	*head;
 
-	node = new_node(ND_SIMPLE_CMD);
+	node = new_node(ND_SIMPLE_CMD, NULL);
 	head = node;
 	// append_command_element(node, &tok, tok);
 	while (tok && tok->kind != TK_EOF)
@@ -75,7 +77,7 @@ t_node	*parse(t_token *tok)
 			// printf("head:%s\n", head->args->next->word);
 			// printf("head-p:%p\n", head->args->next->next);
 			// printf("head:%s\n", head->args->next->next->word);
-			append_node(&node->next, new_node(ND_SIMPLE_CMD));
+			append_node(&node->next, new_node(ND_SIMPLE_CMD, node));
 			node = node->next;
 			tok = tok->next;
 		}
@@ -91,7 +93,7 @@ t_node	*redirect_out(t_token **rest, t_token *tok)
 {
 	t_node	*node;
 
-	node = new_node(ND_REDIR_OUT);
+	node = new_node(ND_REDIR_OUT, NULL);
 	node->filename = tokdup(tok->next);
 	node->targetfd = STDOUT_FILENO;
 	*rest = tok->next->next; //">"の次がwordなのでさらにその次のノードを設定
@@ -103,7 +105,7 @@ t_node	*redirect_in(t_token **rest, t_token *tok)
 {
 	t_node	*node;
 
-	node = new_node(ND_REDIR_IN);
+	node = new_node(ND_REDIR_IN, NULL);
 	node->filename = tokdup(tok->next);
 	node->targetfd = STDIN_FILENO;
 	*rest = tok->next->next; //"<"の次がwordなのでさらにその次のノードを設定
@@ -115,7 +117,7 @@ t_node	*redirect_append(t_token **rest, t_token *tok)
 {
 	t_node	*node;
 
-	node = new_node(ND_REDIR_APPEND);
+	node = new_node(ND_REDIR_APPEND, NULL);
 	node->filename = tokdup(tok->next);
 	node->targetfd = STDOUT_FILENO;
 	*rest = tok->next->next; //">>"の次がwordなのでさらにその次のノードを設定
@@ -127,7 +129,7 @@ t_node	*redirect_heredoc(t_token **rest, t_token *tok)
 {
 	t_node	*node;
 
-	node = new_node(ND_REDIR_HEREDOC);
+	node = new_node(ND_REDIR_HEREDOC, NULL);
 	node->delimiter = tokdup(tok->next);
 	node->targetfd = STDIN_FILENO;
 	*rest = tok->next->next; //"<"の次がwordなのでさらにその次のノードを設定

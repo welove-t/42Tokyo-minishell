@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/19 11:25:54 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/19 12:23:24 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ enum e_node_kind {
 struct s_node {
 	t_node_kind	kind;
 	t_node		*next;
+	t_node		*prev;
 	//CMD
 	t_token		*args;
 	t_node		*redirects;
