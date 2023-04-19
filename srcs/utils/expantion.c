@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/18 20:58:32 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/19 10:50:18 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,27 +70,40 @@ void expand_env(char **new_word,char *p)
 		append_char(new_word, *value++);
 }
 
-void dollar_sign(char **p,char **new_word,int *do_flag)
+void dollar_sign(char **p,char **new_word)
 {
 	char *exp_tmp;
-	if(**p == DOLLAR_SIGN)
+	exp_tmp = NULL;
+	while (**p && !is_metacharacter(**p))
 	{
-		p++;
-		*do_flag = 1;
-		//環境変数をnew_wordに追加
-		if (**p != '?')
+		if (**p == DOLLAR_SIGN)
 		{
-			while (**p != DOUBLE_QUOTE_CHAR && **p != ' ')
-				append_char(&exp_tmp, **p++);
+			(*p)++;
+			//環境変数の展開の場合
+			if (**p == '?')
+			{
+				append_char(&exp_tmp, **p);
+				(*p)++;
+			}
+			else
+			{
+				while (**p != '\0' && **p != ' ')
+				{
+					append_char(&exp_tmp, **p);
+					(*p)++;
+				}
+			}
+			// printf("exp_tmp = %s\n",exp_tmp);
+			//環境変数を展開
+			expand_env(new_word, exp_tmp);
+			free(exp_tmp);
+			exp_tmp = NULL;
 		}
 		else
 		{
-			append_char(&exp_tmp, **p++);
+			append_char(new_word, **p);
+			(*p)++;
 		}
-		//環境変数を展開
-		expand_env(new_word, exp_tmp);
-		free(exp_tmp);
-		exp_tmp = NULL;
 	}
 }
 
@@ -104,20 +117,17 @@ void process_word_token(t_token *tok)
 	char	*new_word;
 	char	*p;
 	char	*exp_tmp;
-	int		dol_flag;
 
 	if (tok == NULL || tok->kind != TK_WORD || tok->word == NULL)
 		return ;
 	p = tok->word;
 	new_word = NULL;
-	dol_flag = 0;
 	while (*p && !is_metacharacter(*p))
 	{
-		printf("*p = %c\n",*p);
+		// printf("*p = %c\n",*p);
 		if (*p == DOLLAR_SIGN)
 		{
-			p++;
-			expand_env(&new_word, p);
+			dollar_sign(&p, &new_word);
 			break;
 		}
 		else if (*p == SINGLE_QUOTE_CHAR)
@@ -134,32 +144,30 @@ void process_word_token(t_token *tok)
 			p++;
 			while (*p != DOUBLE_QUOTE_CHAR)
 			{
-				dol_flag = 0;
 				if(*p == DOLLAR_SIGN)
 				{
 					p++;
-					dol_flag = 1;
 					//環境変数をnew_wordに追加
-					if (*p != '?')
+					if (*p == '?')
 					{
-						while (*p != DOUBLE_QUOTE_CHAR && *p != ' ')
-							append_char(&exp_tmp, *p++);
+						append_char(&exp_tmp, *p++);
 					}
 					else
 					{
-						append_char(&exp_tmp, *p++);
+						while (*p != DOUBLE_QUOTE_CHAR && *p != ' ')
+							append_char(&exp_tmp, *p++);
 					}
 					//環境変数を展開
 					expand_env(&new_word, exp_tmp);
 					free(exp_tmp);
 					exp_tmp = NULL;
 				}
-				if (dol_flag == 0 && *p != DOLLAR_SIGN)
+				else
 					append_char(&new_word, *p++);
 			}
 			// skip quote
 			p++;
-			}
+		}
 		else
 			append_char(&new_word, *p++);
 	}
