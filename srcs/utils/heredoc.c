@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 11:04:41 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/19 12:19:15 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:17:12 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	do_heredoc(t_node *redir)
 		str = buff;
 		if (!strcmp(str, redir->delimiter->word))
         {
-            printf("delimiter文字が入力された\n");
+            // printf("delimiter文字が入力された\n");
 			break ;
         }
 		while (*str)
@@ -41,11 +41,13 @@ void	do_heredoc(t_node *redir)
 			if (*str == DOLLAR_SIGN)
 			{
                 dollar_sign(&str, &new_word);
+                // printf("new_word = %s\n",new_word);
+                // printf("*str = %c\n",*str);
                 while(*new_word)
                 {
                     write(redir->filefd, new_word++,1);
                 }
-                str = new_word;
+                // str = new_word;
                 new_word = NULL;
                 free(new_word);
 			}

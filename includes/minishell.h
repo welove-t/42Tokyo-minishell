@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/19 13:28:26 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/19 13:57:39 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,6 @@ void	append_command_element(t_node *command, t_token **rest, t_token *tok);
 
 // expantion
 void	append_char(char **s, char c);
-int 	expand_env(char **new_word,char *p);
 void		dollar_sign(char **p,char **new_word);
 void	expand(t_node *node);
 
