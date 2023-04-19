@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/19 11:01:02 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/19 13:37:22 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,29 +52,36 @@ static void last_exit_status(char **new_word)
 		append_char(new_word, *str++);
 }
 
-void expand_env(char **new_word,char *p)
+int expand_env(char **new_word,char *p)
 {
 	char *value;
 	if (*p == '?')
 	{
 		last_exit_status(new_word);
-		return ;
+		return 0;
 	}
 	value = getenv(p);
 	if (value == NULL)
 	{
-		printf("\n"); // 改行を出力して新しい行を開始
-		append_char(new_word, '\0');
+		char *new;
+	new = malloc(1);
+	new[0] = '\0';
+	*new_word = new;
+		// append_char(new_word, '\0');
+		// printf("\n"); // 改行を出力して新しい行を開始
+		return 1;
 	}
 	while (*value != '\0')
 		append_char(new_word, *value++);
+	return 0;
 }
 
 void dollar_sign(char **p,char **new_word)
 {
 	char *exp_tmp;
 	exp_tmp = NULL;
-	while (**p && !is_metacharacter(**p) && **p != '\"')
+	int flag = 0;
+	while (**p && !is_metacharacter(**p) && **p != '\"' && flag == 0)
 	{
 		if (**p == DOLLAR_SIGN)
 		{
@@ -93,15 +100,16 @@ void dollar_sign(char **p,char **new_word)
 					(*p)++;
 				}
 			}
+			// printf("exp_tmp = %s\n",exp_tmp);
 			//環境変数を展開
-			expand_env(new_word, exp_tmp);
+			flag = expand_env(new_word, exp_tmp);
+			// printf("new_word = %s\n",*new_word);
 			free(exp_tmp);
 			exp_tmp = NULL;
 		}
 		else
 		{
-			append_char(new_word, **p);
-			(*p)++;
+			break;
 		}
 	}
 }
@@ -127,7 +135,7 @@ void process_word_token(t_token *tok)
 		if (*p == DOLLAR_SIGN)
 		{
 			dollar_sign(&p, &new_word);
-			break;
+			// break;
 		}
 		else if (*p == SINGLE_QUOTE_CHAR)
 		{
@@ -141,8 +149,13 @@ void process_word_token(t_token *tok)
 		{
 			// skip quote
 			p++;
-			if (*p != DOUBLE_QUOTE_CHAR)
-				dollar_sign(&p, &new_word);
+			while (*p != DOUBLE_QUOTE_CHAR)
+			{	
+				if (*p == DOLLAR_SIGN)
+					dollar_sign(&p, &new_word);
+				else
+					append_char(&new_word, *p++);
+			}
 			// skip quote
 			p++;
 		}
