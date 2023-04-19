@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/17 16:48:49 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/19 11:05:40 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,24 +85,4 @@ void	reset_redirect(t_node *redir)
 		close(redir->targetfd);
 		dup2(redir->stashed_targetfd, redir->targetfd);
 	}
-}
-
-void	do_heredoc(t_node *redir)
-{
-	char	*buff;
-
-	if (redir == NULL || redir->kind != ND_REDIR_HEREDOC)
-		return ;
-	while (1)
-	{
-		buff = readline("heredoc> ");
-		if (!buff)
-			break ;
-		if (!strcmp(buff, redir->delimiter->word))
-			break ;
-		write(redir->filefd, buff, strlen(buff));
-		write(redir->filefd, "\n", 1);
-		free (buff);
-	}
-	free(buff);
 }

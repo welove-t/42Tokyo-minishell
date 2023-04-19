@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/19 12:23:24 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/19 13:57:39 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <signal.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/param.h>
@@ -139,12 +140,17 @@ t_token	*tokenize(char *line);
 char	**token_list_to_array(t_token *token);
 bool	is_metacharacter(char c);
 
+//heredoc
+void	do_heredoc(t_node *redir);
+
 // parser
 t_node	*parse(t_token *tok);
 void	append_node(t_node **node, t_node *elm);
 void	append_command_element(t_node *command, t_token **rest, t_token *tok);
 
 // expantion
+void	append_char(char **s, char c);
+void		dollar_sign(char **p,char **new_word);
 void	expand(t_node *node);
 
 // redirect

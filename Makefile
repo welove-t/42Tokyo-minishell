@@ -6,7 +6,7 @@
 #    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/19 11:25:44 by terabu           ###   ########.fr        #
+#    Updated: 2023/04/19 13:36:22 by susasaki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(UTILS_DIR)/get_cmd_line.c\
 		  $(UTILS_DIR)/tokenizer.c\
 		  $(UTILS_DIR)/expantion.c\
+		  $(UTILS_DIR)/heredoc.c\
 		  $(UTILS_DIR)/parser.c\
 		  $(UTILS_DIR)/redirect.c\
 		  $(UTILS_DIR)/exec.c\
@@ -38,6 +39,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 
 OBJS = $(SOURCES:.c=.o)
 LIBFT = -L$(LIBFT_DIR) -lft
+# READLINE = -lreadline -L $(brew --prefix readline)/lib -I $(brew --prefix readline)/include
 
 all: $(NAME)
 
