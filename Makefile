@@ -3,21 +3,23 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
+#    By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/19 13:36:22 by susasaki         ###   ########.fr        #
+#    Updated: 2023/04/19 16:37:11 by susasaki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+RL_FLAGS 	=	-lreadline -lhistory -L$(shell brew --prefix readline)/lib
+INCLUDE		=   -I include -I $(LIBFT_DIR) -I $(shell brew --prefix readline)/include -I/usr/local/opt/readline/include
+CFLAGS 		=	-Wall -Werror -Wextra $(INCLUDE)
+
 SOURCES_DIR = ./srcs
 UTILS_DIR = ./srcs/utils
 BUILTIN_DIR = ./srcs/builtin
 LIBFT_DIR = ./srcs/lib/libft
-
 SOURCES = $(SOURCES_DIR)/main.c\
 		  $(SOURCES_DIR)/str_matches_cmd.c\
 		  $(SOURCES_DIR)/init_environ_list.c\
@@ -39,13 +41,12 @@ SOURCES = $(SOURCES_DIR)/main.c\
 
 OBJS = $(SOURCES:.c=.o)
 LIBFT = -L$(LIBFT_DIR) -lft
-# READLINE = -lreadline -L $(brew --prefix readline)/lib -I $(brew --prefix readline)/include
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(MAKE) -C ${LIBFT_DIR}
-	$(CC) $(OBJS) -o $(NAME) $(LIBFT) -L$(HOME)/.brew/opt/readline/include -L$(HOME)/.brew/opt/readline/lib -lreadline
+	$(MAKE) -C $(LIBFT_DIR)
+	$(CC) $(CFLAGS) $^ $(RL_FLAGS) $(LIBFT) -o $(NAME)
 
 clean:
 	rm -f $(OBJS)

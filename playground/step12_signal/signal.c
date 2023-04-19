@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:21:01 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/15 18:54:27 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/19 13:23:15 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int main(void)
             printf("\n");
         free(input);
     }
-    
 }
 /*
 gcc signal.c -lreadline -L $(brew --prefix readline)/lib -I $(brew --prefix readline)/include
