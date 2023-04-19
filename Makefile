@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+         #
+#    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
 #    Updated: 2023/04/19 13:36:22 by susasaki         ###   ########.fr        #
@@ -34,6 +34,8 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(UTILS_DIR)/heredoc.c\
 		  $(UTILS_DIR)/parser.c\
 		  $(UTILS_DIR)/redirect.c\
+		  $(UTILS_DIR)/exec.c\
+		  $(UTILS_DIR)/pipe.c\
 
 OBJS = $(SOURCES:.c=.o)
 LIBFT = -L$(LIBFT_DIR) -lft
