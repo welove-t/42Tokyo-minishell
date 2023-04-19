@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/17 14:50:32 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/19 11:25:54 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ struct s_node {
 	t_token		*delimiter;
 	int			filefd;
 	int			stashed_targetfd;
+	//pipe
+	pid_t		pid;
+	int			pfd[2];
+
 };
 // `word` is zero terminated string.
 struct s_token {
@@ -147,6 +151,10 @@ void	open_redir_file(t_node *redir);
 void	do_redirect(t_node *redir);
 void	reset_redirect(t_node *redir);
 
+// exec
+void	exec_cmd(t_node *node);
+void	pipex(t_node *node);
+
 // error
 void	fatal_error(const char *msg);
 void	assert_error(const char *msg);
@@ -155,5 +163,8 @@ void	todo(const char *msg);
 void	tokenize_error(const char *location, char **rest, char *line);
 void	parse_error(const char *location, t_token **rest, t_token *tok);
 void	xperror(const char *location);
+
+// pipe
+void	pipex(t_node *node);
 
 #endif

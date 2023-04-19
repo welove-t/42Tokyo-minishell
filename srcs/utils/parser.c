@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:31:19 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/15 12:39:30 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/19 10:07:21 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,42 @@ void	append_tok(t_token **tokens, t_token *tok)
 	append_tok(&(*tokens)->next, tok);
 }
 
+// 制御文字のチェック
+bool	is_operator(t_token *tok, char *op)
+{
+	if (tok->kind != TK_OP)
+		return (false);
+	return (strcmp(tok->word, op) == 0);
+}
+
 // ノードリスト(通常コマンド用)の作成
 t_node	*parse(t_token *tok)
 {
 	t_node	*node;
+	t_node	*head;
 
 	node = new_node(ND_SIMPLE_CMD);
-	append_command_element(node, &tok, tok);
+	head = node;
+	// append_command_element(node, &tok, tok);
 	while (tok && tok->kind != TK_EOF)
-		append_command_element(node, &tok, tok);
-	append_command_element(node, &tok, tok); //終端ノードにNULL追加
-	return (node);
+	{
+		// printf("tok:%s\n", tok->word);
+		if (is_operator(tok, "|"))
+		{
+			append_tok(&node->args, new_token(NULL, TK_EOF));
+			// printf("head:%s\n", head->args->word);
+			// printf("head:%s\n", head->args->next->word);
+			// printf("head-p:%p\n", head->args->next->next);
+			// printf("head:%s\n", head->args->next->next->word);
+			append_node(&node->next, new_node(ND_SIMPLE_CMD));
+			node = node->next;
+			tok = tok->next;
+		}
+		else
+			append_command_element(node, &tok, tok);
+	}
+	append_command_element(node, &tok, tok); //TK_EOF分を追加
+	return (head);
 }
 
 // ノードリスト(リダイレクト-アウト用)の作成
@@ -107,14 +132,6 @@ t_node	*redirect_heredoc(t_token **rest, t_token *tok)
 	node->targetfd = STDIN_FILENO;
 	*rest = tok->next->next; //"<"の次がwordなのでさらにその次のノードを設定
 	return (node);
-}
-
-// 制御文字のチェック
-bool	is_operator(t_token *tok, char *op)
-{
-	if (tok->kind != TK_OP)
-		return (false);
-	return (strcmp(tok->word, op) == 0);
 }
 
 // トークンの種類ごとにノード追加
