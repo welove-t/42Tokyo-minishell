@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/19 13:57:39 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/20 11:29:05 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void	reset_redirect(t_node *redir);
 
 // exec
 void	exec_cmd(t_node *node);
-void	pipex(t_node *node);
+void	execution(t_node *node);
 
 // error
 void	fatal_error(const char *msg);
@@ -172,6 +172,7 @@ void	parse_error(const char *location, t_token **rest, t_token *tok);
 void	xperror(const char *location);
 
 // pipe
-void	pipex(t_node *node);
+void	pipex(t_node *node, size_t cnt_node);
+void	waitpid_pipex(t_node *node);
 
 #endif

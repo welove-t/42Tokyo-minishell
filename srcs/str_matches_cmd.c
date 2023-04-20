@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_matches_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:23:59 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/17 13:24:00 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/20 10:51:45 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	line_matches_cmd(char *line)
 	token = tokenize(line);
 	node =	parse(token);
 	expand(node);
-	// exec_cmd(node);
-	pipex(node);
+	execution(node);
 	// printf("%s\n", node->args->word);
 	// printf("%s\n", node->args->next->word);
 	// printf("%s\n", node->args->next->next->word);
