@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/20 11:29:05 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/20 16:43:27 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,31 @@ void bi_unset(t_environ *environ, char *str);
 // utils
 char	*get_cmd_array(char *cmd_line);
 
+// ------------------------------------------------
 // tokenizer
+// ------------------------------------------------
+
+// tokenizer-main
 t_token	*tokenize(char *line);
-char	**token_list_to_array(t_token *token);
+t_token	*new_token(char *word, t_token_kind kind);
+
+// tokenizer-check-literal
+bool	is_blank(char c);
+bool	is_keyword(const char *s, const char *keyword);
+bool	is_redirection_operator(const char *s);
 bool	is_metacharacter(char c);
+bool	is_word(const char *s);
+
+// tokenizer-check-quote
+int		check_quote(char **line);
+bool	consume_single_quote(char **line);
+bool	consume_double_quote(char **line);
+
+// tokenizer-utils
+size_t	get_token_count(t_token *token);
+char	**token_list_to_array(t_token *token);
+bool	consume_blank(char **rest, char *line);
+bool	consume_double_quote(char **line);
 
 //heredoc
 void	do_heredoc(t_node *redir);
@@ -150,7 +171,7 @@ void	append_command_element(t_node *command, t_token **rest, t_token *tok);
 
 // expantion
 void	append_char(char **s, char c);
-void		dollar_sign(char **p,char **new_word);
+void	dollar_sign(char **p, char **new_word);
 void	expand(t_node *node);
 
 // redirect

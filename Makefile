@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+         #
+#    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/19 16:37:11 by susasaki         ###   ########.fr        #
+#    Updated: 2023/04/20 12:57:10 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,9 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(BUILTIN_DIR)/unset.c\
 		  $(UTILS_DIR)/get_cmd_line.c\
 		  $(UTILS_DIR)/tokenizer.c\
+		  $(UTILS_DIR)/tokenizer_check_literal.c\
+		  $(UTILS_DIR)/tokenizer_check_quote.c\
+		  $(UTILS_DIR)/tokenizer_utils.c\
 		  $(UTILS_DIR)/expantion.c\
 		  $(UTILS_DIR)/heredoc.c\
 		  $(UTILS_DIR)/parser.c\
