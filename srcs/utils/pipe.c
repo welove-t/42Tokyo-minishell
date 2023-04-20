@@ -6,67 +6,39 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 15:45:00 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/19 11:22:17 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/20 11:24:57 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static size_t	get_node_cnt(t_node *node);
-void			output_pipe_dup_close(int fd[2]);
-void			input_pipe_dup_close(int fd[2]);
-void			close_pipe(t_node *node, t_node *head);
+void	output_pipe_dup_close(int fd[2]);
+void	input_pipe_dup_close(int fd[2]);
+void	close_pipe(t_node *node, size_t i);
 
-void	pipex(t_node *node)
+void	pipex(t_node *node, size_t cnt_node)
 {
-	size_t	cnt_node;
-	t_node	*head;
 	size_t	i;
 
-	head = node;
-	cnt_node = get_node_cnt(node);
 	i = 0;
-	if (cnt_node <= 1)
-		exec_cmd(node);
-	else
+	while (i < cnt_node)
 	{
-		while (i < cnt_node)
+		if (i < cnt_node - 1)
+			pipe(node->pfd);
+		node->pid = fork();
+		if (node->pid == 0)
 		{
-			if (i < cnt_node - 1)
-				pipe(node->pfd);
-			node->pid = fork();
-			if (node->pid == 0)
-			{
-				if (i != 0)
-					input_pipe_dup_close(head->pfd);
-				else
-					output_pipe_dup_close(node->pfd);
-				exec_cmd(node);
-			}
-			else
-			{
-				// if (i != 0)
-				// 	close_pipe(node, head);
-			}
-			node = node->next;
-			i++;
+			if (i != 0)
+				input_pipe_dup_close(node->prev->pfd);
+			if (i != cnt_node - 1)
+				output_pipe_dup_close(node->pfd);
+			exec_cmd(node);
 		}
-		wait(NULL);
-		exit(1);
-	}
-}
-
-size_t	get_node_cnt(t_node *node)
-{
-	size_t	cnt;
-
-	cnt = 0;
-	while (node != NULL)
-	{
-		cnt++;
+		else
+			close_pipe(node, i);
 		node = node->next;
+		i++;
 	}
-	return (cnt);
 }
 
 void	output_pipe_dup_close(int fd[2])
@@ -83,13 +55,22 @@ void	input_pipe_dup_close(int fd[2])
 	close(fd[0]);
 }
 
-void	close_pipe(t_node *node, t_node *cur)
+void	close_pipe(t_node *node, size_t i)
 {
-	while (cur->next != node && cur->next != NULL)
+	if (i < 1)
+		return ;
+	close(node->prev->pfd[0]);
+	close(node->prev->pfd[1]);
+}
+
+void	waitpid_pipex(t_node *node)
+{
+	int			status;
+
+	while (node != NULL)
 	{
-		puts("b");
-		cur = cur->next;
+		if (waitpid(node->pid, &status, 0) < 0)
+			perror("waitpid");
+		node = node->next;
 	}
-	close(cur->pfd[0]);
-	close(cur->pfd[1]);
 }
