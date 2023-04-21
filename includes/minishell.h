@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/21 09:26:16 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/21 11:04:41 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,11 @@ void	reset_redirect(t_node *redir);
 void	exec_cmd(t_node *node);
 void	execution(t_node *node);
 
-// error
+
+// ------------------------------------------------
+// Error
+// ------------------------------------------------
+void	perror_prefix(void);
 void	fatal_error(const char *msg);
 void	assert_error(const char *msg);
 void	err_exit(const char *location, const char *msg, int status);
