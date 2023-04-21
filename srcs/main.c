@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/20 14:49:50 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/21 20:19:59 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ int main(void)
 			//子プロセスの場合
 			if (pid == 0)
 			{
+				//子プロセスの方ではmainの方のシグナルハンドラを呼ばないようにする。
+				signal(SIGINT,SIG_DFL);
+				// signal(SIGQUIT,SIG_DFL);
 				line_matches_cmd(input);
 				//子プロセスの処理終了
 				exit(0);
@@ -51,6 +54,7 @@ int main(void)
 			else if(pid > 0)
 			{
 				wait(&wstatus);
+				signal(SIGINT, signal_handler);
 				/*
 				子プロセスが正常に終了した場合に真を返す。
 				*/

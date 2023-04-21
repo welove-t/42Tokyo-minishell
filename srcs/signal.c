@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 19:30:37 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/21 16:11:35 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/21 19:55:55 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ static void signal_backslash()
 
 static void signal_c_cmd()
 {
-	printf("\n"); // 改行を出力して新しい行を開始
-	rl_replace_line("", 0);
+	// printf("signal_c_cmd()が呼ばれた\n");
 	rl_on_new_line(); // 新しい行に移動する
+	rl_replace_line("", 0);
+	printf("\n"); // 改行を出力して新しい行を開始
 	rl_redisplay(); // 新しい行を再表示する
 }
 
