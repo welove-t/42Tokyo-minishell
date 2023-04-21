@@ -3,39 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/19 16:17:02 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/21 20:54:54 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// ctrl-cが押された時に呼ばれるシグナルハンドラ
-void signal_c()
-{
-    printf("\n"); // 改行を出力して新しい行を開始
-	// プロンプトとして表示されている現在の行を消去
-    rl_replace_line("", 0);
-    rl_on_new_line(); // 新しい行に移動する
-    rl_redisplay(); // 新しい行を再表示する
-}
-
-//ctrl-\が押された時に呼ばれるシグナルハンドラ
-void signal_backslash()
-{
-   return ;
-}
-
-void signal_handler(int sig)
-{
-	if (sig == SIGINT)
-		signal_c();
-	else if (sig == SIGQUIT)
-		signal_backslash();
-	return ;
-}
 
 int main(void)
 {
@@ -47,11 +23,13 @@ int main(void)
 	syntax_error = false;
 
 	signal(SIGINT,signal_handler);
-    signal(SIGQUIT,signal_handler);
+	signal(SIGQUIT,signal_handler);
 	//入力を受け続ける
 	while(1)
 	{
-		//プロンプトの入力待ち
+		// printf("回った\n");
+		// write(1, "round\n", strlen("round\n"));
+		//プロンプトの入力待
 		input = readline("minishell> ");
 		//ctrl-Dが押されたら、EOFが代入され、whileから抜ける。
 		if (input == NULL)
@@ -68,6 +46,11 @@ int main(void)
 			//子プロセスの場合
 			if (pid == 0)
 			{
+				//子プロセスの方ではmainの方のシグナルハンドラを呼ばないようにする。
+				/*TODO: heredocumentの時に出力が少しおかしいが、もしかしたらfork()が関係しているかも知れないので、
+				fork()の所を改善してから修正すること。*/
+				signal(SIGINT,SIG_DFL);
+				// signal(SIGQUIT,SIG_DFL);
 				line_matches_cmd(input);
 				//子プロセスの処理終了
 				exit(0);
@@ -75,6 +58,7 @@ int main(void)
 			else if(pid > 0)
 			{
 				wait(&wstatus);
+				signal(SIGINT, signal_handler);
 				/*
 				子プロセスが正常に終了した場合に真を返す。
 				*/

@@ -3,9 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
+/*   Updated: 2023/04/21 15:41:34 by susasaki         ###   ########.fr       */
 /*   Updated: 2023/04/21 11:04:41 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -27,6 +28,8 @@
 #define SINGLE_QUOTE_CHAR '\''
 #define DOUBLE_QUOTE_CHAR '"'
 #define DOLLAR_SIGN '$'
+#define SIG_GET 100
+#define SIG_SET 200
 
 extern char	**environ;
 bool		syntax_error;
@@ -148,6 +151,9 @@ bool	is_redirection_operator(const char *s);
 bool	is_metacharacter(char c);
 bool	is_word(const char *s);
 
+//heredoc
+void	do_heredoc(t_node *redir);
+
 // tokenizer-check-quote
 int		check_quote(char **line);
 bool	consume_single_quote(char **line);
@@ -209,6 +215,11 @@ void	todo(const char *msg);
 void	tokenize_error(const char *location, char **rest, char *line);
 void	parse_error(const char *location, t_token **rest, t_token *tok);
 void	xperror(const char *location);
+
+//signal
+void signal_handler(int sig);
+int signal_setget_status(int style, int sig);
+void signal_handler_heredoc(int sig);
 
 // pipe
 void	pipex(t_node *node, size_t cnt_node);

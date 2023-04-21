@@ -8,3 +8,5 @@ settings.json
 work
 srcs/a.out
 .heredoc
+test.c
+a.out

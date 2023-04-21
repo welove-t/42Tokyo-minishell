@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 11:04:41 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/19 15:17:12 by susasaki         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 
 #include "../../includes/minishell.h"
 
@@ -27,14 +15,9 @@ void	do_heredoc(t_node *redir)
 	while (1)
 	{
 		buff = readline("heredoc> ");
-		// if (buff == NULL)
-		// 	break;
 		str = buff;
 		if (!strcmp(str, redir->delimiter->word))
-        {
-            // printf("delimiter文字が入力された\n");
 			break ;
-        }
 		while (*str)
 		{
             // printf("*str = %c\n",*str);
@@ -44,23 +27,27 @@ void	do_heredoc(t_node *redir)
                 // printf("new_word = %s\n",new_word);
                 // printf("*str = %c\n",*str);
                 while(*new_word)
-                {
                     write(redir->filefd, new_word++,1);
-                }
                 // str = new_word;
-                new_word = NULL;
-                free(new_word);
+				if (new_word)
+				{
+                	free(new_word);
+                	new_word = NULL;
+				}
 			}
 			else
 			{
 				write(redir->filefd, str++,1);
 			}
 		}
-		// write(redir->filefd, buff, strlen(buff));
-		write(redir->filefd, "\n", 1);
+		// write(redir->filefd, "\n", 1);
 		free (buff);
 		buff = NULL;
 	}
+	/*
+	signal(SIGINT,シグナルハンドラ)が2つ使用されている場合、最後に設定した
+	シグナルハンドラが優先されるため、heredocを閉じるときにmainの方に戻してあげる。*/
+	signal(SIGINT, signal_handler);
 	if (buff != NULL)
 		free(buff);
 }
