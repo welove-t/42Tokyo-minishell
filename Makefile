@@ -3,10 +3,11 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+         #
+#    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
 #    Updated: 2023/04/19 19:30:31 by susasaki         ###   ########.fr        #
+#    Updated: 2023/04/21 10:04:43 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +24,8 @@ LIBFT_DIR = ./srcs/lib/libft
 SOURCES = $(SOURCES_DIR)/main.c\
 		  $(SOURCES_DIR)/str_matches_cmd.c\
 		  $(SOURCES_DIR)/init_environ_list.c\
-		  $(SOURCES_DIR)/error.c\
-		  $(SOURCES_DIR)/signal.c\
+		  $(SOURCES_DIR)/error_general.c\
+		  $(SOURCES_DIR)/error_special.c\
 		  $(BUILTIN_DIR)/echo.c\
 		  $(BUILTIN_DIR)/env.c\
 		  $(BUILTIN_DIR)/export.c\
@@ -33,9 +34,14 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(BUILTIN_DIR)/unset.c\
 		  $(UTILS_DIR)/get_cmd_line.c\
 		  $(UTILS_DIR)/tokenizer.c\
+		  $(UTILS_DIR)/tokenizer_check_literal.c\
+		  $(UTILS_DIR)/tokenizer_check_quote.c\
+		  $(UTILS_DIR)/tokenizer_utils.c\
+		  $(UTILS_DIR)/parser.c\
+		  $(UTILS_DIR)/parser_node_redirect.c\
+		  $(UTILS_DIR)/parser_make_tok.c\
 		  $(UTILS_DIR)/expantion.c\
 		  $(UTILS_DIR)/heredoc.c\
-		  $(UTILS_DIR)/parser.c\
 		  $(UTILS_DIR)/redirect.c\
 		  $(UTILS_DIR)/exec.c\
 		  $(UTILS_DIR)/pipe.c\
