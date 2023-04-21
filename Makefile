@@ -6,7 +6,7 @@
 #    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/21 09:00:24 by terabu           ###   ########.fr        #
+#    Updated: 2023/04/21 10:04:43 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ LIBFT_DIR = ./srcs/lib/libft
 SOURCES = $(SOURCES_DIR)/main.c\
 		  $(SOURCES_DIR)/str_matches_cmd.c\
 		  $(SOURCES_DIR)/init_environ_list.c\
-		  $(SOURCES_DIR)/error.c\
+		  $(SOURCES_DIR)/error_general.c\
+		  $(SOURCES_DIR)/error_special.c\
 		  $(BUILTIN_DIR)/echo.c\
 		  $(BUILTIN_DIR)/env.c\
 		  $(BUILTIN_DIR)/export.c\
