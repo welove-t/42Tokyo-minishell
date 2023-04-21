@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 19:30:37 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/20 16:32:46 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/21 16:11:35 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,6 @@
 static void signal_backslash()
 {
    return ;
-}
-
-int signal_setget_status(int style, int sig)
-{
-	// printf("~~ signal_setget_status ~~\n");
-	static int sig_status;
-	// printf("sig = %d\n",sig);
-	// printf("style = %d\n",style);
-	if (style == SIG_GET)
-	{
-		// printf("SIG_GET\n");
-		return (sig_status);
-	}
-	else if(style == SIG_SET)
-	{
-		//sig_statusにセットする
-		// printf("SIG_SET\n");
-		sig_status = sig;
-	}
-	// printf("sig_status = %d\n",sig_status);
-	return (0);
 }
 
 static void signal_c_cmd()
@@ -52,12 +31,12 @@ void signal_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		signal_setget_status(SIG_SET, sig);
+		// signal_setget_status(SIG_SET, sig);
 		signal_c_cmd();
 	}
 	else if (sig == SIGQUIT)
 	{
-		signal_setget_status(SIG_SET, sig);
+		// signal_setget_status(SIG_SET, sig);
 		signal_backslash();
 	}
 	return ;
@@ -67,13 +46,19 @@ void signal_handler_heredoc(int sig)
 {
 	if (sig == SIGINT)
 	{
-		rl_done = 0;
+		/*
+		rl_doneが0でなければ、readlineは終了せず、
+		プロンプトを維持し続けます。
+		一方、rl_doneが0の場合、readlineは終了し、
+		プログラムはreadlineから戻ります。
+		通常は、rl_doneはreadlineの初期化時にゼロに設定され、
+		プログラムが終了するときに1に設定されます。*/
+		g_status = 1;
+		// Ctrl-Cで入力された文字列を削除する
+        rl_replace_line("", 0);
+		rl_on_new_line();
+        rl_redisplay();
 	}
-	// else if (sig == SIGQUIT)
-	// {
-	// 	signal_setget_status(SIG_SET, sig);
-	// 	signal_backslash();
-	// }
 	return ;
 }
 

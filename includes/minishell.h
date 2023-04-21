@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/20 16:32:05 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/21 15:41:34 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ bool	is_metacharacter(char c);
 
 //heredoc
 void	do_heredoc(t_node *redir);
+// void	heredoc_input_handler(char *line, t_node *redir);
 
 // parser
 t_node	*parse(t_token *tok);

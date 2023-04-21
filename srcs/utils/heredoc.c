@@ -3,16 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 11:04:41 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/20 16:32:11 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/21 16:06:06 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../../includes/minishell.h"
 
+static int monitor_signal(void)
+{
+	// printf("monitor_signal\n");
+	if (g_status == 1)
+	{
+		// printf("rl_done = 0\n");
+		rl_done = 1;
+	}
+	else
+	{
+		rl_done = 0;
+	}
+	//0だと終了
+	return 0;
+}
 void	do_heredoc(t_node *redir)
 {
 	char	*buff;
@@ -24,23 +39,28 @@ void	do_heredoc(t_node *redir)
 
 	if (redir == NULL || redir->kind != ND_REDIR_HEREDOC)
 		return ;
+	g_status = 0;
+	rl_done = 0;
+	rl_catch_signals = 0;
 	signal(SIGINT,signal_handler_heredoc);
-	while (1)
+	rl_event_hook = monitor_signal;
+	
+	while (g_status != 1)
 	{
+		if (g_status == 1)
+		{
+			// printf("g_status=1のため、breakする\n");
+			free (buff);
+			buff = NULL;
+			break;
+		}
 		buff = readline("heredoc> ");
 		str = buff;
-		rl_done = 1;
 		if (!strcmp(str, redir->delimiter->word))
         {
             // printf("delimiter文字が入力された\n");
 			break ;
         }
-		// printf("heredocのwhileが回った\n");
-		if (signal_setget_status(SIG_GET,-1) == SIGINT)
-		{
-			printf("\x1b[31mbreakした\x1b[0m\n");
-			break;
-		}
 		while (*str)
 		{
             // printf("*str = %c\n",*str);
@@ -54,8 +74,11 @@ void	do_heredoc(t_node *redir)
                     write(redir->filefd, new_word++,1);
                 }
                 // str = new_word;
-                new_word = NULL;
-                free(new_word);
+				if (new_word != NULL)
+				{
+                	new_word = NULL;
+                	free(new_word);
+				}
 			}
 			else
 			{
@@ -67,7 +90,13 @@ void	do_heredoc(t_node *redir)
 		free (buff);
 		buff = NULL;
 	}
-	g_status = 0;
+	rl_event_hook = NULL;
+	// printf("g_status = %d,rl_done = %d\n↑↑のため、heredocを終了\n",g_status,rl_done);
+	rl_done = 0;
+	/*
+	signal(SIGINT,シグナルハンドラ)が2つ使用されている場合、最後に設定した
+	シグナルハンドラが優先されるため、heredocを閉じるときにmainの方に戻してあげる。*/
+	signal(SIGINT, signal_handler);
 	if (buff != NULL)
 		free(buff);
 }
