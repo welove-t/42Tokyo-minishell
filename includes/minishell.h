@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/21 09:02:19 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/21 09:26:16 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,6 @@ t_node	*redirect_heredoc(t_token **rest, t_token *tok);
 
 //heredoc
 void	do_heredoc(t_node *redir);
-
 
 // expantion
 void	append_char(char **s, char c);

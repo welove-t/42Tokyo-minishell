@@ -6,13 +6,11 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/20 11:18:32 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/21 09:22:26 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// #define DB
 
 size_t	get_node_cnt(t_node *node);
 
@@ -32,21 +30,16 @@ void	execution(t_node *node)
 
 void	exec_cmd(t_node *node)
 {
-	char	**cmd_line = NULL;
+	char	**cmd_line;
 
 	open_redir_file(node->redirects);
 	do_redirect(node->redirects);
-	#ifdef DB
-	printf();
-	#endif
 	cmd_line = token_list_to_array(node->args);
 	cmd_line[0] = get_cmd_array(ft_strtrim(cmd_line[0], " "));
 	if (cmd_line != NULL)
 	{
 		if (execve(cmd_line[0], cmd_line, environ) == -1)
-		{
-			// printf("\x1b[31mError: execve()\x1b[0m\n");
-		}
+			fatal_error("execv");
 		reset_redirect(node->redirects);
 	}
 }
