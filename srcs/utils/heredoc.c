@@ -1,33 +1,25 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 11:04:41 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/21 16:06:06 by susasaki         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 
 #include "../../includes/minishell.h"
 
 static int monitor_signal(void)
 {
-	// printf("monitor_signal\n");
-	if (g_status == 1)
-	{
-		// printf("rl_done = 0\n");
-		rl_done = 1;
-	}
-	else
-	{
-		rl_done = 0;
-	}
-	//0だと終了
-	return 0;
+    if (g_status == 1)
+    {
+        rl_done = 1;
+    }
+    else
+    {
+        rl_done = 0;
+    }
+
+    if (rl_done == 1)
+    {
+        rl_callback_handler_remove();
+    }
+
+    return 0;
 }
+
 void	do_heredoc(t_node *redir)
 {
 	char	*buff;
@@ -93,6 +85,7 @@ void	do_heredoc(t_node *redir)
 	rl_event_hook = NULL;
 	// printf("g_status = %d,rl_done = %d\n↑↑のため、heredocを終了\n",g_status,rl_done);
 	rl_done = 0;
+	// rl_catch_signals = 0;
 	/*
 	signal(SIGINT,シグナルハンドラ)が2つ使用されている場合、最後に設定した
 	シグナルハンドラが優先されるため、heredocを閉じるときにmainの方に戻してあげる。*/
