@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/20 16:43:27 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/21 09:02:19 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,37 +100,35 @@ typedef struct s_envinfo
 //main.c
 
 //line_matches_cmd.c
-void line_matches_cmd(char *line);
-
+void		line_matches_cmd(char *line);
 
 // init_environ_list
-int 	first_strlen(char *str);
-int 	latter_strlen(char *str);
-t_environ    *init_environ_list();
+int			first_strlen(char *str);
+int			latter_strlen(char *str);
+t_environ	*init_environ_list();
 
 //buliin
 //echo.c
-void bi_echo(char *str);
+void	bi_echo(char *str);
 
 //env.c
-void bi_env(t_environ *environ);
+void	bi_env(t_environ *environ);
 
 //pwd.c
-int bi_pwd(void);
+int		bi_pwd(void);
 
 //export_utils.c
-void environ_nodeadd_back(t_environ *env, t_environ *new);
+void		environ_nodeadd_back(t_environ *env, t_environ *new);
 t_environ *environ_node_new(char *name, char *value);
 
 //export.c
-char    *make_name(char *str);
-char    *make_value(char *str);
-void bi_only_export_env(t_environ *env);
-void bi_export(t_environ *env, char *str);
+char	*make_name(char *str);
+char	*make_value(char *str);
+void	bi_only_export_env(t_environ *env);
+void	bi_export(t_environ *env, char *str);
 
 // unset.c
-void bi_unset(t_environ *environ, char *str);
-
+void	bi_unset(t_environ *environ, char *str);
 
 // utils
 char	*get_cmd_array(char *cmd_line);
@@ -161,13 +159,30 @@ char	**token_list_to_array(t_token *token);
 bool	consume_blank(char **rest, char *line);
 bool	consume_double_quote(char **line);
 
+// ------------------------------------------------
+// Parser
+// ------------------------------------------------
+
+// parser-main
+t_node	*parse(t_token *tok);
+t_node	*new_node(t_node_kind kind, t_node *prev);
+void	append_node(t_node **node, t_node *elm);
+void	append_command_element(t_node *command, t_token **rest, t_token *tok);
+bool	is_operator(t_token *tok, char *op);
+
+// parser-make-tok
+t_token	*tokdup(t_token *tok);
+void	append_tok(t_token **tokens, t_token *tok);
+
+// parser-node-redirect
+t_node	*redirect_out(t_token **rest, t_token *tok);
+t_node	*redirect_in(t_token **rest, t_token *tok);
+t_node	*redirect_append(t_token **rest, t_token *tok);
+t_node	*redirect_heredoc(t_token **rest, t_token *tok);
+
 //heredoc
 void	do_heredoc(t_node *redir);
 
-// parser
-t_node	*parse(t_token *tok);
-void	append_node(t_node **node, t_node *elm);
-void	append_command_element(t_node *command, t_token **rest, t_token *tok);
 
 // expantion
 void	append_char(char **s, char c);

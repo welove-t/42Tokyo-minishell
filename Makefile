@@ -6,7 +6,7 @@
 #    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/20 12:57:10 by terabu           ###   ########.fr        #
+#    Updated: 2023/04/21 09:00:24 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,9 +35,11 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(UTILS_DIR)/tokenizer_check_literal.c\
 		  $(UTILS_DIR)/tokenizer_check_quote.c\
 		  $(UTILS_DIR)/tokenizer_utils.c\
+		  $(UTILS_DIR)/parser.c\
+		  $(UTILS_DIR)/parser_node_redirect.c\
+		  $(UTILS_DIR)/parser_make_tok.c\
 		  $(UTILS_DIR)/expantion.c\
 		  $(UTILS_DIR)/heredoc.c\
-		  $(UTILS_DIR)/parser.c\
 		  $(UTILS_DIR)/redirect.c\
 		  $(UTILS_DIR)/exec.c\
 		  $(UTILS_DIR)/pipe.c\
