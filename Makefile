@@ -3,21 +3,23 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
+#    By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/12 11:31:47 by terabu           ###   ########.fr        #
+#    Updated: 2023/04/19 16:37:11 by susasaki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+RL_FLAGS 	=	-lreadline -lhistory -L$(shell brew --prefix readline)/lib
+INCLUDE		=   -I include -I $(LIBFT_DIR) -I $(shell brew --prefix readline)/include -I/usr/local/opt/readline/include
+CFLAGS 		=	-Wall -Werror -Wextra $(INCLUDE)
+
 SOURCES_DIR = ./srcs
 UTILS_DIR = ./srcs/utils
 BUILTIN_DIR = ./srcs/builtin
 LIBFT_DIR = ./srcs/lib/libft
-
 SOURCES = $(SOURCES_DIR)/main.c\
 		  $(SOURCES_DIR)/str_matches_cmd.c\
 		  $(SOURCES_DIR)/init_environ_list.c\
@@ -31,8 +33,11 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(UTILS_DIR)/get_cmd_line.c\
 		  $(UTILS_DIR)/tokenizer.c\
 		  $(UTILS_DIR)/expantion.c\
+		  $(UTILS_DIR)/heredoc.c\
 		  $(UTILS_DIR)/parser.c\
 		  $(UTILS_DIR)/redirect.c\
+		  $(UTILS_DIR)/exec.c\
+		  $(UTILS_DIR)/pipe.c\
 
 OBJS = $(SOURCES:.c=.o)
 LIBFT = -L$(LIBFT_DIR) -lft
@@ -40,8 +45,8 @@ LIBFT = -L$(LIBFT_DIR) -lft
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(MAKE) -C ${LIBFT_DIR}
-	$(CC) $(OBJS) -o $(NAME) $(LIBFT) -Iincludes -lreadline
+	$(MAKE) -C $(LIBFT_DIR)
+	$(CC) $(CFLAGS) $^ $(RL_FLAGS) $(LIBFT) -o $(NAME)
 
 clean:
 	rm -f $(OBJS)

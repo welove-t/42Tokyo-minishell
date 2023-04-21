@@ -6,3 +6,5 @@ cmp
 out
 settings.json
 work
+srcs/a.out
+.heredoc

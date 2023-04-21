@@ -3,91 +3,100 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/04 16:21:36 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/19 16:17:02 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// グローバル変数
-// test
-char **g_environ;
+// ctrl-cが押された時に呼ばれるシグナルハンドラ
+void signal_c()
+{
+    printf("\n"); // 改行を出力して新しい行を開始
+	// プロンプトとして表示されている現在の行を消去
+    rl_replace_line("", 0);
+    rl_on_new_line(); // 新しい行に移動する
+    rl_redisplay(); // 新しい行を再表示する
+}
+
+//ctrl-\が押された時に呼ばれるシグナルハンドラ
+void signal_backslash()
+{
+   return ;
+}
+
+void signal_handler(int sig)
+{
+	if (sig == SIGINT)
+		signal_c();
+	else if (sig == SIGQUIT)
+		signal_backslash();
+	return ;
+}
 
 int main(void)
 {
 	char *input;
+	int	wstatus;
 
-	//pidを宣言
 	pid_t	pid;
 
-	// 初期設定
 	syntax_error = false;
+
+	signal(SIGINT,signal_handler);
+    signal(SIGQUIT,signal_handler);
 	//入力を受け続ける
 	while(1)
 	{
 		//プロンプトの入力待ち
-		input = readline(">");
+		input = readline("minishell> ");
 		//ctrl-Dが押されたら、EOFが代入され、whileから抜ける。
 		if (input == NULL)
-		{
-			// printf("\nProgram exited\n");
 			break;
-		}
 		//入力内容を履歴に追加する。
 		if (input != NULL)
 			add_history(input);
-
-		//NULLの場合、何もしない
 		if (input == NULL)
-		{
 			printf("\n");
-		}
-		//文字列が入力された場合、パスと一致するかどうか
 		else
 		{
-			/*
-			子プロセスを生成。複数のcmdを同時に実行したいから
-			fork()を使う。
-			*/
-			//子プロセスを生成(親と全く同じ動作)
+			//子プロセスを生成
 			pid = fork();
-			/*
-			[Child]が指している親プロセスのIDと[Parent]のIDが正しければ、
-			正常にプログラムが実行できている。
-			*/
 			//子プロセスの場合
 			if (pid == 0)
 			{
-				// printf("\x1b[32m[Child Process]\x1b[0m\n");
-				//子プロセスの親プロセスPID
-				// printf("Parent PPID = %d,",getppid());
-				//自身のPIDを出力
-				// printf("Child PID = %d\n",getpid());
-
 				line_matches_cmd(input);
 				//子プロセスの処理終了
 				exit(0);
 			}
 			else if(pid > 0)
 			{
-				// printf("\x1b[32m[Parent Process]\x1b[0m\n");
-				// 親プロセスのPIDを出力
-				// printf("Parent PPID = %d\n",getpid());
-				// printf("Wait for Child Process to finish\n");
-				// 子プロセスの処理終了を待つ
-				wait(NULL);
-				// printf("Child process finished\n");
+				wait(&wstatus);
+				/*
+				子プロセスが正常に終了した場合に真を返す。
+				*/
+				// printf("status: %08x\n", wstatus);
+				if (WIFEXITED(wstatus))
+				{
+					g_status = WEXITSTATUS(wstatus);
+					// printf("status parse: %d\n", g_status);
+				}
+				/*
+				シグナルで終了した時
+				*/
+				// else if (WIFSIGNALED(wstatus))
+				else
+				{
+					g_status = WTERMSIG(wstatus);
+					// printf("status parse: %d\n", g_status);
+				}
 			}
 			else
-			{
 				printf("\x1b[31mError fork()\x1b[0m\n");
-			}
-			// str_matches_cmd(input);
 		}
-		//readline関数で割り当てたメモリを解放する。
 		free(input);
 	}
 	return 0;
