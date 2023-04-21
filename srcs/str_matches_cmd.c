@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:23:59 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/20 11:48:18 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/21 11:19:47 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	line_matches_cmd(char *line)
 	t_node	*node;
 
 	token = tokenize(line);
+	if (syntax_error)
+		return ;
 	node = parse(token);
 	expand(node);
 	execution(node);

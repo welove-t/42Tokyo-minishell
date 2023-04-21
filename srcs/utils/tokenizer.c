@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/20 16:52:58 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/21 11:20:47 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ static t_token	*word(char **rest, char *line)
 		tokenize_error("Unclosed single quote", rest, line);
 	if (quote_err_flg == -2)
 		tokenize_error("Unclosed double quote", rest, line);
+	// printf("%s\n", line);
 	word = strndup(start, line - start);
 	if (word == NULL)
 		fatal_error("strndup");

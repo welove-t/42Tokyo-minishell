@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:24 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/21 10:03:40 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/21 11:11:19 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	tokenize_error(const char *location, char **rest, char *line)
 	perror_prefix();
 	dprintf(STDERR_FILENO, "syntax error near unexpected character \
 	`%c' in %s\n", *line, location);
-	exit(1);
+	// exit(1);
 	while (*line)
 		line++;
 	*rest = line;
