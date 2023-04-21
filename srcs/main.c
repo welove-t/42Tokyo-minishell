@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/21 20:19:59 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/21 20:54:54 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int main(void)
 	//入力を受け続ける
 	while(1)
 	{
-		//プロンプトの入力待ち
+		// printf("回った\n");
+		// write(1, "round\n", strlen("round\n"));
+		//プロンプトの入力待
 		input = readline("minishell> ");
 		//ctrl-Dが押されたら、EOFが代入され、whileから抜ける。
 		if (input == NULL)
@@ -45,6 +47,8 @@ int main(void)
 			if (pid == 0)
 			{
 				//子プロセスの方ではmainの方のシグナルハンドラを呼ばないようにする。
+				/*TODO: heredocumentの時に出力が少しおかしいが、もしかしたらfork()が関係しているかも知れないので、
+				fork()の所を改善してから修正すること。*/
 				signal(SIGINT,SIG_DFL);
 				// signal(SIGQUIT,SIG_DFL);
 				line_matches_cmd(input);
