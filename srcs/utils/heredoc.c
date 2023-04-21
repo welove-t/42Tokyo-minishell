@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 11:04:41 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/19 15:17:12 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/20 16:32:11 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,23 @@ void	do_heredoc(t_node *redir)
 
 	if (redir == NULL || redir->kind != ND_REDIR_HEREDOC)
 		return ;
+	signal(SIGINT,signal_handler_heredoc);
 	while (1)
 	{
 		buff = readline("heredoc> ");
-		// if (buff == NULL)
-		// 	break;
 		str = buff;
+		rl_done = 1;
 		if (!strcmp(str, redir->delimiter->word))
         {
             // printf("delimiter文字が入力された\n");
 			break ;
         }
+		// printf("heredocのwhileが回った\n");
+		if (signal_setget_status(SIG_GET,-1) == SIGINT)
+		{
+			printf("\x1b[31mbreakした\x1b[0m\n");
+			break;
+		}
 		while (*str)
 		{
             // printf("*str = %c\n",*str);
@@ -61,6 +67,7 @@ void	do_heredoc(t_node *redir)
 		free (buff);
 		buff = NULL;
 	}
+	g_status = 0;
 	if (buff != NULL)
 		free(buff);
 }

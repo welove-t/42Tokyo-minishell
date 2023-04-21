@@ -6,7 +6,7 @@
 #    By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/19 16:37:11 by susasaki         ###   ########.fr        #
+#    Updated: 2023/04/19 19:30:31 by susasaki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(SOURCES_DIR)/str_matches_cmd.c\
 		  $(SOURCES_DIR)/init_environ_list.c\
 		  $(SOURCES_DIR)/error.c\
+		  $(SOURCES_DIR)/signal.c\
 		  $(BUILTIN_DIR)/echo.c\
 		  $(BUILTIN_DIR)/env.c\
 		  $(BUILTIN_DIR)/export.c\

@@ -6,36 +6,12 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/19 16:17:02 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/20 14:49:50 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// ctrl-cが押された時に呼ばれるシグナルハンドラ
-void signal_c()
-{
-    printf("\n"); // 改行を出力して新しい行を開始
-	// プロンプトとして表示されている現在の行を消去
-    rl_replace_line("", 0);
-    rl_on_new_line(); // 新しい行に移動する
-    rl_redisplay(); // 新しい行を再表示する
-}
-
-//ctrl-\が押された時に呼ばれるシグナルハンドラ
-void signal_backslash()
-{
-   return ;
-}
-
-void signal_handler(int sig)
-{
-	if (sig == SIGINT)
-		signal_c();
-	else if (sig == SIGQUIT)
-		signal_backslash();
-	return ;
-}
 
 int main(void)
 {
@@ -47,7 +23,7 @@ int main(void)
 	syntax_error = false;
 
 	signal(SIGINT,signal_handler);
-    signal(SIGQUIT,signal_handler);
+	signal(SIGQUIT,signal_handler);
 	//入力を受け続ける
 	while(1)
 	{

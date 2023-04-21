@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/20 11:29:05 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/20 16:32:05 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 #define SINGLE_QUOTE_CHAR '\''
 #define DOUBLE_QUOTE_CHAR '"'
 #define DOLLAR_SIGN '$'
+#define SIG_GET 100
+#define SIG_SET 200
 
 extern char	**environ;
 bool		syntax_error;
@@ -170,6 +172,11 @@ void	todo(const char *msg);
 void	tokenize_error(const char *location, char **rest, char *line);
 void	parse_error(const char *location, t_token **rest, t_token *tok);
 void	xperror(const char *location);
+
+//signal
+void signal_handler(int sig);
+int signal_setget_status(int style, int sig);
+void signal_handler_heredoc(int sig);
 
 // pipe
 void	pipex(t_node *node, size_t cnt_node);

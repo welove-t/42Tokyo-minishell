@@ -6,13 +6,11 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/19 11:05:40 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/20 16:29:47 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	do_heredoc(t_node *redir);
 
 int	stashfd(int fd)
 {
@@ -47,6 +45,7 @@ void	open_redir_file(t_node *redir)
 		redir->filefd = open(".heredoc", O_WRONLY | O_CREAT | O_APPEND, \
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		do_heredoc(redir);
+		rl_done = 0;
 		close(redir->filefd);
 		redir->filefd = open(".heredoc", O_RDONLY);
 	}
