@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 18:54:42 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/16 19:42:39 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/22 19:22:47 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,25 @@
 //TODO:./bash> echo -nnnn の処理をする
 void bi_echo(char **argv)
 {
-    int i;
     int nflag;
-
+	int i;
+	int j;
     nflag = 0;
-    i = 1;
-    if (argv[1])
+	i = 1;
+    if (argv[1] && argv[1][0] == '-')
     {
-        if (strcmp(argv[i],"-n") == 0)
+		j = 0;
+        while(argv[1][j])
         {
-            nflag = 1;
-            i++;
+			if (argv[1][j] == 'n')
+            	nflag = 1;
+			else
+            	nflag = 0;
+            j++;
         }
     }
+	if (nflag == 1)
+		i++;
     while (argv[i])
     {
         printf("%s",argv[i]);
