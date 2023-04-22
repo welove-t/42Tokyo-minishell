@@ -12,15 +12,24 @@
 
 #include "../../includes/minishell.h"
 
-size_t	get_node_cnt(t_node *node);
+size_t get_node_cnt(t_node *node);
 
-void	execution(t_node *node)
+void execution(t_node *node)
 {
-	size_t	cnt_node;
+	size_t cnt_node;
+	pid_t pid;
 
 	cnt_node = get_node_cnt(node);
 	if (cnt_node <= 1)
-		exec_cmd(node);
+	{
+		pid = fork();
+		if (pid < 0)
+			fatal_error("fork");
+		else if (pid == 0)
+			exec_cmd(node);
+		else
+			wait(NULL);
+	}
 	else
 	{
 		pipex(node, cnt_node);
@@ -28,9 +37,9 @@ void	execution(t_node *node)
 	}
 }
 
-void	exec_cmd(t_node *node)
+void exec_cmd(t_node *node)
 {
-	char	**cmd_line;
+	char **cmd_line;
 
 	open_redir_file(node->redirects);
 	do_redirect(node->redirects);
@@ -44,9 +53,9 @@ void	exec_cmd(t_node *node)
 	}
 }
 
-size_t	get_node_cnt(t_node *node)
+size_t get_node_cnt(t_node *node)
 {
-	size_t	cnt;
+	size_t cnt;
 
 	cnt = 0;
 	while (node != NULL)
