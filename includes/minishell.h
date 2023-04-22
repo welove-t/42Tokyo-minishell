@@ -6,10 +6,10 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/22 13:59:03 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/21 15:41:34 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/21 11:04:41 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 
@@ -219,6 +219,7 @@ void	xperror(const char *location);
 //signal
 void signal_handler(int sig);
 int signal_setget_status(int style, int sig);
+void signal_handler_heredoc(int sig);
 
 // pipe
 void	pipex(t_node *node, size_t cnt_node);

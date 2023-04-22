@@ -6,23 +6,26 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/22 14:53:32 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/21 20:54:54 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(void)
+
+int main(void)
 {
-	char	*input;
-	int		wstatus;
+	char *input;
+	int	wstatus;
+
 	pid_t	pid;
 
 	syntax_error = false;
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
+
+	signal(SIGINT,signal_handler);
+	signal(SIGQUIT,signal_handler);
 	//入力を受け続ける
-	while (1)
+	while(1)
 	{
 		// printf("回った\n");
 		// write(1, "round\n", strlen("round\n"));
@@ -30,7 +33,7 @@ int	main(void)
 		input = readline("minishell> ");
 		//ctrl-Dが押されたら、EOFが代入され、whileから抜ける。
 		if (input == NULL)
-			break ;
+			break;
 		//入力内容を履歴に追加する。
 		if (input != NULL)
 			add_history(input);
@@ -46,13 +49,13 @@ int	main(void)
 				//子プロセスの方ではmainの方のシグナルハンドラを呼ばないようにする。
 				/*TODO: heredocumentの時に出力が少しおかしいが、もしかしたらfork()が関係しているかも知れないので、
 				fork()の所を改善してから修正すること。*/
-				signal(SIGINT, SIG_DFL);
+				signal(SIGINT,SIG_DFL);
 				// signal(SIGQUIT,SIG_DFL);
 				line_matches_cmd(input);
 				//子プロセスの処理終了
 				exit(0);
 			}
-			else if (pid > 0)
+			else if(pid > 0)
 			{
 				wait(&wstatus);
 				signal(SIGINT, signal_handler);
@@ -80,5 +83,5 @@ int	main(void)
 		}
 		free(input);
 	}
-	return (0);
+	return 0;
 }
