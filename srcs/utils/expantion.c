@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expantion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/19 15:15:59 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/22 14:37:45 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,21 @@ void	append_char(char **s, char c)
 	*s = new;
 }
 
-static void last_exit_status(char **new_word)
+static void	last_exit_status(char **new_word)
 {
-	char *str;
+	char	*str;
+
 	//グローバル変数を代入して、char型に変えて代入
 	str = ft_itoa(g_status);
 	while (*str != '\0')
 		append_char(new_word, *str++);
 }
 
-static void expand_env(char **new_word,char *p)
+static void	expand_env(char **new_word, char *p)
 {
-	char *value;
+	char	*value;
+	char	*new;
+
 	if (*p == '?')
 	{
 		last_exit_status(new_word);
@@ -63,12 +66,9 @@ static void expand_env(char **new_word,char *p)
 	value = getenv(p);
 	if (value == NULL)
 	{
-		char *new;
-	new = malloc(1);
-	new[0] = '\0';
-	*new_word = new;
-		// append_char(new_word, '\0');
-		// printf("\n"); // 改行を出力して新しい行を開始
+		new = malloc(1);
+		new[0] = '\0';
+		*new_word = new;
 		return ;
 	}
 	while (*value != '\0')
@@ -76,65 +76,51 @@ static void expand_env(char **new_word,char *p)
 	return ;
 }
 
-void dollar_sign(char **p,char **new_word)
+void	dollar_sign(char **p, char **new_word)
 {
-	char *exp_tmp;
+	char	*exp_tmp;
+
 	exp_tmp = NULL;
-	while (**p && !is_metacharacter(**p) && **p != '\"' &&  **p != '\'')
+	while (**p && !is_metacharacter(**p) && **p != '\"' && **p != '\'')
 	{
 		if (**p == DOLLAR_SIGN)
 		{
-			// printf("*((*p) + 1) = %c\n", *((*p) + 1));
-			if (*((*p) + 1) == ' ' || *((*p) + 1) == '\t' || *((*p) + 1) == '\0')
+			if (*((*p) + 1) == ' ' || *((*p) + 1) == '\t' || *((*p)
+					+ 1) == '\0')
 			{
-				append_char(new_word, **p);
+				append_char(new_word, *((*p)++));
 				(*p)++;
-				append_char(new_word, **p);
+				append_char(new_word, *((*p)++));
 				(*p)++;
-				break;
+				break ;
 			}
 			else
 			{
 				(*p)++;
-				//環境変数の展開の場合
 				if (**p == '?')
-				{
-					append_char(&exp_tmp, **p);
-					(*p)++;
-				}
+					append_char(&exp_tmp, *((*p)++));
 				else
-				{
-					while (**p && !is_metacharacter(**p) && **p != '\"' && **p != '\'')
-					{
-						append_char(&exp_tmp, **p);
-						(*p)++;
-					}
-				}
-				// printf("exp_tmp = %s\n",exp_tmp);
-				//環境変数を展開
+					while (**p && !is_metacharacter(**p) && **p != '\"'
+						&& **p != '\'')
+						append_char(&exp_tmp, *((*p)++));
 				expand_env(new_word, exp_tmp);
-				// printf("new_word = %s\n",*new_word);
 				free(exp_tmp);
 				exp_tmp = NULL;
 			}
 		}
 		else
-		{
-			break;
-		}
+			break ;
 	}
 }
-
 
 /*
 quoteを除外してtok->wordを更新する
 quoteの開閉チェックはtokenizerで実施済みのため閉じられていることは保障されている
 */
-void process_word_token(t_token *tok)
+void	process_word_token(t_token *tok)
 {
 	char	*new_word;
 	char	*p;
-	// char	*exp_tmp;
 
 	if (tok == NULL || tok->kind != TK_WORD || tok->word == NULL)
 		return ;
@@ -142,32 +128,25 @@ void process_word_token(t_token *tok)
 	new_word = NULL;
 	while (*p && !is_metacharacter(*p))
 	{
-		// printf("*p = %c\n",*p);
 		if (*p == DOLLAR_SIGN)
-		{
 			dollar_sign(&p, &new_word);
-			// break;
-		}
 		else if (*p == SINGLE_QUOTE_CHAR)
 		{
 			p++;
 			while (*p != SINGLE_QUOTE_CHAR)
 				append_char(&new_word, *p++);
-			// skip quote
 			p++;
 		}
 		else if (*p == DOUBLE_QUOTE_CHAR)
 		{
-			// skip quote
 			p++;
 			while (*p != DOUBLE_QUOTE_CHAR)
-			{	
+			{
 				if (*p == DOLLAR_SIGN)
 					dollar_sign(&p, &new_word);
 				else
 					append_char(&new_word, *p++);
 			}
-			// skip quote
 			p++;
 		}
 		else
@@ -178,9 +157,6 @@ void process_word_token(t_token *tok)
 	process_word_token(tok->next);
 }
 
-/*
-
-*/
 void	expand_quote_removal(t_node *node)
 {
 	if (node == NULL)
@@ -195,4 +171,3 @@ void	expand(t_node *node)
 {
 	expand_quote_removal(node);
 }
-
