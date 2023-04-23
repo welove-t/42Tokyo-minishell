@@ -30,7 +30,7 @@ void	append_char(char **s, char c)
 
 	size = 2;
 	if (*s)
-		size += strlen(*s);
+		size += ft_strlen(*s);
 	new = malloc(size);
 	if (new == NULL)
 		fatal_error("malloc");

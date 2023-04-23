@@ -7,17 +7,18 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
 /*   Updated: 2023/04/23 15:52:08 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/23 13:34:08 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-size_t get_node_cnt(t_node *node);
+size_t	get_node_cnt(t_node *node);
 
-void execution(t_node *node)
+void	execution(t_node *node)
 {
-	size_t cnt_node;
-	pid_t pid;
+	size_t	cnt_node;
+	pid_t	pid;
 
 	cnt_node = get_node_cnt(node);
 	if (cnt_node <= 1)
@@ -38,26 +39,28 @@ void execution(t_node *node)
 	}
 }
 
-void exec_cmd(t_node *node)
+void	exec_cmd(t_node *node)
 {
-	char **cmd_line;
+	char	**cmd_line;
 
 	open_redir_file(node->redirects);
 	do_redirect(node->redirects);
 	cmd_line = token_list_to_array(node->args);
 	cmd_line[0] = get_cmd_array(ft_strtrim(cmd_line[0], " "));
-	if (cmd_line != NULL)
+	if (cmd_line[0] != NULL)
 	{
 		signal(SIGINT, SIG_DFL);
 		if (execve(cmd_line[0], cmd_line, environ) == -1)
 			fatal_error("execv");
-		reset_redirect(node->redirects);
 	}
+	else
+		error_cmd(node->args->word);
+	reset_redirect(node->redirects);
 }
 
-size_t get_node_cnt(t_node *node)
+size_t	get_node_cnt(t_node *node)
 {
-	size_t cnt;
+	size_t	cnt;
 
 	cnt = 0;
 	while (node != NULL)

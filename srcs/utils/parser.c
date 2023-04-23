@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:31:19 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/21 09:03:03 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 14:51:10 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ bool	is_operator(t_token *tok, char *op)
 {
 	if (tok->kind != TK_OP)
 		return (false);
-	return (strcmp(tok->word, op) == 0);
+	return (ft_strcmp(tok->word, op) == 0);
 }
 
 // トークンの種類ごとにノード追加

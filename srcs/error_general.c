@@ -6,44 +6,47 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:24 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/21 11:04:30 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 16:25:05 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-#define ERROR_PREFIX "minishell: "
-
 void	perror_prefix(void)
 {
-	dprintf(STDERR_FILENO, "%s", ERROR_PREFIX);
+	put_error_msg(ERROR_PREFIX);
 }
 
-void	fatal_error(const char *msg)
+void	fatal_error(char *msg)
 {
 	perror_prefix();
-	dprintf(STDERR_FILENO, "Fatal Error: %s\n", msg);
+	put_error_msg("Fatal Error: ");
+	put_error_msg_endl(msg);
 	exit(1);
 }
 
-void	assert_error(const char *msg)
+void	assert_error(char *msg)
 {
 	perror_prefix();
-	dprintf(STDERR_FILENO, "Fatal Error: %s\n", msg);
+	put_error_msg("Fatal Error: ");
+	put_error_msg_endl(msg);
 	exit(255);
 }
 
-void	err_exit(const char *location, const char *msg, int status)
+void	err_exit(char *location, char *msg, int status)
 {
 	perror_prefix();
-	dprintf(STDERR_FILENO, "%s: %s\n", location, msg);
+	put_error_msg(location);
+	put_error_msg(": ");
+	put_error_msg_endl(msg);
 	exit(status);
 }
 
-void	todo(const char *msg)
+void	todo(char *msg)
 {
 	perror_prefix();
-	dprintf(STDERR_FILENO, "TODO: %s\n", msg);
+	put_error_msg("TODO: ");
+	put_error_msg_endl(msg);
 	exit(255);
 }
 

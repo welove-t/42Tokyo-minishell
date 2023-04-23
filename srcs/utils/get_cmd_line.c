@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:10:07 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/04 13:31:13 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 14:35:45 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	get_env_index(const char *key, int index_start)
 	i = 0;
 	while (environ[i])
 	{
-		if (!strncmp(environ[i], key, index_start))
+		if (!ft_strncmp(environ[i], key, index_start))
 			return (i);
 		i++;
 	}

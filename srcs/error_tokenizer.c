@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_special.c                                    :+:      :+:    :+:   */
+/*   error_tokenizer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:24 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/23 16:39:06 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 16:39:20 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	parse_error(char *location, t_token **rest, t_token *tok)
+void	tokenize_error(char *location, char **rest, char *line, int flg)
 {
 	syntax_error = true;
 	perror_prefix();
-	put_error_msg("syntax error near unexpected token `");
-	put_error_msg(tok->word);
-	put_error_msg("' in ");
-	put_error_msg_endl(location);
-	while (tok && tok->kind != TK_EOF)
-		tok = tok->next;
-	*rest = tok;
-}
-
-void	xperror(const char *location)
-{
-	perror_prefix();
-	perror(location);
+	if (flg < 0)
+	{
+		put_error_msg("syntax error: ");
+		put_error_msg_endl(location);
+	}
+	else
+	{
+		put_error_msg("syntax error near unexpected character `");
+		put_error_char(*line);
+		put_error_msg("' in ");
+		put_error_msg_endl(location);
+	}
+	while (*line)
+		line++;
+	*rest = line;
 }

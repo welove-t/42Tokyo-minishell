@@ -6,7 +6,7 @@
 #    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/13 09:34:19 by terabu            #+#    #+#              #
-#    Updated: 2022/10/29 09:13:06 by terabu           ###   ########.fr        #
+#    Updated: 2023/04/23 15:12:23 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS := ft_atoi.c \
 		 ft_putstr_fd.c \
 		 ft_split.c \
 		 ft_strchr.c \
+		 ft_strcmp.c \
 		 ft_strdup.c \
 		 ft_striteri.c \
 		 ft_strjoin.c \
@@ -41,6 +42,7 @@ SRCS := ft_atoi.c \
 		 ft_strlen.c \
 		 ft_strmapi.c \
 		 ft_strncmp.c \
+		 ft_strndup.c \
 		 ft_strnstr.c \
 		 ft_strrchr.c \
 		 ft_strtrim.c \

@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
+#    Updated: 2023/04/23 16:15:27 by terabu           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = minishell
 CC = cc
 RL_FLAGS = -lreadline -lhistory -L$(shell brew --prefix readline)/lib
@@ -13,6 +25,9 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(SOURCES_DIR)/init_environ_list.c\
 		  $(SOURCES_DIR)/error_general.c\
 		  $(SOURCES_DIR)/error_special.c\
+		  $(SOURCES_DIR)/error_tokenizer.c\
+		  $(SOURCES_DIR)/error_put.c\
+		  $(SOURCES_DIR)/error_cmd.c\
 		  $(SOURCES_DIR)/signal.c\
 		  $(BUILTIN_DIR)/echo.c\
 		  $(BUILTIN_DIR)/env.c\
