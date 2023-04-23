@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:13 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/23 14:33:53 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 14:50:41 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void bi_unset(t_environ *environ, char *str)
     }
     while (tmp != NULL)
     {
-        if (strcmp(tmp->name, str) == 0)
+        if (ft_strcmp(tmp->name, str) == 0)
         {
             found = 1;
             break;
