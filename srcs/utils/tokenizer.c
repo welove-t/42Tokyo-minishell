@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/23 12:49:29 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 14:31:51 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static t_token	*operator(char **rest, char *line)
 			op = strdup(operators[i]);
 			if (op == NULL)
 				fatal_error("strdup");
-			*rest = line + strlen(op);
+			*rest = line + ft_strlen(op);
 			return (new_token(op, TK_OP));
 		}
 		i++;
