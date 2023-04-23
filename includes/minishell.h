@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/23 19:29:25 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/23 21:29:15 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_environ					*init_environ_list(void);
 
 //buliin
 //echo.c
-void						bi_echo(char *str);
+void						bi_echo(char **argv);
 
 //env.c
 void						bi_env(t_environ *environ);
