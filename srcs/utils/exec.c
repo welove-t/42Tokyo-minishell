@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/22 15:50:43 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/23 15:52:08 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void execution(t_node *node)
 	cnt_node = get_node_cnt(node);
 	if (cnt_node <= 1)
 	{
+		signal(SIGINT, SIG_IGN);
 		pid = fork();
 		if (pid < 0)
 			fatal_error("fork");
@@ -47,6 +48,7 @@ void exec_cmd(t_node *node)
 	cmd_line[0] = get_cmd_array(ft_strtrim(cmd_line[0], " "));
 	if (cmd_line != NULL)
 	{
+		signal(SIGINT, SIG_DFL);
 		if (execve(cmd_line[0], cmd_line, environ) == -1)
 			fatal_error("execv");
 		reset_redirect(node->redirects);

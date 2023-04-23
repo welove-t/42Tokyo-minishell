@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 15:45:00 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/20 11:24:57 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 15:54:01 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	pipex(t_node *node, size_t cnt_node)
 	{
 		if (i < cnt_node - 1)
 			pipe(node->pfd);
+		signal(SIGINT, SIG_IGN);
 		node->pid = fork();
 		if (node->pid == 0)
 		{

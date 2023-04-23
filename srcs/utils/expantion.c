@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/22 23:37:45 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/23 16:28:05 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static void	expand_env(char **new_word, char *p)
 		new = malloc(1);
 		new[0] = '\0';
 		*new_word = new;
+		free(new);
 		return ;
 	}
 	while (*value != '\0')
@@ -121,7 +122,9 @@ void	dollar_sign(char **p, char **new_word)
 			}
 		}
 		else
+		{
 			break ;
+		}
 	}
 }
 

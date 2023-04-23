@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/22 19:57:38 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/23 15:32:12 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ int main(void)
 	char *input;
 	syntax_error = false;
 
-	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	while (1)
 	{
+		signal(SIGINT, signal_handler);
+		// printf("待機中\n");
 		input = readline("minishell> ");
 		// ctrl-Dが押されたら、EOFが代入され、whileから抜ける。
 		if (input == NULL)
@@ -31,7 +32,6 @@ int main(void)
 			printf("\n");
 		else
 		{
-			signal(SIGINT, SIG_DFL);
 			line_matches_cmd(input);
 		}
 		free(input);
