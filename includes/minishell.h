@@ -3,33 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/21 15:41:34 by susasaki         ###   ########.fr       */
-/*   Updated: 2023/04/21 11:04:41 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 12:40:35 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
+# define MINISHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <signal.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/param.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "../srcs/lib/libft/libft.h"
-
-#define SINGLE_QUOTE_CHAR '\''
-#define DOUBLE_QUOTE_CHAR '"'
-#define DOLLAR_SIGN '$'
-#define SIG_GET 100
-#define SIG_SET 200
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <stdbool.h>
+# include <signal.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/param.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include "../srcs/lib/libft/libft.h"
+# define SINGLE_QUOTE_CHAR '\''
+# define DOUBLE_QUOTE_CHAR '"'
+# define ERROR_PREFIX "minishell: "
+# define DOLLAR_SIGN '$'
+# define SIG_GET 100
+# define SIG_SET 200
 
 extern char	**environ;
 bool		syntax_error;
@@ -212,7 +212,7 @@ void	fatal_error(const char *msg);
 void	assert_error(const char *msg);
 void	err_exit(const char *location, const char *msg, int status);
 void	todo(const char *msg);
-void	tokenize_error(const char *location, char **rest, char *line);
+void	tokenize_error(const char *location, char **rest, char *line, int flg);
 void	parse_error(const char *location, t_token **rest, t_token *tok);
 void	xperror(const char *location);
 

@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/21 11:20:47 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 12:49:29 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_token	*tokenize(char *line)
 			token = token->next;
 		}
 		else
-			tokenize_error("Unexpected Token", &line, line);
+			tokenize_error("Unexpected Token", &line, line, 0);
 	}
 	token->next = new_token(NULL, TK_EOF);
 	return (head.next);
@@ -119,10 +119,9 @@ static t_token	*word(char **rest, char *line)
 	quote_err_flg = 0;
 	quote_err_flg = check_quote(&line);
 	if (quote_err_flg == -1)
-		tokenize_error("Unclosed single quote", rest, line);
+		tokenize_error("Unclosed single quote", rest, line, quote_err_flg);
 	if (quote_err_flg == -2)
-		tokenize_error("Unclosed double quote", rest, line);
-	// printf("%s\n", line);
+		tokenize_error("Unclosed double quote", rest, line, quote_err_flg);
 	word = strndup(start, line - start);
 	if (word == NULL)
 		fatal_error("strndup");

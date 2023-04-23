@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+         #
+#    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/21 21:30:21 by susasaki         ###   ########.fr        #
+#    Updated: 2023/04/23 12:19:12 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(SOURCES_DIR)/init_environ_list.c\
 		  $(SOURCES_DIR)/error_general.c\
 		  $(SOURCES_DIR)/error_special.c\
+		  $(SOURCES_DIR)/error_tokenizer.c\
 		  $(SOURCES_DIR)/signal.c\
 		  $(BUILTIN_DIR)/echo.c\
 		  $(BUILTIN_DIR)/env.c\
