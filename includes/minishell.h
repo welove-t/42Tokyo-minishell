@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -221,6 +222,8 @@ void	put_error_msg_endl(char *error_msg);
 void	put_error_char(char c);
 
 //signal
+void signal_c_cmd();
+void signal_backslash();
 void signal_handler(int sig);
 int signal_setget_status(int style, int sig);
 void signal_handler_heredoc(int sig);
