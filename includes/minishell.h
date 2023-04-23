@@ -6,10 +6,10 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/21 15:41:34 by susasaki         ###   ########.fr       */
-/*   Updated: 2023/04/21 11:04:41 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/22 17:08:43 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 
@@ -217,6 +217,8 @@ void	parse_error(const char *location, t_token **rest, t_token *tok);
 void	xperror(const char *location);
 
 //signal
+void signal_c_cmd();
+void signal_backslash();
 void signal_handler(int sig);
 int signal_setget_status(int style, int sig);
 void signal_handler_heredoc(int sig);

@@ -12,6 +12,8 @@ void	do_heredoc(t_node *redir)
 
 	if (redir == NULL || redir->kind != ND_REDIR_HEREDOC)
 		return ;
+	// heredoc処理用にシグナルハンドラを設定
+    signal(SIGINT, signal_handler_heredoc);
 	while (1)
 	{
 		buff = readline("heredoc> ");
@@ -40,6 +42,7 @@ void	do_heredoc(t_node *redir)
 				write(redir->filefd, str++,1);
 			}
 		}
+		signal(SIGQUIT, signal_handler);
 		// write(redir->filefd, "\n", 1);
 		free (buff);
 		buff = NULL;
@@ -47,6 +50,7 @@ void	do_heredoc(t_node *redir)
 	/*
 	signal(SIGINT,シグナルハンドラ)が2つ使用されている場合、最後に設定した
 	シグナルハンドラが優先されるため、heredocを閉じるときにmainの方に戻してあげる。*/
+	// printf("シグナルハンドラをsignal_handlerに戻す\n");
 	signal(SIGINT, signal_handler);
 	if (buff != NULL)
 		free(buff);
