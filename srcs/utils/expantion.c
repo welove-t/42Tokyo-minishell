@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expantion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/19 15:15:59 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/23 14:31:32 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	append_char(char **s, char c)
 
 	size = 2;
 	if (*s)
-		size += strlen(*s);
+		size += ft_strlen(*s);
 	new = malloc(size);
 	if (new == NULL)
 		fatal_error("malloc");
@@ -161,7 +161,7 @@ void process_word_token(t_token *tok)
 			// skip quote
 			p++;
 			while (*p != DOUBLE_QUOTE_CHAR)
-			{	
+			{
 				if (*p == DOLLAR_SIGN)
 					dollar_sign(&p, &new_word);
 				else

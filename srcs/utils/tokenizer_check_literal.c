@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:50:42 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/20 12:17:05 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 14:31:40 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	is_blank(char c)
 // トークンとキーワードを比較
 bool	is_keyword(const char *s, const char *keyword)
 {
-	return (memcmp(s, keyword, strlen(keyword)) == 0);
+	return (memcmp(s, keyword, ft_strlen(keyword)) == 0);
 }
 
 // リダイレクション文字のチェック

@@ -16,7 +16,7 @@ void	do_heredoc(t_node *redir)
 	{
 		buff = readline("heredoc> ");
 		str = buff;
-		if (!strcmp(str, redir->delimiter->word))
+		if (!ft_strcmp(str, redir->delimiter->word))
 			break ;
 		while (*str)
 		{

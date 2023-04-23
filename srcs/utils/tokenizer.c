@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/23 12:49:29 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 15:14:09 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,10 @@ static t_token	*operator(char **rest, char *line)
 	{
 		if (is_keyword(line, operators[i]))
 		{
-			op = strdup(operators[i]);
+			op = ft_strdup(operators[i]);
 			if (op == NULL)
 				fatal_error("strdup");
-			*rest = line + strlen(op);
+			*rest = line + ft_strlen(op);
 			return (new_token(op, TK_OP));
 		}
 		i++;
@@ -122,7 +122,7 @@ static t_token	*word(char **rest, char *line)
 		tokenize_error("Unclosed single quote", rest, line, quote_err_flg);
 	if (quote_err_flg == -2)
 		tokenize_error("Unclosed double quote", rest, line, quote_err_flg);
-	word = strndup(start, line - start);
+	word = ft_strndup(start, line - start);
 	if (word == NULL)
 		fatal_error("strndup");
 	*rest = line;
