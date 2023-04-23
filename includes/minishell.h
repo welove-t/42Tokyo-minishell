@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/23 18:48:43 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/23 19:29:25 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void						line_matches_cmd(char *line);
 // init_environ_list
 int							first_strlen(char *str);
 int							latter_strlen(char *str);
-t_environ					*init_environ_list();
+t_environ					*init_environ_list(void);
 
 //buliin
 //echo.c
