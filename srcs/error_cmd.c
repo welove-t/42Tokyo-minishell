@@ -1,47 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_general.c                                    :+:      :+:    :+:   */
+/*   error_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:24 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/23 13:24:28 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 13:45:50 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	perror_prefix(void)
-{
-	dprintf(STDERR_FILENO, "%s", ERROR_PREFIX);
-}
-
-void	fatal_error(const char *msg)
+void	error_cmd(char *cmd)
 {
 	perror_prefix();
-	dprintf(STDERR_FILENO, "Fatal Error: %s\n", msg);
+	if (ft_strchr(cmd, '/'))
+		dprintf(STDERR_FILENO, "%s: No such file or directory\n", cmd);
+	else
+		dprintf(STDERR_FILENO, "%s: command not found\n", cmd);
 	exit(1);
 }
-
-void	assert_error(const char *msg)
-{
-	perror_prefix();
-	dprintf(STDERR_FILENO, "Fatal Error: %s\n", msg);
-	exit(255);
-}
-
-void	err_exit(const char *location, const char *msg, int status)
-{
-	perror_prefix();
-	dprintf(STDERR_FILENO, "%s: %s\n", location, msg);
-	exit(status);
-}
-
-void	todo(const char *msg)
-{
-	perror_prefix();
-	dprintf(STDERR_FILENO, "TODO: %s\n", msg);
-	exit(255);
-}
-
