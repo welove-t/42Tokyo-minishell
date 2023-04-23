@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 08:52:41 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/21 08:53:07 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 14:37:57 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_token	*tokdup(t_token *tok)
 
 	if (tok->word == NULL)
 		return (new_token(NULL, tok->kind));
-	word = strdup(tok->word);
+	word = ft_strdup(tok->word);
 	if (word == NULL)
 		perror("strdup");
 	return (new_token(word, tok->kind));

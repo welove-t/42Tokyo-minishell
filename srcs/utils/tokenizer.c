@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/23 14:31:51 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 14:38:08 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static t_token	*operator(char **rest, char *line)
 	{
 		if (is_keyword(line, operators[i]))
 		{
-			op = strdup(operators[i]);
+			op = ft_strdup(operators[i]);
 			if (op == NULL)
 				fatal_error("strdup");
 			*rest = line + ft_strlen(op);
