@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/23 13:23:10 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 16:39:46 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,15 +208,17 @@ void	execution(t_node *node);
 // Error
 // ------------------------------------------------
 void	perror_prefix(void);
-void	fatal_error(const char *msg);
-void	assert_error(const char *msg);
-void	err_exit(const char *location, const char *msg, int status);
-void	todo(const char *msg);
-void	tokenize_error(const char *location, char **rest, char *line, int flg);
-void	parse_error(const char *location, t_token **rest, t_token *tok);
+void	fatal_error(char *msg);
+void	assert_error(char *msg);
+void	err_exit(char *location, char *msg, int status);
+void	todo(char *msg);
+void	tokenize_error(char *location, char **rest, char *line, int flg);
+void	parse_error(char *location, t_token **rest, t_token *tok);
 void	xperror(const char *location);
 void	error_cmd(char *cmd);
-
+void	put_error_msg(char *error_msg);
+void	put_error_msg_endl(char *error_msg);
+void	put_error_char(char c);
 
 //signal
 void signal_handler(int sig);
