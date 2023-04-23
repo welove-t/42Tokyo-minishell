@@ -1,6 +1,22 @@
 
 #include "../../includes/minishell.h"
 
+static int monitor_signal(void)
+{
+	// printf("monitor_signal\n");
+	if (g_status == 1)
+	{
+		// printf("rl_done = 0\n");
+		rl_done = 1;
+	}
+	else
+	{
+		rl_done = 0;
+	}
+	//0だと終了
+	return 0;
+}
+
 void	do_heredoc(t_node *redir)
 {
 	char	*buff;
@@ -12,9 +28,11 @@ void	do_heredoc(t_node *redir)
 
 	if (redir == NULL || redir->kind != ND_REDIR_HEREDOC)
 		return ;
+	g_status = 0;
+	rl_done = 0;
 	// heredoc処理用にシグナルハンドラを設定
     signal(SIGINT, signal_handler_heredoc);
-	while (1)
+	while (g_status != 1)
 	{
 		buff = readline("heredoc> ");
 		str = buff;
