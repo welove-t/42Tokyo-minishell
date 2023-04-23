@@ -6,16 +6,15 @@
 #    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/23 12:19:12 by terabu           ###   ########.fr        #
+#    Updated: 2023/04/23 13:30:10 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
 NAME = minishell
 CC = cc
-RL_FLAGS 	=	-lreadline -lhistory -L$(shell brew --prefix readline)/lib
-INCLUDE		=   -I include -I $(LIBFT_DIR) -I $(shell brew --prefix readline)/include -I/usr/local/opt/readline/include
-CFLAGS 		=	-Wall -Werror -Wextra $(INCLUDE)
+RL_FLAGS = -lreadline -lhistory -L$(shell brew --prefix readline)/lib
+INCLUDE = -I include -I $(LIBFT_DIR) -I $(shell brew --prefix readline)/include -I/usr/local/opt/readline/include
+CFLAGS = -Wall -Werror -Wextra $(INCLUDE)
 
 SOURCES_DIR = ./srcs
 UTILS_DIR = ./srcs/utils
@@ -27,6 +26,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(SOURCES_DIR)/error_general.c\
 		  $(SOURCES_DIR)/error_special.c\
 		  $(SOURCES_DIR)/error_tokenizer.c\
+		  $(SOURCES_DIR)/error_cmd.c\
 		  $(SOURCES_DIR)/signal.c\
 		  $(BUILTIN_DIR)/echo.c\
 		  $(BUILTIN_DIR)/env.c\
@@ -48,7 +48,9 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(UTILS_DIR)/exec.c\
 		  $(UTILS_DIR)/pipe.c\
 
-OBJS = $(SOURCES:.c=.o)
+VPATH = $(SOURCES_DIR) $(UTILS_DIR) $(BUILTIN_DIR)
+OBJS_DIR = objs
+OBJS = $(addprefix $(OBJS_DIR)/, $(notdir $(SOURCES:.c=.o)))
 LIBFT = -L$(LIBFT_DIR) -lft
 
 all: $(NAME)
@@ -57,8 +59,12 @@ $(NAME): $(OBJS)
 	$(MAKE) -C $(LIBFT_DIR)
 	$(CC) $(CFLAGS) $^ $(RL_FLAGS) $(LIBFT) -o $(NAME)
 
+$(OBJS_DIR)/%.o: %.c
+	mkdir -p $(OBJS_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
-	rm -f $(OBJS)
+	rm -rf $(OBJS_DIR)
 	$(MAKE) -C ${LIBFT_DIR} clean
 
 fclean: clean

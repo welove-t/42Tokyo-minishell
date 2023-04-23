@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/23 12:40:35 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 13:23:10 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,6 +215,8 @@ void	todo(const char *msg);
 void	tokenize_error(const char *location, char **rest, char *line, int flg);
 void	parse_error(const char *location, t_token **rest, t_token *tok);
 void	xperror(const char *location);
+void	error_cmd(char *cmd);
+
 
 //signal
 void signal_handler(int sig);
