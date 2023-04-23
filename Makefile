@@ -6,7 +6,7 @@
 #    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/23 13:30:10 by terabu           ###   ########.fr        #
+#    Updated: 2023/04/23 16:15:27 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(SOURCES_DIR)/error_general.c\
 		  $(SOURCES_DIR)/error_special.c\
 		  $(SOURCES_DIR)/error_tokenizer.c\
+		  $(SOURCES_DIR)/error_put.c\
 		  $(SOURCES_DIR)/error_cmd.c\
 		  $(SOURCES_DIR)/signal.c\
 		  $(BUILTIN_DIR)/echo.c\
