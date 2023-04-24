@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_general.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:24 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/23 16:25:05 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 20:32:53 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,3 @@ void	todo(char *msg)
 	put_error_msg_endl(msg);
 	exit(255);
 }
-

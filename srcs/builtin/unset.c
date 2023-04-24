@@ -3,52 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:13 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/23 14:50:41 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/23 20:06:17 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void bi_unset(t_environ *environ, char *str)
+int	is_valid_param_name(char *str)
 {
-    int i;
-    t_environ *tmp;
-    int found;
-    tmp = environ;
+	if (ft_strchr(str, '=') != NULL)
+	{
+		printf("unset: %s: invalid parameter name\n", str);
+		return (0);
+	}
+	return (1);
+}
 
-    found = 0;
+t_environ	*find_variable(t_environ *environ, char *str)
+{
+	t_environ	*tmp;
 
-    if (ft_strchr(str,'=') != NULL)
-    {
-        printf("unset: %s: invalid parameter name\n",str);
-        return ;
-    }
-    while (tmp != NULL)
-    {
-        if (ft_strcmp(tmp->name, str) == 0)
-        {
-            found = 1;
-            break;
-        }
-        tmp = tmp->next;
-    }
+	tmp = environ;
+	while (tmp != NULL)
+	{
+		if (ft_strcmp(tmp->name, str) == 0)
+		{
+			return (tmp);
+		}
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
 
-    // 環境変数が見つからない場合
-    if (!found)
-        return ;
+void	remove_variable(t_environ *environ, t_environ *var)
+{
+	while (environ != NULL)
+	{
+		if (environ->next->name == var->name)
+		{
+			environ->next = environ->next->next;
+			break ;
+		}
+		environ = environ->next;
+	}
+}
 
-    i = 0;
-    while (environ != NULL)
-    {
-        if (environ->next->name == tmp->name)
-        {
-            environ->next = environ->next->next;
-            break;
-        }
-        environ = environ->next;
-    }
-    return ;
+void	bi_unset(t_environ *environ, char *str)
+{
+	t_environ	*var;
+
+	if (!is_valid_param_name(str))
+	{
+		return ;
+	}
+	var = find_variable(environ, str);
+	if (var == NULL)
+	{
+		return ;
+	}
+	remove_variable(environ, var);
+	return ;
 }
