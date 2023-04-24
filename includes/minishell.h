@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/23 16:39:46 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/24 10:16:44 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ bool	is_word(const char *s);
 
 //heredoc
 void	do_heredoc(t_node *redir);
+void	delete_heredoc(void);
 
 // tokenizer-check-quote
 int		check_quote(char **line);
