@@ -6,7 +6,7 @@
 #    By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/23 18:39:49 by susasaki         ###   ########.fr        #
+#    Updated: 2023/04/24 18:39:48 by susasaki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(SOURCES_DIR)/error_put.c\
 		  $(SOURCES_DIR)/error_cmd.c\
 		  $(SOURCES_DIR)/signal.c\
+		  $(BUILTIN_DIR)/cd.c\
 		  $(BUILTIN_DIR)/echo.c\
 		  $(BUILTIN_DIR)/env.c\
 		  $(BUILTIN_DIR)/export.c\
@@ -42,6 +43,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(UTILS_DIR)/tokenizer_check_literal.c\
 		  $(UTILS_DIR)/tokenizer_check_quote.c\
 		  $(UTILS_DIR)/tokenizer_utils.c\
+		  $(UTILS_DIR)/search_bi_cmd.c\
 		  $(UTILS_DIR)/parser.c\
 		  $(UTILS_DIR)/parser_node_redirect.c\
 		  $(UTILS_DIR)/parser_make_tok.c\

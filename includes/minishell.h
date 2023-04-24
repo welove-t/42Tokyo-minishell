@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/24 10:16:44 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/24 18:35:00 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <sys/param.h>
+# include <sys/stat.h>
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -112,7 +113,13 @@ int							first_strlen(char *str);
 int							latter_strlen(char *str);
 t_environ					*init_environ_list(void);
 
-//buliin
+// ------------------------------------------------
+// builtin
+// ------------------------------------------------
+
+//cd.c
+void	bi_cd(char *str);
+
 //echo.c
 void						bi_echo(char **argv);
 
@@ -135,6 +142,9 @@ void						bi_export(t_environ *env, char *str);
 
 // unset.c
 void						bi_unset(t_environ *environ, char *str);
+
+
+int search_bi_cmd(t_node *node);
 
 // utils
 char						*get_cmd_array(char *cmd_line);
@@ -214,6 +224,22 @@ void						reset_redirect(t_node *redir);
 void						exec_cmd(t_node *node);
 void						execution(t_node *node);
 
+
+// ------------------------------------------------
+// signal
+// ------------------------------------------------
+void						signal_c_cmd(void);
+void						signal_backslash(void);
+void						signal_handler(int sig);
+int							signal_setget_status(int style, int sig);
+void						signal_handler_heredoc(int sig);
+
+// ------------------------------------------------
+// pipe
+// ------------------------------------------------
+void						pipex(t_node *node, size_t cnt_node);
+void						waitpid_pipex(t_node *node);
+
 // ------------------------------------------------
 // Error
 // ------------------------------------------------
@@ -231,16 +257,5 @@ void						error_cmd(char *cmd);
 void						put_error_msg(char *error_msg);
 void						put_error_msg_endl(char *error_msg);
 void						put_error_char(char c);
-
-//signal
-void						signal_c_cmd(void);
-void						signal_backslash(void);
-void						signal_handler(int sig);
-int							signal_setget_status(int style, int sig);
-void						signal_handler_heredoc(int sig);
-
-// pipe
-void						pipex(t_node *node, size_t cnt_node);
-void						waitpid_pipex(t_node *node);
 
 #endif

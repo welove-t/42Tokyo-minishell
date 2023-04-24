@@ -40,9 +40,9 @@ void bi_cd(char **argv)
     return ;
 }
 
-int main(int argc, char **argv)
-{
-    argc = 1;
-    bi_cd(argv);
-    return 0;
-}
+// int main(int argc, char **argv)
+// {
+//     argc = 1;
+//     bi_cd(argv);
+//     return 0;
+// }

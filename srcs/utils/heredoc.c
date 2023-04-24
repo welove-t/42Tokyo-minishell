@@ -31,6 +31,11 @@ void	do_heredoc(t_node *redir)
 		str = buff;
 		if (!ft_strcmp(str, redir->delimiter->word))
 			break ;
+		// printf("buff = %s\n",buff);
+		if (buff == NULL)
+		{
+			break ;
+		}
 		if (g_status == 1)
 		{
 			buff = NULL;

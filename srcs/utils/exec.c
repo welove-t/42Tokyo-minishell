@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/24 10:45:36 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/24 18:41:50 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,16 @@ void	execution(t_node *node)
 	pid_t	pid;
 
 	cnt_node = get_node_cnt(node);
+	//cmdが1つの場合
 	if (cnt_node <= 1)
 	{
+		/*
+		node->args->wordの中にcdなどのコマンドが入っている。
+		fork()前にbuiltinか確認する。builtinだったら、forkしない
+		*/
+		//設定したビルトインコマンドがあったら、1が返ってくる
+		if (search_bi_cmd(node) == 1)
+			return ;
 		signal(SIGINT, SIG_IGN);
 		pid = fork();
 		if (pid < 0)
