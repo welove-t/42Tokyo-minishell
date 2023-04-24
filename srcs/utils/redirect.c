@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/21 11:30:46 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/24 10:49:35 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ void	open_redir_file(t_node *redir)
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else if (redir->kind == ND_REDIR_HEREDOC)
 	{
-		if (!access(".heredoc", R_OK))
-			unlink(".heredoc");
+		delete_heredoc();
 		redir->filefd = open(".heredoc", O_WRONLY | O_CREAT | O_APPEND, \
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		do_heredoc(redir);

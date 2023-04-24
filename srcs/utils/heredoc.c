@@ -66,3 +66,9 @@ void	do_heredoc(t_node *redir)
 	if (buff != NULL)
 		free(buff);
 }
+
+void	delete_heredoc(void)
+{
+	if (!access(".heredoc", R_OK))
+		unlink(".heredoc");
+}

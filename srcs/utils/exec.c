@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/24 09:43:16 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/24 10:45:36 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	execution(t_node *node)
 		pipex(node, cnt_node);
 		waitpid_pipex(node);
 	}
+	delete_heredoc();
 }
 
 void	exec_cmd(t_node *node)
