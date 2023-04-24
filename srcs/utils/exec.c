@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/23 15:52:08 by susasaki         ###   ########.fr       */
-/*   Updated: 2023/04/23 13:34:08 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/24 10:45:36 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../includes/minishell.h"
 
@@ -37,6 +37,7 @@ void	execution(t_node *node)
 		pipex(node, cnt_node);
 		waitpid_pipex(node);
 	}
+	delete_heredoc();
 }
 
 void	exec_cmd(t_node *node)
@@ -47,14 +48,17 @@ void	exec_cmd(t_node *node)
 	do_redirect(node->redirects);
 	cmd_line = token_list_to_array(node->args);
 	cmd_line[0] = get_cmd_array(ft_strtrim(cmd_line[0], " "));
-	if (cmd_line[0] != NULL)
+	if (g_status != 1)
 	{
-		signal(SIGINT, SIG_DFL);
-		if (execve(cmd_line[0], cmd_line, environ) == -1)
-			fatal_error("execv");
+		if (cmd_line[0] != NULL)
+		{
+			signal(SIGINT, SIG_DFL);
+			if (execve(cmd_line[0], cmd_line, environ) == -1)
+				fatal_error("execv");
+		}
+		else
+			error_cmd(node->args->word);
 	}
-	else
-		error_cmd(node->args->word);
 	reset_redirect(node->redirects);
 }
 
