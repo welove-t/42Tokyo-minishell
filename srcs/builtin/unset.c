@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:13 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/23 20:06:17 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/24 20:34:17 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,19 @@ void	remove_variable(t_environ *environ, t_environ *var)
 	}
 }
 
-void	bi_unset(t_environ *environ, char *str)
+void	bi_unset(t_environ *environ, char **argv,int argc)
 {
 	t_environ	*var;
 
-	if (!is_valid_param_name(str))
+	if (argc != 2)
 	{
 		return ;
 	}
-	var = find_variable(environ, str);
+	if (!is_valid_param_name(argv[1]))
+	{
+		return ;
+	}
+	var = find_variable(environ, argv[1]);
 	if (var == NULL)
 	{
 		return ;
