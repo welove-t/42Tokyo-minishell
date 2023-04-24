@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/23 19:58:33 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/24 20:34:04 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,21 @@ void	bi_only_export_env(t_environ *env)
 	}
 }
 
-//複数の場合分岐する。
-void	bi_export(t_environ *env, char *str)
+void	bi_export(t_environ *env, char **argv, int argc)
 {
 	char		*name;
 	char		*value;
 	t_environ	*new;
 
-	name = make_name(str);
-	value = make_value(str);
-	new = environ_node_new(name, value);
-	environ_nodeadd_back(env, new);
+	if (argc == 1)
+	{
+		bi_only_export_env(env);
+	}
+	else if(argc == 2)
+	{
+		name = make_name(argv[1]);
+		value = make_value(argv[1]);
+		new = environ_node_new(name, value);
+		environ_nodeadd_back(env, new);
+	}
 }

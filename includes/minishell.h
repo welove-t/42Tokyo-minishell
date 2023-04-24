@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/24 18:35:00 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/24 20:25:09 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ t_environ					*init_environ_list(void);
 // ------------------------------------------------
 
 //cd.c
-void	bi_cd(char *str);
+void	bi_cd(char **argv);
 
 //echo.c
 void						bi_echo(char **argv);
@@ -138,10 +138,10 @@ t_environ					*environ_node_new(char *name, char *value);
 char						*make_name(char *str);
 char						*make_value(char *str);
 void						bi_only_export_env(t_environ *env);
-void						bi_export(t_environ *env, char *str);
+void						bi_export(t_environ *env, char **argv, int argc);
 
 // unset.c
-void						bi_unset(t_environ *environ, char *str);
+void	bi_unset(t_environ *environ, char **argv,int argc);
 
 
 int search_bi_cmd(t_node *node);
@@ -223,6 +223,7 @@ void						reset_redirect(t_node *redir);
 // exec
 void						exec_cmd(t_node *node);
 void						execution(t_node *node);
+size_t						get_node_cnt(t_node *node);
 
 
 // ------------------------------------------------

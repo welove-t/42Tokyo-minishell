@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:52:38 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/24 18:40:47 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/24 19:49:29 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ static int	pathname_check(char *str)
 		return (1);
 }
 
-void	bi_cd(char *str)
+void	bi_cd(char **argv)
 {
 	char	buf[256];
 
-	if (str)
+	if (argv[1])
 	{
-		if (pathname_check(str) == 0)
+		if (pathname_check(argv[1]) == 0)
 		{
 			getcwd(buf, sizeof(buf));
 			/*
@@ -42,7 +42,8 @@ void	bi_cd(char *str)
 			return ;
 		}
 		else
-			printf("cd: %s: No such file or directory\n", str);
+			printf("cd: %s: No such file or directory\n", argv[1]);
 	}
+	//TODO cdコマンド単体の処理をする
 	return ;
 }
