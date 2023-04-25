@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:45:48 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/25 11:34:30 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/25 13:14:54 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,14 @@ char **string_to_array(int *argc, t_token *token)
 	argv[i] = NULL;
 	return (argv);
 }
-int search_bi_cmd(t_node *node)
+int search_bi_cmd(t_node *node,t_environ *environ)
 {
 	int res;
 	char **argv;
 	int argc;
-	t_environ *environ;
 	res = 0;
 
 	(void)node;
-	environ = init_environ_list();
 	argv = string_to_array(&argc ,node->args);
 	if (argv == NULL)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/24 20:25:09 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/25 13:13:28 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,10 @@ typedef struct s_environ
 	struct s_environ		*next;
 }							t_environ;
 
-typedef struct s_envinfo
-{
-	//先頭ノード
-	t_environ				*head;
-}							t_envinfo;
-
 //main.c
 
 //line_matches_cmd.c
-void						line_matches_cmd(char *line);
+void						line_matches_cmd(char *line,t_environ *environ);
 
 // init_environ_list
 int							first_strlen(char *str);
@@ -144,7 +138,7 @@ void						bi_export(t_environ *env, char **argv, int argc);
 void	bi_unset(t_environ *environ, char **argv,int argc);
 
 
-int search_bi_cmd(t_node *node);
+int							search_bi_cmd(t_node *node,t_environ *environ);
 
 // utils
 char						*get_cmd_array(char *cmd_line);
@@ -222,7 +216,7 @@ void						reset_redirect(t_node *redir);
 
 // exec
 void						exec_cmd(t_node *node);
-void						execution(t_node *node);
+void						execution(t_node *node,t_environ *environ);
 size_t						get_node_cnt(t_node *node);
 
 

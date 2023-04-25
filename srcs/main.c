@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/24 18:44:34 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/25 13:12:15 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 int	main(void)
 {
 	char	*input;
+	t_environ *environ;
 
 	syntax_error = false;
 	signal(SIGQUIT, signal_handler);
+	//TODO: ここで環境変数を初期化する
+	environ = init_environ_list();
 	while (1)
 	{
 		signal(SIGINT, signal_handler);
@@ -27,11 +30,12 @@ int	main(void)
 			break ;
 		if (input != NULL)
 			add_history(input);
+		//TODO:このif文いらないかも
 		if (input == NULL)
 			printf("\n");
 		else
 		{
-			line_matches_cmd(input);
+			line_matches_cmd(input,environ);
 		}
 		free(input);
 	}
