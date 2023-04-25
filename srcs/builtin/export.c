@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/25 18:51:58 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/25 19:25:33 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*make_name(char *str)
 	int		fir_len;
 
 	fir_len = first_strlen(str);
+	if (fir_len == -1)
+		return (NULL);
 	name = (char *)malloc(fir_len + 1);
 	strncpy(name, str, fir_len);
 	name[fir_len] = '\0';
@@ -63,12 +65,15 @@ void	bi_export(t_environ *env, char **argv, int argc)
 	t_environ	*new;
 
 	if (argc == 1)
-	{
 		bi_only_export_env(env);
-	}
-	else if(argc == 2)
+	else if (argc == 2)
 	{
 		name = make_name(argv[1]);
+		if (name == NULL)
+		{
+			printf("export: `%s': not a valid identifier\n", argv[1]);
+			return ;
+		}
 		value = make_value(argv[1]);
 		new = environ_node_new(name, value);
 		environ_nodeadd_back(env, new);

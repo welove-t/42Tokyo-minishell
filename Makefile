@@ -6,7 +6,7 @@
 #    By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/24 18:39:48 by susasaki         ###   ########.fr        #
+#    Updated: 2023/04/25 19:48:02 by susasaki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(BUILTIN_DIR)/cd.c\
 		  $(BUILTIN_DIR)/echo.c\
 		  $(BUILTIN_DIR)/env.c\
+		  $(BUILTIN_DIR)/exit.c\
 		  $(BUILTIN_DIR)/export.c\
 		  $(BUILTIN_DIR)/export_utils.c\
 		  $(BUILTIN_DIR)/pwd.c\

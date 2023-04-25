@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/25 18:32:58 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/25 19:51:13 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,9 @@ void						bi_env(int argc,t_environ *environ);
 
 //pwd.c
 int							bi_pwd(void);
+
+//exit.c
+void						bi_exit(char **argv);
 
 //export_utils.c
 void						environ_nodeadd_back(t_environ *env,
