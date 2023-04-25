@@ -6,12 +6,11 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:45:48 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/24 20:36:08 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/25 11:34:30 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 static int search_bi_cmd_helper(int argc,char **argv, t_environ *environ)
 {
 	// printf("argv[0] = %s\n",argv[0]);
@@ -54,6 +53,8 @@ char **string_to_array(int *argc, t_token *token)
 	int cnt_args;
 
 	tmp_token = token;
+	if (tmp_token->word == NULL)
+		return (NULL);
 	cnt_args = get_args_cnt(tmp_token);
 	*argc = cnt_args;
 	argv = malloc(sizeof(char *)*(cnt_args + 1));
@@ -69,16 +70,19 @@ char **string_to_array(int *argc, t_token *token)
 	argv[i] = NULL;
 	return (argv);
 }
-
 int search_bi_cmd(t_node *node)
 {
 	int res;
 	char **argv;
 	int argc;
 	t_environ *environ;
+	res = 0;
 
+	(void)node;
 	environ = init_environ_list();
 	argv = string_to_array(&argc ,node->args);
+	if (argv == NULL)
+		return (0);
 	res = search_bi_cmd_helper(argc,argv,environ);
 	// if (res == 1)
 	// 	printf("\x1b[32mBuilt in commandが呼ばれた(%d)\x1b[0m\n",res);
