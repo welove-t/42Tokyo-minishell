@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/24 20:30:12 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/25 13:14:12 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 size_t	get_node_cnt(t_node *node);
 
-void	execution(t_node *node)
+void	execution(t_node *node,t_environ *environ)
 {
 	size_t	cnt_node;
 	pid_t	pid;
@@ -29,7 +29,7 @@ void	execution(t_node *node)
 		fork()前にbuiltinか確認する。builtinだったら、forkしない
 		*/
 		//設定したビルトインコマンドがあったら、1が返ってくる
-		if (search_bi_cmd(node) == 1)
+		if (search_bi_cmd(node,environ) == 1)
 			return ;
 		signal(SIGINT, SIG_IGN);
 		pid = fork();
