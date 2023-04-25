@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:52:38 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/24 19:49:29 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/25 17:58:32 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,43 @@ static int	pathname_check(char *str)
 		return (1);
 }
 
-void	bi_cd(char **argv)
+static int	cd_home(void)
 {
-	char	buf[256];
+	char	*home_dir;
 
-	if (argv[1])
+	home_dir = getenv("HOME");
+	if (home_dir == NULL)
+	{
+		printf("cd: could not get HOME directory\n");
+		return (1);
+	}
+	if (chdir(home_dir) == -1)
+	{
+		printf("cd: could not change to HOME directory\n");
+		return (1);
+	}
+	return (0);
+}
+
+void	bi_cd(char **argv, int argc)
+{
+	if (argc == 1)
+	{
+		if (cd_home() == 1)
+			return ;
+	}
+	else
 	{
 		if (pathname_check(argv[1]) == 0)
 		{
-			getcwd(buf, sizeof(buf));
-			/*
-            printf("移動前: %s\n", buf);
-            chdir(argv[1]);
-            //移動しているか確認
-            getcwd(buf, sizeof(buf));
-            printf("移動後: %s\n", buf);
-            */
-			return ;
+			if (chdir(argv[1]) == -1)
+			{
+				printf("cd: could not change to HOME directory\n");
+				return ;
+			}
 		}
 		else
 			printf("cd: %s: No such file or directory\n", argv[1]);
 	}
-	//TODO cdコマンド単体の処理をする
 	return ;
 }
