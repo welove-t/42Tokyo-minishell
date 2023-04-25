@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/25 17:56:17 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/25 18:32:58 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	bi_cd(char **argv, int argc);
 void						bi_echo(char **argv);
 
 //env.c
-void						bi_env(t_environ *environ);
+void						bi_env(int argc,t_environ *environ);
 
 //pwd.c
 int							bi_pwd(void);

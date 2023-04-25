@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:45:48 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/25 17:57:56 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/25 18:32:08 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int search_bi_cmd_helper(int argc,char **argv, t_environ *environ)
 	else if (strcmp(argv[0],"echo") == 0)
 		bi_echo(argv);
 	else if (strcmp(argv[0],"env") == 0)
-		bi_env(environ);
+		bi_env(argc, environ);
 	else if (strcmp(argv[0],"export") == 0)
 		bi_export(environ,argv,argc);
 	else if (strcmp(argv[0],"unset") == 0)

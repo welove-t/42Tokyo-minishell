@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/24 20:34:04 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/25 18:51:58 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	bi_only_export_env(t_environ *env)
 	{
 		printf("declare -x %s", print_env->name);
 		if (print_env->value != NULL)
-			printf("=%s", print_env->value);
+			printf("=\"%s\"", print_env->value);
 		printf("\n");
 		print_env = print_env->next;
 	}
