@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:13 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/24 20:34:17 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/25 18:54:35 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	bi_unset(t_environ *environ, char **argv,int argc)
 {
 	t_environ	*var;
 
-	if (argc != 2)
+	if (argc < 2)
 	{
 		return ;
 	}

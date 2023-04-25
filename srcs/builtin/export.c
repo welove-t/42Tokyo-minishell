@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/24 20:34:04 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/25 20:58:35 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*make_name(char *str)
 	int		fir_len;
 
 	fir_len = first_strlen(str);
+	if (fir_len == -1)
+		return (NULL);
 	name = (char *)malloc(fir_len + 1);
 	strncpy(name, str, fir_len);
 	name[fir_len] = '\0';
@@ -50,27 +52,54 @@ void	bi_only_export_env(t_environ *env)
 	{
 		printf("declare -x %s", print_env->name);
 		if (print_env->value != NULL)
-			printf("=%s", print_env->value);
+			printf("=\"%s\"", print_env->value);
 		printf("\n");
 		print_env = print_env->next;
 	}
 }
 
-void	bi_export(t_environ *env, char **argv, int argc)
+static void override_val(t_environ *environ, t_environ *var, char *value)
+{
+	while (environ != NULL)
+	{
+		if (environ->name == var->name)
+		{
+			environ->value = value;
+			break ;
+		}
+		environ = environ->next;
+	}
+}
+
+void	bi_export(t_environ *environ, char **argv, int argc)
 {
 	char		*name;
 	char		*value;
 	t_environ	*new;
+	t_environ	*var;
 
 	if (argc == 1)
-	{
-		bi_only_export_env(env);
-	}
-	else if(argc == 2)
+		bi_only_export_env(environ);
+	else if (argc == 2)
 	{
 		name = make_name(argv[1]);
+		if (name == NULL)
+		{
+			printf("export: `%s': not a valid identifier\n", argv[1]);
+			return ;
+		}
+		var = find_variable(environ, name);
 		value = make_value(argv[1]);
-		new = environ_node_new(name, value);
-		environ_nodeadd_back(env, new);
+		//既に環境変数名があり上書きされる時
+		if (var != NULL)
+		{
+			override_val(environ, var, value);
+		}
+		else
+		{
+			new = environ_node_new(name, value);
+			environ_nodeadd_back(environ, new);
+		}
+		
 	}
 }

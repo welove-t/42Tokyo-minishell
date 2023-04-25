@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:04 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/23 19:28:53 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/25 19:28:56 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	first_strlen(char *str)
 	{
 		i++;
 	}
+	if (i == 0 || str[i] == '\0')
+		return (-1);
 	return (i);
 }
 

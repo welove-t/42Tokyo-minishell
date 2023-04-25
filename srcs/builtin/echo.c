@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:42:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/23 19:51:47 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/25 20:38:23 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_nflag(char **argv, int *i)
 	int	j;
 
 	nflag = 0;
-	j = 0;
+	j = 1;
 	if (argv[1] && argv[1][0] == '-')
 	{
 		while (argv[1][j])
@@ -26,7 +26,10 @@ int	check_nflag(char **argv, int *i)
 			if (argv[1][j] == 'n')
 				nflag = 1;
 			else
+			{
 				nflag = 0;
+				break;
+			}
 			j++;
 		}
 	}

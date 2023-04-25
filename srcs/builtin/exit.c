@@ -5,19 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/11 20:01:07 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/25 19:48:30 by susasaki         ###   ########.fr       */
+/*   Created: 2023/04/25 19:49:00 by susasaki          #+#    #+#             */
+/*   Updated: 2023/04/25 19:50:33 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <string.h>
-
-int g_status;
+#include "../../includes/minishell.h"
 
 static int int_overflow__check(char *str, long *num)
 {
@@ -80,7 +73,7 @@ static void bi_exit_multiple(char *str)
     return ;
 }
 
-static void bi_exit(char **argv)
+void bi_exit(char **argv)
 {
     g_status = 0;
     if (argv[1] == NULL)
@@ -103,11 +96,3 @@ static void bi_exit(char **argv)
         bi_single_exit_multiple(argv[1]);
     }
 }
-
-// int main(int argc, char **argv)
-// {
-//     argc = 1;
-//     bi_exit(argv);
-//     printf("Goodbye!\n");
-//     return 0;
-// }
