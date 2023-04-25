@@ -23,7 +23,7 @@ typedef struct s_envinfo
 
 int	is_valid_param_name(char *str)
 {
-	if (ft_strchr(str, '=') != NULL)
+	if (strchr(str, '=') != NULL)
 	{
 		printf("unset: %s: invalid parameter name\n", str);
 		return (0);
@@ -38,7 +38,7 @@ t_environ	*find_variable(t_environ *environ, char *str)
 	tmp = environ;
 	while (tmp != NULL)
 	{
-		if (ft_strcmp(tmp->name, str) == 0)
+		if (strcmp(tmp->name, str) == 0)
 		{
 			return (tmp);
 		}
@@ -60,15 +60,19 @@ void	remove_variable(t_environ *environ, t_environ *var)
 	}
 }
 
-void	bi_unset(t_environ *environ, char *str)
+void	bi_unset(t_environ *environ, char **argv,int argc)
 {
 	t_environ	*var;
 
-	if (!is_valid_param_name(str))
+	if (argc != 2)
 	{
 		return ;
 	}
-	var = find_variable(environ, str);
+	if (!is_valid_param_name(argv[1]))
+	{
+		return ;
+	}
+	var = find_variable(environ, argv[1]);
 	if (var == NULL)
 	{
 		return ;
@@ -221,11 +225,7 @@ int	main(int argc, char **argv)
 {
 	t_environ *environ;
 	environ = init_environ_list();
-	if (argc == 1)
-	{
-		return (1);
-	}
-	bi_unset(environ, argv[1]);
+	bi_unset(environ, argv,argc);
 	bi_env(environ);
 	return (0);
 }

@@ -137,22 +137,24 @@ static void bi_only_export_env(t_environ *env)
 }
 
 //複数の場合分岐する。
-static void bi_export(t_environ *env, char *str)
+static void bi_export(t_environ *env, char **argv, int argc)
 {
-    char *name;
-    char *value;
-    int i;
-    int j;
-    t_environ *new;
-    i = 0;
-    j = 0;
-    name = make_name(str);
-    value = make_value(str);
-    new = environ_node_new(name,value);
-    environ_nodeadd_back(env, new);
+	char		*name;
+	char		*value;
+	t_environ	*new;
+
+	if (argc == 1)
+	{
+		bi_only_export_env(env);
+	}
+	else if(argc == 2)
+	{
+		name = make_name(argv[1]);
+		value = make_value(argv[1]);
+		new = environ_node_new(name, value);
+		environ_nodeadd_back(env, new);
+	}
 }
-
-
 
 extern char **environ;
 static t_environ    *init_environ_list()
@@ -210,15 +212,7 @@ int main(int argc,char **argv)
     environ = init_environ_list();
     (void)argv;
     (void)argc;
-    if (argc == 1)
-    {
-        bi_only_export_env(environ);
-        // memory leak確認
-        // printf("\n\n\n");
-        // system("leaks a.out");
-        return 0;
-    }
-    bi_export(environ,argv[1]);
+    bi_export(environ,argv,argc);
     bi_env(environ);
     // memory leak確認
     // printf("\n\n\n");
