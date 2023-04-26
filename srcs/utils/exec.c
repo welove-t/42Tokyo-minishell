@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/25 13:14:12 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/26 14:48:45 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	execution(t_node *node,t_environ *environ)
 		node->args->wordの中にcdなどのコマンドが入っている。
 		fork()前にbuiltinか確認する。builtinだったら、forkしない
 		*/
-		//設定したビルトインコマンドがあったら、1が返ってくる
-		if (search_bi_cmd(node,environ) == 1)
+		//設定したビルトインコマンドがあったら、0が返ってくる
+		if (search_bi_cmd(node,environ) != 1)
 			return ;
 		signal(SIGINT, SIG_IGN);
 		pid = fork();
@@ -42,7 +42,7 @@ void	execution(t_node *node,t_environ *environ)
 	}
 	else
 	{
-		pipex(node, cnt_node);
+		pipex(node, cnt_node,environ);
 		waitpid_pipex(node);
 	}
 	delete_heredoc();

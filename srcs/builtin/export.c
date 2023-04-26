@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/25 20:58:35 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/26 13:23:23 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	bi_only_export_env(t_environ *env)
 	}
 }
 
-static void override_val(t_environ *environ, t_environ *var, char *value)
+static void	override_val(t_environ *environ, t_environ *var, char *value)
 {
 	while (environ != NULL)
 	{
@@ -71,7 +71,7 @@ static void override_val(t_environ *environ, t_environ *var, char *value)
 	}
 }
 
-void	bi_export(t_environ *environ, char **argv, int argc)
+int	bi_export(t_environ *environ, char **argv, int argc)
 {
 	char		*name;
 	char		*value;
@@ -86,7 +86,7 @@ void	bi_export(t_environ *environ, char **argv, int argc)
 		if (name == NULL)
 		{
 			printf("export: `%s': not a valid identifier\n", argv[1]);
-			return ;
+			return (-1);
 		}
 		var = find_variable(environ, name);
 		value = make_value(argv[1]);
@@ -100,6 +100,6 @@ void	bi_export(t_environ *environ, char **argv, int argc)
 			new = environ_node_new(name, value);
 			environ_nodeadd_back(environ, new);
 		}
-		
 	}
+	return (0);
 }

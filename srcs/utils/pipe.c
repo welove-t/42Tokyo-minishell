@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 15:45:00 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/23 15:54:01 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/26 14:50:03 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ void	output_pipe_dup_close(int fd[2]);
 void	input_pipe_dup_close(int fd[2]);
 void	close_pipe(t_node *node, size_t i);
 
-void	pipex(t_node *node, size_t cnt_node)
+void	pipex(t_node *node, size_t cnt_node,t_environ *environ)
 {
 	size_t	i;
+	int flag;
 
 	i = 0;
 	while (i < cnt_node)
@@ -33,7 +34,14 @@ void	pipex(t_node *node, size_t cnt_node)
 				input_pipe_dup_close(node->prev->pfd);
 			if (i != cnt_node - 1)
 				output_pipe_dup_close(node->pfd);
-			exec_cmd(node);
+			flag = search_bi_cmd(node,environ);
+			// ビルトインコマンドが失敗した時。
+			if (flag == -1)
+				exit(EXIT_FAILURE);
+			else if(flag == 0)
+				exit (EXIT_SUCCESS);
+			else 
+				exec_cmd(node);
 		}
 		else
 			close_pipe(node, i);

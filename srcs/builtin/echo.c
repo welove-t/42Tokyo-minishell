@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:42:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/25 20:38:23 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/26 13:20:38 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	print_arguments(char **argv, int i, int nflag)
 		printf("\n");
 }
 
-void	bi_echo(char **argv)
+int	bi_echo(char **argv)
 {
 	int	nflag;
 	int	i;
@@ -59,5 +59,5 @@ void	bi_echo(char **argv)
 	i = 1;
 	nflag = check_nflag(argv, &i);
 	print_arguments(argv, i, nflag);
-	return ;
+	return (0);
 }

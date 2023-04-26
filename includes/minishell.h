@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/25 20:42:44 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/26 14:42:21 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,19 +112,19 @@ t_environ					*init_environ_list(void);
 // ------------------------------------------------
 
 //cd.c
-void	bi_cd(char **argv, int argc);
+int	bi_cd(char **argv, int argc);
 
 //echo.c
-void						bi_echo(char **argv);
+int						bi_echo(char **argv);
 
 //env.c
-void						bi_env(int argc,t_environ *environ);
+int						bi_env(int argc,t_environ *environ);
 
 //pwd.c
 int							bi_pwd(void);
 
 //exit.c
-void						bi_exit(char **argv);
+int						bi_exit(char **argv);
 
 //export_utils.c
 void						environ_nodeadd_back(t_environ *env,
@@ -135,10 +135,10 @@ t_environ					*environ_node_new(char *name, char *value);
 char						*make_name(char *str);
 char						*make_value(char *str);
 void						bi_only_export_env(t_environ *env);
-void						bi_export(t_environ *env, char **argv, int argc);
+int32_t						bi_export(t_environ *env, char **argv, int argc);
 
 // unset.c
-void						bi_unset(t_environ *environ, char **argv,int argc);
+int						bi_unset(t_environ *environ, char **argv,int argc);
 t_environ					*find_variable(t_environ *environ, char *str);
 
 int							search_bi_cmd(t_node *node,t_environ *environ);
@@ -235,7 +235,7 @@ void						signal_handler_heredoc(int sig);
 // ------------------------------------------------
 // pipe
 // ------------------------------------------------
-void						pipex(t_node *node, size_t cnt_node);
+void						pipex(t_node *node, size_t cnt_node,t_environ *environ);
 void						waitpid_pipex(t_node *node);
 
 // ------------------------------------------------

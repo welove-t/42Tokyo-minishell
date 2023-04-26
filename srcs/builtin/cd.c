@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:52:38 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/25 17:58:32 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/26 14:06:37 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ static int	cd_home(void)
 	return (0);
 }
 
-void	bi_cd(char **argv, int argc)
+int	bi_cd(char **argv, int argc)
 {
 	if (argc == 1)
 	{
 		if (cd_home() == 1)
-			return ;
+			return (-1);
 	}
 	else
 	{
@@ -55,11 +55,11 @@ void	bi_cd(char **argv, int argc)
 			if (chdir(argv[1]) == -1)
 			{
 				printf("cd: could not change to HOME directory\n");
-				return ;
+				return (-1);
 			}
 		}
 		else
 			printf("cd: %s: No such file or directory\n", argv[1]);
 	}
-	return ;
+	return (0);
 }
