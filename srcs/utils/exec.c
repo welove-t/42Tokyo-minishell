@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
 /*   Updated: 2023/04/26 14:48:45 by susasaki         ###   ########.fr       */
@@ -52,8 +52,9 @@ void	exec_cmd(t_node *node)
 {
 	char	**cmd_line;
 
-	open_redir_file(node->redirects);
-	do_redirect(node->redirects);
+	redirection(node->redirects);
+	if (g_flg_redir != 0)
+		exit(EXIT_FAILURE);
 	cmd_line = token_list_to_array(node->args);
 	cmd_line[0] = get_cmd_array(ft_strtrim(cmd_line[0], " "));
 	if (g_status != 1)
