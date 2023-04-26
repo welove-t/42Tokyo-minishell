@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+         #
+#    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/25 19:48:02 by susasaki         ###   ########.fr        #
+#    Updated: 2023/04/26 10:45:17 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(SOURCES_DIR)/error_tokenizer.c\
 		  $(SOURCES_DIR)/error_put.c\
 		  $(SOURCES_DIR)/error_cmd.c\
+		  $(SOURCES_DIR)/error_file.c\
 		  $(SOURCES_DIR)/signal.c\
 		  $(BUILTIN_DIR)/cd.c\
 		  $(BUILTIN_DIR)/echo.c\
@@ -51,6 +52,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(UTILS_DIR)/expantion.c\
 		  $(UTILS_DIR)/heredoc.c\
 		  $(UTILS_DIR)/redirect.c\
+		  $(UTILS_DIR)/redirect_open.c\
 		  $(UTILS_DIR)/exec.c\
 		  $(UTILS_DIR)/pipe.c\
 

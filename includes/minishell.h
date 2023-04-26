@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/25 20:42:44 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/26 11:53:36 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/param.h>
 # include <sys/stat.h>
 # include <unistd.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # define SINGLE_QUOTE_CHAR '\''
@@ -36,6 +37,7 @@ extern char					**environ;
 bool						syntax_error;
 extern bool					g_syntax_error;
 int							g_status;
+int							g_flg_redir;
 
 typedef struct s_token		t_token;
 typedef struct s_node		t_node;
@@ -212,14 +214,23 @@ void						dollar_sign(char **p, char **new_word);
 void						append_char(char **s, char c);
 void						process_word_token(t_token *tok);
 
+// ------------------------------------------------
+// recirection
+// ------------------------------------------------
+
 // redirect
+void						redirection(t_node *redir);
 void						open_redir_file(t_node *redir);
 void						do_redirect(t_node *redir);
 void						reset_redirect(t_node *redir);
+int							do_open_redir_out(char *filepath);
+int							do_open_redir_in(char *filepath);
+int							do_open_redir_append(char *filepath);
+
 
 // exec
 void						exec_cmd(t_node *node);
-void						execution(t_node *node,t_environ *environ);
+void						execution(t_node *node, t_environ *environ);
 size_t						get_node_cnt(t_node *node);
 
 
@@ -255,5 +266,6 @@ void						error_cmd(char *cmd);
 void						put_error_msg(char *error_msg);
 void						put_error_msg_endl(char *error_msg);
 void						put_error_char(char c);
+void						error_file(char *filename);
 
 #endif

@@ -6,11 +6,24 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/24 10:49:35 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/26 14:50:04 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	redirection(t_node *redir)
+{
+	g_flg_redir = 0;
+	open_redir_file(redir);
+	if (g_flg_redir != 0)
+	{
+		reset_redirect(redir);
+		return ;
+	}
+	do_redirect(redir);
+}
+
 
 int	stashfd(int fd)
 {
@@ -26,30 +39,37 @@ int	stashfd(int fd)
 
 void	open_redir_file(t_node *redir)
 {
+
 	if (redir == NULL)
 		return ;
 	if (redir->kind == ND_REDIR_OUT)
-		redir->filefd = open(redir->filename->word, \
-				O_WRONLY | O_CREAT | O_TRUNC, \
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		redir->filefd = do_open_redir_out(redir->filename->word);
 	else if (redir->kind == ND_REDIR_IN)
-		redir->filefd = open(redir->filename->word, O_RDONLY);
+		redir->filefd = do_open_redir_in(redir->filename->word);
 	else if (redir->kind == ND_REDIR_APPEND)
-		redir->filefd = open(redir->filename->word, \
-				O_WRONLY | O_CREAT | O_APPEND, \
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		redir->filefd = do_open_redir_append(redir->filename->word);
 	else if (redir->kind == ND_REDIR_HEREDOC)
 	{
 		delete_heredoc();
-		redir->filefd = open(".heredoc", O_WRONLY | O_CREAT | O_APPEND, \
-				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		redir->filefd = do_open_redir_append(".heredoc");
 		do_heredoc(redir);
 		close(redir->filefd);
-		redir->filefd = open(".heredoc", O_RDONLY);
+		redir->filefd = do_open_redir_in(".heredoc");
 	}
 	else
 		assert_error("open_redir_file");
+	if (redir->filefd < 0)
+	{
+		g_flg_redir = 1;
+		return ;
+	}
+	// dprintf(STDOUT_FILENO, "before:filefd:%d\n", redir->filefd);
+	// dprintf(STDOUT_FILENO, "before:targetfd:%d\n", redir->targetfd);
+	// dprintf(STDOUT_FILENO, "before:stashedfd:%d\n", redir->stashed_targetfd);
 	redir->filefd = stashfd(redir->filefd);
+	// dprintf(STDOUT_FILENO, "after:filefd:%d\n", redir->filefd);
+	// dprintf(STDOUT_FILENO, "after:targetfd:%d\n", redir->targetfd);
+	// dprintf(STDOUT_FILENO, "after:stashedfd:%d\n", redir->stashed_targetfd);
 	open_redir_file(redir->next);
 }
 
