@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:49:00 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/25 19:50:33 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/26 13:22:54 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void bi_exit_multiple(char *str)
     return ;
 }
 
-void bi_exit(char **argv)
+int bi_exit(char **argv)
 {
     g_status = 0;
     if (argv[1] == NULL)
@@ -95,4 +95,5 @@ void bi_exit(char **argv)
     {
         bi_single_exit_multiple(argv[1]);
     }
+	return (0);
 }
