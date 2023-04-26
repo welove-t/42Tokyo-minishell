@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:49:00 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/26 13:22:54 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 02:18:19 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void bi_single_exit_multiple(char *str)
     
     if (int_overflow__check(str,&num) == 1)
     {
-        printf("exit: %s: numeric argument required\n",str);
+        put_error_msg_endl("exit: numeric argument required");
         exit(255);
     }
     if (num < 0)
@@ -67,7 +67,7 @@ static void bi_exit_multiple(char *str)
     
     if (int_overflow__check(str,&num) == 1)
     {
-        printf("exit: %s: numeric argument required\n",str);
+        put_error_msg_endl("exit: numeric argument required");
         exit(255);
     }
     return ;
@@ -87,7 +87,7 @@ int bi_exit(char **argv)
         {
             bi_exit_multiple(argv[1]);
         }
-        printf("exit: too many arguments\n");
+        put_error_msg_endl("exit: too many arguments");
         g_status = 1;
         exit(g_status);
     }

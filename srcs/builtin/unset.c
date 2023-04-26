@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:13 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/26 14:07:56 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 02:22:40 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_valid_param_name(char *str)
 {
 	if (ft_strchr(str, '=') != NULL)
 	{
-		printf("unset: %s: invalid parameter name\n", str);
+		put_error_msg_endl("unset: invalid parameter name");
 		return (0);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 14:27:04 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/26 13:21:01 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 02:25:02 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	bi_env(int argc, t_environ *environ)
 	tmp = environ;
 	if (argc > 1)
 	{
-		printf("env too many arguments\n");
+		put_error_msg_endl("env: too many arguments");
 		return (-1);
 	}
 	// 環境変数を1行ずつ出力
