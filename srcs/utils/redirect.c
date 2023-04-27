@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/27 10:37:04 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/27 18:23:13 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	redirection(t_node *redir)
 {
-	g_flg_redir = 0;
+	g_global.flg_redir = 0;
 	open_redir_file(redir);
-	if (g_flg_redir != 0)
+	if (g_global.flg_redir != 0)
 		return ;
 	do_redirect(redir);
 }
@@ -56,7 +56,7 @@ void	open_redir_file(t_node *redir)
 		assert_error("open_redir_file");
 	if (redir->filefd < 0)
 	{
-		g_flg_redir = 1;
+		g_global.flg_redir = 1;
 		return ;
 	}
 	// dprintf(STDOUT_FILENO, "before:filefd:%d\n", redir->filefd);

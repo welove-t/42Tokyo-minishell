@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:40:25 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 16:00:12 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:21:57 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	last_exit_status(char **new_word)
 {
 	char	*str;
 
-	str = ft_itoa(g_status);
+	str = ft_itoa(g_global.status);
 	while (*str != '\0')
 		append_char(new_word, *str++);
 }

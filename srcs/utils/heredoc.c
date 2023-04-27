@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:15:06 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 15:54:41 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:22:46 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	monitor_signal(void)
 {
-	if (g_status == 1)
+	if (g_global.status == 1)
 		rl_done = 1;
 	//0だと終了
 	return (0);
@@ -50,19 +50,19 @@ void	do_heredoc(t_node *redir)
 
 	if (redir == NULL || redir->kind != ND_REDIR_HEREDOC)
 		return ;
-	g_status = 0;
+	g_global.status = 0;
 	rl_done = 0;
 	// heredoc処理用にシグナルハンドラを設定
 	rl_event_hook = monitor_signal;
 	signal(SIGINT, signal_handler_heredoc);
-	while (g_status != 1)
+	while (g_global.status != 1)
 	{
 		buff = readline("heredoc> ");
 		if (!ft_strcmp(buff, redir->delimiter->word))
 			break ;
 		if (buff == NULL)
 			break ;
-		if (g_status == 1)
+		if (g_global.status == 1)
 		{
 			buff = NULL;
 			free(buff);

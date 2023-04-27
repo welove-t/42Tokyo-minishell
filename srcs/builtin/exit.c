@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:49:00 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 12:17:54 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:21:51 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ static void	bi_exit_multiple(char *str)
 
 int	bi_exit(char **argv)
 {
-	g_status = 0;
+	g_global.status = 0;
 	if (argv[1] == NULL)
 	{
 		printf("exit\n");
-		exit(g_status);
+		exit(g_global.status);
 	}
 	if (argv[1] && argv[2])
 	{
@@ -90,8 +90,8 @@ int	bi_exit(char **argv)
 			bi_exit_multiple(argv[1]);
 		}
 		put_error_msg_endl("exit: too many arguments");
-		g_status = 1;
-		exit(g_status);
+		g_global.status = 1;
+		exit(g_global.status);
 	}
 	if (argv[1])
 	{

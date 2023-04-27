@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_tokenizer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:24 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/23 16:39:20 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/27 18:20:18 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	tokenize_error(char *location, char **rest, char *line, int flg)
 {
-	syntax_error = true;
+	g_global.syntax_error = true;
 	perror_prefix();
 	if (flg < 0)
 	{
