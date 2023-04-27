@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:38:25 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 15:12:26 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:54:42 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ static void	process_quotes(char **p, char quote_char, char **new_word)
 	(*p)++;
 	while (**p != quote_char)
 	{
-		if (**p == DOLLAR_SIGN && *((*p) + 1) != '\0' && *((*p) + 1) != '\t'
-			&& *((*p) + 1) != ' ' && quote_char == DOUBLE_QUOTE_CHAR)
+		if (**p == DOLLAR_SIGN && quote_char == DOUBLE_QUOTE_CHAR)
 			dollar_sign(p, new_word);
 		else
 			append_char(new_word, *(*p)++);
@@ -62,7 +61,7 @@ static void	process_word_token_helper(char **p, char **new_word)
 {
 	while (**p && !is_metacharacter(**p))
 	{
-		if (**p == DOLLAR_SIGN && *((*p) + 1) != '\0')
+		if (**p == DOLLAR_SIGN)
 			dollar_sign(p, new_word);
 		else if (**p == SINGLE_QUOTE_CHAR)
 			process_quotes(p, SINGLE_QUOTE_CHAR, new_word);

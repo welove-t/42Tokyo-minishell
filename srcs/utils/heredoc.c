@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:15:06 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 15:08:49 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:54:41 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	process_heredoc_line(char *str, t_node *redir)
 	new_word = NULL;
 	while (*str)
 	{
-		if (*str == DOLLAR_SIGN && (*str + 1) == '\0')
+		if (*str == DOLLAR_SIGN)
 		{
 			dollar_sign(&str, &new_word);
 			while (*new_word)
