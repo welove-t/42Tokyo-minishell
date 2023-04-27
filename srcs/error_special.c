@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_special.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:24 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/23 16:39:06 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/27 18:19:57 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	parse_error(char *location, t_token **rest, t_token *tok)
 {
-	syntax_error = true;
+	g_global.syntax_error = true;
 	perror_prefix();
 	put_error_msg("syntax error near unexpected token `");
 	put_error_msg(tok->word);

@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 19:30:37 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/23 21:29:36 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:21:41 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	signal_handler_heredoc(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_status = 1;
+		g_global.status = 1;
 	}
 	return ;
 }
