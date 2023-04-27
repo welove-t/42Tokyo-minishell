@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/26 14:48:45 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 09:36:34 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	execution(t_node *node,t_environ *environ)
 		fork()前にbuiltinか確認する。builtinだったら、forkしない
 		*/
 		//設定したビルトインコマンドがあったら、0が返ってくる
-		if (search_bi_cmd(node,environ) != 1)
+		if (search_bi_cmd(node, environ) != 1)
 			return ;
 		signal(SIGINT, SIG_IGN);
 		pid = fork();
