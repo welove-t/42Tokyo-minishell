@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 12:06:54 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 21:05:25 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*make_name(char *str)
 	if (fir_len == -1)
 		return (NULL);
 	name = (char *)malloc(fir_len + 1);
+	if (!name)
+		fatal_error ("malloc");
 	strncpy(name, str, fir_len);
 	name[fir_len] = '\0';
 	return (name);
@@ -37,6 +39,8 @@ char	*make_value(char *str)
 	if (lat_len == -1)
 		return (NULL);
 	value = (char *)malloc(lat_len + 1);
+	if (!value)
+		fatal_error ("malloc");
 	strncpy(value, str + fir_len + 1, lat_len);
 	value[lat_len] = '\0';
 	return (value);
