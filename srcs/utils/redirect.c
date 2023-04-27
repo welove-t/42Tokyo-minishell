@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/26 14:50:04 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/27 10:37:04 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,9 @@ void	redirection(t_node *redir)
 	g_flg_redir = 0;
 	open_redir_file(redir);
 	if (g_flg_redir != 0)
-	{
-		reset_redirect(redir);
 		return ;
-	}
 	do_redirect(redir);
 }
-
 
 int	stashfd(int fd)
 {
