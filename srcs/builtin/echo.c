@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:42:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/26 13:20:38 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 02:45:31 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_nflag(char **argv, int *i)
 			else
 			{
 				nflag = 0;
-				break;
+				break ;
 			}
 			j++;
 		}

@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/26 13:23:23 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:43:08 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,13 @@ int	bi_export(t_environ *environ, char **argv, int argc)
 		name = make_name(argv[1]);
 		if (name == NULL)
 		{
-			printf("export: `%s': not a valid identifier\n", argv[1]);
+			put_error_msg_endl("export: not a valid identifier");
 			return (-1);
 		}
 		var = find_variable(environ, name);
 		value = make_value(argv[1]);
-		//既に環境変数名があり上書きされる時
 		if (var != NULL)
-		{
 			override_val(environ, var, value);
-		}
 		else
 		{
 			new = environ_node_new(name, value);
@@ -103,3 +100,4 @@ int	bi_export(t_environ *environ, char **argv, int argc)
 	}
 	return (0);
 }
+
