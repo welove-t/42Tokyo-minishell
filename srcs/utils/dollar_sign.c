@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:40:25 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/23 19:03:36 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 16:00:12 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	last_exit_status(char **new_word)
 static void	expand_env(char **new_word, char *p)
 {
 	char	*value;
-	char	*new;
 
 	if (*p == '?')
 	{
@@ -34,12 +33,7 @@ static void	expand_env(char **new_word, char *p)
 	value = getenv(p);
 	if (value == NULL)
 	{
-		new = malloc(1);
-		new[0] = '\0';
-		*new_word = new;
-		// append_char(new_word, '\0');
-		// printf("\n"); // 改行を出力して新しい行を開始
-		// free(new);
+		append_char(new_word, '\0');
 		return ;
 	}
 	while (*value != '\0')
@@ -49,11 +43,11 @@ static void	expand_env(char **new_word, char *p)
 
 int	handle_dollar_sign(char **p, char **exp_tmp)
 {
-	if (*((*p) + 1) == ' ' || *((*p) + 1) == '\t' || *((*p) + 1) == '\0')
+	(*p)++;
+	if (**p == ' ' || **p == '\t' || **p == '\0')
 		return (1);
 	else
 	{
-		(*p)++;
 		if (**p == '?')
 			append_char(exp_tmp, *((*p)++));
 		else
@@ -75,18 +69,12 @@ void	dollar_sign(char **p, char **new_word)
 		if (**p == DOLLAR_SIGN)
 		{
 			if (handle_dollar_sign(p, &exp_tmp) == 1)
-				break ;
+				append_char(new_word, '$');
 			if (exp_tmp)
 			{
 				expand_env(new_word, exp_tmp);
 				free(exp_tmp);
 				exp_tmp = NULL;
-			}
-			else
-			{
-				append_char(new_word, *((*p)++));
-				append_char(new_word, *((*p)++));
-				break ;
 			}
 		}
 		else

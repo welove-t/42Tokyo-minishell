@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/27 09:36:34 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/27 13:17:02 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../includes/minishell.h"
 
 size_t	get_node_cnt(t_node *node);
 
-void	execution(t_node *node,t_environ *environ)
+void	execution(t_node *node, t_environ *environ)
 {
 	size_t	cnt_node;
 	pid_t	pid;
@@ -42,7 +41,7 @@ void	execution(t_node *node,t_environ *environ)
 	}
 	else
 	{
-		pipex(node, cnt_node,environ);
+		pipex(node, cnt_node, environ);
 		waitpid_pipex(node);
 	}
 	delete_heredoc();

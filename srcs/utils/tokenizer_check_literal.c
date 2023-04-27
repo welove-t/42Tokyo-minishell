@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_check_literal.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 11:50:42 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/23 14:31:40 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/27 13:46:33 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	is_blank(char c)
 // トークンとキーワードを比較
 bool	is_keyword(const char *s, const char *keyword)
 {
-	return (memcmp(s, keyword, ft_strlen(keyword)) == 0);
+	return (ft_memcmp(s, keyword, ft_strlen(keyword)) == 0);
 }
 
 // リダイレクション文字のチェック

@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:13 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 02:22:40 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:07:10 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	remove_variable(t_environ *environ, t_environ *var)
 	}
 }
 
-int	bi_unset(t_environ *environ, char **argv,int argc)
+int	bi_unset(t_environ *environ, char **argv, int argc)
 {
 	t_environ	*var;
 

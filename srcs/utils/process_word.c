@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:38:25 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/23 18:42:30 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:54:42 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	process_quotes(char **p, char quote_char, char **new_word)
 	(*p)++;
 	while (**p != quote_char)
 	{
-		if (**p == DOLLAR_SIGN && **p && quote_char == DOUBLE_QUOTE_CHAR)
+		if (**p == DOLLAR_SIGN && quote_char == DOUBLE_QUOTE_CHAR)
 			dollar_sign(p, new_word);
 		else
 			append_char(new_word, *(*p)++);
