@@ -6,9 +6,11 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:49:00 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 02:46:22 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:17:54 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../includes/minishell.h"
 
 static int	int_overflow__check(char *str, long *num)
 {

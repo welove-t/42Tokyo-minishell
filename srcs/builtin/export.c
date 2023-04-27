@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 11:43:08 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:06:54 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int	bi_export(t_environ *environ, char **argv, int argc)
 {
 	char		*name;
 	char		*value;
-	t_environ	*new;
 	t_environ	*var;
 
 	if (argc == 1)
@@ -93,11 +92,7 @@ int	bi_export(t_environ *environ, char **argv, int argc)
 		if (var != NULL)
 			override_val(environ, var, value);
 		else
-		{
-			new = environ_node_new(name, value);
-			environ_nodeadd_back(environ, new);
-		}
+			environ_nodeadd_back(environ, environ_node_new(name, value));
 	}
 	return (0);
 }
-

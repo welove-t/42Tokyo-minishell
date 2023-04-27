@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   str_matches_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:23:59 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/21 11:19:47 by terabu           ###   ########.fr       */
-/*                           w                                                 */
+/*   Updated: 2023/04/27 12:09:12 by susasaki         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	line_matches_cmd(char *line,t_environ *environ)
+void	line_matches_cmd(char *line, t_environ *environ)
 {
 	t_token	*token;
 	t_node	*node;
@@ -22,6 +22,6 @@ void	line_matches_cmd(char *line,t_environ *environ)
 		return ;
 	node = parse(token);
 	expand(node);
-	execution(node,environ);
+	execution(node, environ);
 	return ;
 }
