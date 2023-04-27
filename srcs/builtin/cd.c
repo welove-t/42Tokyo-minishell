@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:52:38 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 02:15:38 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:49:44 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 static int	pathname_check(char *str)
 {
-	struct stat	statBuf;
+	t_stat	tmp_stat;
 
-	//ディレクトリが存在する場合
-	if (stat(str, &statBuf) == 0)
+	if (stat(str, &tmp_stat) == 0)
 		return (0);
 	else
 		return (1);
