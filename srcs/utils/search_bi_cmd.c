@@ -3,32 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   search_bi_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:45:48 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/26 14:52:25 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 10:39:03 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-static int search_bi_cmd_helper(int argc,char **argv, t_environ *environ)
+
+static bool	check_bi(char *cmd)
+{
+	if (ft_strcmp(cmd, "pwd") == 0)
+		return (true);
+	else if (ft_strcmp(cmd, "cd") == 0)
+		return (true);
+	else if (ft_strcmp(cmd, "echo") == 0)
+		return (true);
+	else if (ft_strcmp(cmd, "env") == 0)
+		return (true);
+	else if (ft_strcmp(cmd, "exit") == 0)
+		return (true);
+	else if (ft_strcmp(cmd, "export") == 0)
+		return (true);
+	else if (ft_strcmp(cmd, "unset") == 0)
+		return (true);
+	else
+		return (false);
+}
+
+static int search_bi_cmd_helper(int argc, char **argv, t_environ *environ)
 {
 	int flag;
 	//成功時:0,失敗時:-1
 	flag = 0;
-	if (strcmp(argv[0],"pwd") == 0)
+	if (ft_strcmp(argv[0],"pwd") == 0)
 		flag = bi_pwd();
-	else if (strcmp(argv[0],"cd") == 0)
+	else if (ft_strcmp(argv[0],"cd") == 0)
 		flag = bi_cd(argv,argc);
-	else if (strcmp(argv[0],"echo") == 0)
+	else if (ft_strcmp(argv[0],"echo") == 0)
 		flag = bi_echo(argv);
-	else if (strcmp(argv[0],"env") == 0)
+	else if (ft_strcmp(argv[0],"env") == 0)
 		flag = bi_env(argc, environ);
-	else if (strcmp(argv[0],"exit") == 0)
+	else if (ft_strcmp(argv[0],"exit") == 0)
 		flag = bi_exit(argv);
-	else if (strcmp(argv[0],"export") == 0)
+	else if (ft_strcmp(argv[0],"export") == 0)
 		flag = bi_export(environ,argv,argc);
-	else if (strcmp(argv[0],"unset") == 0)
+	else if (ft_strcmp(argv[0],"unset") == 0)
 		flag = bi_unset(environ,argv,argc);
 	else
 		return (1);
@@ -74,18 +95,27 @@ char **string_to_array(int *argc, t_token *token)
 	argv[i] = NULL;
 	return (argv);
 }
-int search_bi_cmd(t_node *node,t_environ *environ)
-{
-	int flag;
-	char **argv;
-	int argc;
-	flag = 0;
 
-	(void)node;
-	argv = string_to_array(&argc ,node->args);
+int	search_bi_cmd(t_node *node, t_environ *environ)
+{
+	int		flag;
+	char	**argv;
+	int		argc;
+
+	flag = 0;
+	argv = string_to_array(&argc, node->args);
 	if (argv == NULL)
 		return (0);
-	flag = search_bi_cmd_helper(argc,argv,environ);
+	if (check_bi(argv[0]))
+	{
+		redirection(node->redirects);
+		if (g_flg_redir == 1)
+			return (-1);
+		flag = search_bi_cmd_helper(argc, argv, environ);
+		reset_redirect(node->redirects);
+	}
+	else
+		flag = 1;
 	// if (flag == 0)
 	// 	printf("\x1b[32mBuilt in commandが呼ばれた(%d)\x1b[0m\n",flag);
 	// else
