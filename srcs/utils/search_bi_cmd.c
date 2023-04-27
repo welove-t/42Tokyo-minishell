@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:45:48 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 12:04:35 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:23:17 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	search_bi_cmd(t_node *node, t_environ *environ)
 	if (check_bi(argv[0]))
 	{
 		redirection(node->redirects);
-		if (g_flg_redir == 1)
+		if (g_global.flg_redir == 1)
 			return (-1);
 		flag = search_bi_cmd_helper(argc, argv, environ);
 		reset_redirect(node->redirects);

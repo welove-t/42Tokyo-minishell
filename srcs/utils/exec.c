@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/27 13:17:02 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:23:26 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ void	exec_cmd(t_node *node)
 	char	**cmd_line;
 
 	redirection(node->redirects);
-	if (g_flg_redir != 0)
+	if (g_global.flg_redir != 0)
 		exit(EXIT_FAILURE);
 	cmd_line = token_list_to_array(node->args);
 	cmd_line[0] = get_cmd_array(ft_strtrim(cmd_line[0], " "));
-	if (g_status != 1)
+	if (g_global.status != 1)
 	{
 		if (cmd_line[0] != NULL)
 		{

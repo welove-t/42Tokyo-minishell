@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/23 15:14:09 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/27 18:20:27 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_token	*tokenize(char *line)
 	t_token	head;
 	t_token	*token;
 
-	syntax_error = false;
+	g_global.syntax_error = false;
 	head.next = NULL;
 	token = &head;
 	while (*line)

@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 11:49:46 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:25:10 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,25 @@
 # define SIG_SET 200
 
 extern char					**environ;
-bool						syntax_error;
-extern bool					g_syntax_error;
-int							g_status;
-int							g_flg_redir;
 
 typedef struct s_token		t_token;
 typedef struct s_node		t_node;
 typedef enum e_token_kind	t_token_kind;
 typedef enum e_node_kind	t_node_kind;
-typedef struct stat	t_stat;
+typedef struct stat			t_stat;
+typedef struct s_global		t_global;
+t_global					g_global;
 
 t_token						*new_token(char *word, t_token_kind kind);
 
+// グローバル変数の構造体
+struct						s_global
+{
+	//TODO:g_始まりを消す
+	bool						syntax_error;
+	int							status;
+	int							flg_redir;
+};
 // トークンの種類
 enum						e_token_kind
 {

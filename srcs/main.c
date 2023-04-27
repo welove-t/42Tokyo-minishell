@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 12:09:29 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:20:21 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(void)
 	char		*input;
 	t_environ	*environ;
 
-	syntax_error = false;
+	g_global.syntax_error = false;
 	signal(SIGQUIT, signal_handler);
 	environ = init_environ_list();
 	while (1)
