@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:40:25 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 13:15:58 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:10:13 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ static void	expand_env(char **new_word, char *p)
 
 int	handle_dollar_sign(char **p, char **exp_tmp)
 {
-	if (*((*p) + 1) == ' ' || *((*p) + 1) == '\t' || *((*p) + 1) == '\0')
+	(*p)++;
+	if (**p == ' ' || **p == '\t' || **p == '\0')
 		return (1);
 	else
 	{
-		(*p)++;
 		if (**p == '?')
 			append_char(exp_tmp, *((*p)++));
 		else

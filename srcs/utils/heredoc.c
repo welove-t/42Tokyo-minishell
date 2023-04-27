@@ -6,10 +6,9 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:15:06 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 13:15:06 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:08:49 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../includes/minishell.h"
 
@@ -28,7 +27,7 @@ static void	process_heredoc_line(char *str, t_node *redir)
 	new_word = NULL;
 	while (*str)
 	{
-		if (*str == DOLLAR_SIGN)
+		if (*str == DOLLAR_SIGN && (*str + 1) == '\0')
 		{
 			dollar_sign(&str, &new_word);
 			while (*new_word)
@@ -48,7 +47,6 @@ static void	process_heredoc_line(char *str, t_node *redir)
 void	do_heredoc(t_node *redir)
 {
 	char	*buff;
-	char	*str;
 
 	if (redir == NULL || redir->kind != ND_REDIR_HEREDOC)
 		return ;
@@ -60,10 +58,8 @@ void	do_heredoc(t_node *redir)
 	while (g_status != 1)
 	{
 		buff = readline("heredoc> ");
-		str = buff;
-		if (!ft_strcmp(str, redir->delimiter->word))
+		if (!ft_strcmp(buff, redir->delimiter->word))
 			break ;
-		// printf("buff = %s\n",buff);
 		if (buff == NULL)
 			break ;
 		if (g_status == 1)
@@ -72,7 +68,7 @@ void	do_heredoc(t_node *redir)
 			free(buff);
 			break ;
 		}
-		process_heredoc_line(str, redir);
+		process_heredoc_line(buff, redir);
 		buff = NULL;
 		free(buff);
 	}
