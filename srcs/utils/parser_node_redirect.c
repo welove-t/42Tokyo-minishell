@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 08:42:58 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/21 09:01:01 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/28 09:44:42 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_node	*redirect_out(t_token **rest, t_token *tok)
 
 	node = new_node(ND_REDIR_OUT, NULL);
 	node->filename = tokdup(tok->next);
-	node->targetfd = STDOUT_FILENO;
+	node->target_fd = STDOUT_FILENO;
 	*rest = tok->next->next;
 	return (node);
 }
@@ -31,7 +31,7 @@ t_node	*redirect_in(t_token **rest, t_token *tok)
 
 	node = new_node(ND_REDIR_IN, NULL);
 	node->filename = tokdup(tok->next);
-	node->targetfd = STDIN_FILENO;
+	node->target_fd = STDIN_FILENO;
 	*rest = tok->next->next;
 	return (node);
 }
@@ -43,7 +43,7 @@ t_node	*redirect_append(t_token **rest, t_token *tok)
 
 	node = new_node(ND_REDIR_APPEND, NULL);
 	node->filename = tokdup(tok->next);
-	node->targetfd = STDOUT_FILENO;
+	node->target_fd = STDOUT_FILENO;
 	*rest = tok->next->next;
 	return (node);
 }
@@ -55,7 +55,7 @@ t_node	*redirect_heredoc(t_token **rest, t_token *tok)
 
 	node = new_node(ND_REDIR_HEREDOC, NULL);
 	node->delimiter = tokdup(tok->next);
-	node->targetfd = STDIN_FILENO;
+	node->target_fd = STDIN_FILENO;
 	*rest = tok->next->next;
 	return (node);
 }

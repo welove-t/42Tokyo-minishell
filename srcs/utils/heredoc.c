@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:15:06 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 18:22:46 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/28 09:43:47 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	process_heredoc_line(char *str, t_node *redir)
 		{
 			dollar_sign(&str, &new_word);
 			while (*new_word)
-				write(redir->filefd, new_word++, 1);
+				write(redir->file_fd, new_word++, 1);
 			if (new_word)
 			{
 				new_word = NULL;
@@ -39,9 +39,9 @@ static void	process_heredoc_line(char *str, t_node *redir)
 			}
 		}
 		else
-			write(redir->filefd, str++, 1);
+			write(redir->file_fd, str++, 1);
 	}
-	write(redir->filefd, "\n", 1);
+	write(redir->file_fd, "\n", 1);
 }
 
 void	do_heredoc(t_node *redir)

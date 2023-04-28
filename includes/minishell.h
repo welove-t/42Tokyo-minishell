@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 18:25:10 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/28 09:43:16 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,11 @@ struct						s_node
 	t_token					*args;
 	t_node					*redirects;
 	//REDIR
-	int						targetfd;
+	int						target_fd;
 	t_token					*filename;
 	t_token					*delimiter;
-	int						filefd;
-	int						stashed_targetfd;
+	int						file_fd;
+	int						stacktmp_fd;
 	//pipe
 	pid_t					pid;
 	int						pfd[2];
