@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/27 18:23:13 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/28 09:44:56 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,49 +23,42 @@ void	redirection(t_node *redir)
 
 int	stashfd(int fd)
 {
-	int	stashfd;
+	int	tmp_fd;
 
-	stashfd = fcntl(fd, F_DUPFD, 10);
-	if (stashfd < 0)
+	tmp_fd = dup(fd);
+	if (tmp_fd < 0)
 		fatal_error("fcntl");
 	if (close(fd) < 0)
 		fatal_error("close");
-	return (stashfd);
+	return (tmp_fd);
 }
 
 void	open_redir_file(t_node *redir)
 {
-
 	if (redir == NULL)
 		return ;
 	if (redir->kind == ND_REDIR_OUT)
-		redir->filefd = do_open_redir_out(redir->filename->word);
+		redir->file_fd = do_open_redir_out(redir->filename->word);
 	else if (redir->kind == ND_REDIR_IN)
-		redir->filefd = do_open_redir_in(redir->filename->word);
+		redir->file_fd = do_open_redir_in(redir->filename->word);
 	else if (redir->kind == ND_REDIR_APPEND)
-		redir->filefd = do_open_redir_append(redir->filename->word);
+		redir->file_fd = do_open_redir_append(redir->filename->word);
 	else if (redir->kind == ND_REDIR_HEREDOC)
 	{
 		delete_heredoc();
-		redir->filefd = do_open_redir_append(".heredoc");
+		redir->file_fd = do_open_redir_append(".heredoc");
 		do_heredoc(redir);
-		close(redir->filefd);
-		redir->filefd = do_open_redir_in(".heredoc");
+		close(redir->file_fd);
+		redir->file_fd = do_open_redir_in(".heredoc");
 	}
 	else
 		assert_error("open_redir_file");
-	if (redir->filefd < 0)
+	if (redir->file_fd < 0)
 	{
 		g_global.flg_redir = 1;
 		return ;
 	}
-	// dprintf(STDOUT_FILENO, "before:filefd:%d\n", redir->filefd);
-	// dprintf(STDOUT_FILENO, "before:targetfd:%d\n", redir->targetfd);
-	// dprintf(STDOUT_FILENO, "before:stashedfd:%d\n", redir->stashed_targetfd);
-	redir->filefd = stashfd(redir->filefd);
-	// dprintf(STDOUT_FILENO, "after:filefd:%d\n", redir->filefd);
-	// dprintf(STDOUT_FILENO, "after:targetfd:%d\n", redir->targetfd);
-	// dprintf(STDOUT_FILENO, "after:stashedfd:%d\n", redir->stashed_targetfd);
+	redir->file_fd = stashfd(redir->file_fd);
 	open_redir_file(redir->next);
 }
 
@@ -76,8 +69,8 @@ void	do_redirect(t_node *redir)
 	if (redir->kind == ND_REDIR_OUT || redir->kind == ND_REDIR_IN \
 		|| redir->kind == ND_REDIR_APPEND || redir->kind == ND_REDIR_HEREDOC)
 	{
-		redir->stashed_targetfd = stashfd(redir->targetfd);
-		dup2(redir->filefd, redir->targetfd);
+		redir->stacktmp_fd = stashfd(redir->target_fd);
+		dup2(redir->file_fd, redir->target_fd);
 	}
 	else
 		assert_error("do_redirect");
@@ -94,8 +87,8 @@ void	reset_redirect(t_node *redir)
 	if (redir->kind == ND_REDIR_OUT || redir->kind == ND_REDIR_IN \
 		|| redir->kind == ND_REDIR_IN || redir->kind == ND_REDIR_HEREDOC)
 	{
-		close(redir->filefd);
-		close(redir->targetfd);
-		dup2(redir->stashed_targetfd, redir->targetfd);
+		close(redir->file_fd);
+		close(redir->target_fd);
+		dup2(redir->stacktmp_fd, redir->target_fd);
 	}
 }
