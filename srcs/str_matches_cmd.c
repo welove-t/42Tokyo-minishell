@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_matches_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:23:59 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 18:20:24 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/28 10:21:11 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	line_matches_cmd(char *line, t_environ *environ)
 	if (g_global.syntax_error)
 		return ;
 	node = parse(token);
+	if (g_global.syntax_error)
+		return ;
 	expand(node);
 	execution(node, environ);
 	return ;
