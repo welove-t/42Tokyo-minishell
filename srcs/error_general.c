@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_general.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:24 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/23 20:32:53 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/28 10:28:02 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,4 @@ void	err_exit(char *location, char *msg, int status)
 	put_error_msg(": ");
 	put_error_msg_endl(msg);
 	exit(status);
-}
-
-void	todo(char *msg)
-{
-	perror_prefix();
-	put_error_msg("TODO: ");
-	put_error_msg_endl(msg);
-	exit(255);
 }

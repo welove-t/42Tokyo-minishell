@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/28 09:43:16 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/28 10:28:11 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,11 +263,9 @@ void						perror_prefix(void);
 void						fatal_error(char *msg);
 void						assert_error(char *msg);
 void						err_exit(char *location, char *msg, int status);
-void						todo(char *msg);
 void						tokenize_error(char *location, char **rest,
 								char *line, int flg);
-void						parse_error(char *location, t_token **rest,
-								t_token *tok);
+void						parse_error(t_token **rest, t_token *tok);
 void						xperror(const char *location);
 void						error_cmd(char *cmd);
 void						put_error_msg(char *error_msg);

@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:31:19 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/23 14:51:10 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/28 10:26:50 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ void	append_command_element(t_node *command, t_token **rest, t_token *tok)
 		tok = NULL;
 	}
 	else
-		todo("Unexpected Token");
+	{
+		parse_error(rest, tok);
+		return ;
+	}
 	*rest = tok;
 }
 
