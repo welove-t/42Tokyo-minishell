@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:49:00 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 18:21:51 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/28 23:30:14 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,16 +86,19 @@ int	bi_exit(char **argv)
 	if (argv[1] && argv[2])
 	{
 		if (argv[1])
-		{
 			bi_exit_multiple(argv[1]);
+		if (argv[2])
+		{
+			put_error_msg_endl("exit: too many arguments");
+			return (0);
 		}
-		put_error_msg_endl("exit: too many arguments");
-		g_global.status = 1;
-		exit(g_global.status);
+		else
+		{
+			g_global.status = 1;
+			exit(g_global.status);
+		}
 	}
 	if (argv[1])
-	{
 		bi_single_exit_multiple(argv[1]);
-	}
 	return (0);
 }
