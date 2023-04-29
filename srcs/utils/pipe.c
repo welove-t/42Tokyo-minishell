@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 15:45:00 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/27 14:04:12 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/29 13:53:04 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,24 +52,24 @@ void	pipex(t_node *node, size_t cnt_node, t_environ *environ)
 
 void	output_pipe_dup_close(int fd[2])
 {
-	close(fd[0]);
+	do_close(fd[0]);
 	dup2(fd[1], STDOUT_FILENO);
-	close(fd[1]);
+	do_close(fd[1]);
 }
 
 void	input_pipe_dup_close(int fd[2])
 {
-	close(fd[1]);
+	do_close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
+	do_close(fd[0]);
 }
 
 void	close_pipe(t_node *node, size_t i)
 {
 	if (i < 1)
 		return ;
-	close(node->prev->pfd[0]);
-	close(node->prev->pfd[1]);
+	do_close(node->prev->pfd[0]);
+	do_close(node->prev->pfd[1]);
 }
 
 void	waitpid_pipex(t_node *node)
