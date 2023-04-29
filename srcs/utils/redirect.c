@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/28 09:44:56 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/29 13:53:53 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ int	stashfd(int fd)
 	tmp_fd = dup(fd);
 	if (tmp_fd < 0)
 		fatal_error("fcntl");
-	if (close(fd) < 0)
-		fatal_error("close");
+	do_close(fd);
 	return (tmp_fd);
 }
 
@@ -48,7 +47,7 @@ void	open_redir_file(t_node *redir)
 		delete_heredoc();
 		redir->file_fd = do_open_redir_append(".heredoc");
 		do_heredoc(redir);
-		close(redir->file_fd);
+		do_close(redir->file_fd);
 		redir->file_fd = do_open_redir_in(".heredoc");
 	}
 	else
@@ -87,8 +86,8 @@ void	reset_redirect(t_node *redir)
 	if (redir->kind == ND_REDIR_OUT || redir->kind == ND_REDIR_IN \
 		|| redir->kind == ND_REDIR_IN || redir->kind == ND_REDIR_HEREDOC)
 	{
-		close(redir->file_fd);
-		close(redir->target_fd);
+		do_close(redir->file_fd);
+		do_close(redir->target_fd);
 		dup2(redir->stacktmp_fd, redir->target_fd);
 	}
 }

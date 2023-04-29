@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/29 16:38:07 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/29 17:02:29 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,5 +283,13 @@ void						error_file(char *filename);
 void						free_token(t_token *tok);
 void						free_nodelist(t_node *node);
 void						free_argv(char **args);
+
+
+// ------------------------------------------------
+// WRAPPER FUNCTION
+// ------------------------------------------------
+void    do_close(int fd);
+void    do_write(int fd, const void *buf,size_t count);
+
 
 #endif

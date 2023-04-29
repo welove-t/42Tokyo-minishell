@@ -6,7 +6,7 @@
 #    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/29 12:00:36 by terabu           ###   ########.fr        #
+#    Updated: 2023/04/29 17:03:09 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(UTILS_DIR)/redirect_open.c\
 		  $(UTILS_DIR)/exec.c\
 		  $(UTILS_DIR)/pipe.c\
+		  $(UTILS_DIR)/wrap_systemcall.c\
 
 VPATH = $(SOURCES_DIR) $(UTILS_DIR) $(BUILTIN_DIR)
 OBJS_DIR = objs

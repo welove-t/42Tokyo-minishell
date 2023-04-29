@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   wrap_systemcall.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/21 14:20:00 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/27 21:10:53 by susasaki         ###   ########.fr       */
+/*   Created: 2023/04/29 13:30:00 by susasaki          #+#    #+#             */
+/*   Updated: 2023/04/29 14:05:08 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+void    do_close(int fd)
 {
-	char	*heap;
-	size_t	i;
+    if (close(fd) < 0)
+    {
+        fatal_error("close");
+        exit(1);
+    }
+}
 
-	if (s == NULL || f == NULL)
-		return (NULL);
-	heap = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (heap == NULL)
-		return (NULL);
-	i = 0;
-	while (*s)
-	{
-		heap[i] = f(i, *s);
-		i++;
-		s++;
-	}
-	heap[i] = '\0';
-	return (heap);
+void    do_write(int fd, const void *buf,size_t count)
+{
+    if (write(fd, buf, count) < 0)
+    {
+        fatal_error("write");
+        exit(1);
+    }
 }
