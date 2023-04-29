@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 11:56:02 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/29 16:17:50 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/29 16:54:07 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,19 @@ void	free_nodelist(t_node *node)
 	free_nodelist(node->redirects);
 	free_nodelist(node->next);
 	free(node);
+}
+
+void	free_argv(char **args)
+{
+	size_t	i;
+
+	if (args == NULL)
+		return ;
+	i = 0;
+	while (args[i])
+	{
+		// free(args[i]);
+		i++;
+	}
+	free(args);
 }
