@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:48:29 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/23 19:58:57 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/27 21:05:14 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ t_environ	*environ_node_new(char *name, char *value)
 	t_environ	*new;
 
 	new = (t_environ *)malloc(sizeof(t_environ));
-	if (new == NULL)
-		return (NULL);
+	if (!new)
+		fatal_error ("malloc");
 	new->name = name;
 	new->value = value;
 	new->next = NULL;
