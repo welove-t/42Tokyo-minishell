@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_bi_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:45:48 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 18:23:17 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/29 16:54:15 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,15 @@ int	search_bi_cmd(t_node *node, t_environ *environ)
 	{
 		redirection(node->redirects);
 		if (g_global.flg_redir == 1)
+		{
+			free_argv(argv);
 			return (-1);
+		}
 		flag = search_bi_cmd_helper(argc, argv, environ);
 		reset_redirect(node->redirects);
 	}
 	else
 		flag = 1;
+	free_argv(argv);
 	return (flag);
 }

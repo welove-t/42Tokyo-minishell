@@ -1,37 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_matches_cmd.c                                  :+:      :+:    :+:   */
+/*   destructors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 13:23:59 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/29 16:32:34 by terabu           ###   ########.fr       */
+/*   Created: 2023/04/29 11:56:02 by terabu            #+#    #+#             */
+/*   Updated: 2023/04/29 16:54:07 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	line_matches_cmd(char *line, t_environ *environ)
+void	free_token(t_token *tok)
 {
-	t_token	*token;
-	t_node	*node;
+	if (tok)
+		free_token(tok->next);
+	else
+		return ;
+	if (tok->word)
+		free(tok->word);
+	free(tok);
+}
 
-	token = tokenize(line);
-	if (g_global.syntax_error)
-	{
-		free_token(token);
+void	free_nodelist(t_node *node)
+{
+	if (node == NULL)
 		return ;
-	}
-	node = parse(token);
-	free_token(token);
-	if (g_global.syntax_error)
-	{
-		free_nodelist(node);
+	free_token(node->args);
+	free_token(node->filename);
+	free_nodelist(node->redirects);
+	free_nodelist(node->next);
+	free(node);
+}
+
+void	free_argv(char **args)
+{
+	size_t	i;
+
+	if (args == NULL)
 		return ;
+	i = 0;
+	while (args[i])
+	{
+		// free(args[i]);
+		i++;
 	}
-	expand(node);
-	execution(node, environ);
-	free_nodelist(node);
-	return ;
+	free(args);
 }

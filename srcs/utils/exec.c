@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/27 18:23:26 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/29 16:31:56 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	exec_cmd(t_node *node)
 		else
 			error_cmd(node->args->word);
 	}
-	reset_redirect(node->redirects);
+	// reset_redirect(node->redirects);
 }
 
 size_t	get_node_cnt(t_node *node)
