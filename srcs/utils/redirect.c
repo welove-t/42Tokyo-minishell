@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/29 13:53:53 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/29 14:43:52 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	do_redirect(t_node *redir)
 		|| redir->kind == ND_REDIR_APPEND || redir->kind == ND_REDIR_HEREDOC)
 	{
 		redir->stacktmp_fd = stashfd(redir->target_fd);
-		dup2(redir->file_fd, redir->target_fd);
+		do_dup2(redir->file_fd, redir->target_fd);
 	}
 	else
 		assert_error("do_redirect");
@@ -88,6 +88,6 @@ void	reset_redirect(t_node *redir)
 	{
 		do_close(redir->file_fd);
 		do_close(redir->target_fd);
-		dup2(redir->stacktmp_fd, redir->target_fd);
+		do_dup2(redir->stacktmp_fd, redir->target_fd);
 	}
 }
