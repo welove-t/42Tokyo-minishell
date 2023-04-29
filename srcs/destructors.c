@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destructors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 11:56:02 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/29 16:54:07 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/29 17:48:06 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	free_argv(char **args)
 	i = 0;
 	while (args[i])
 	{
-		// free(args[i]);
+		free(args[i]);
 		i++;
 	}
 	free(args);
