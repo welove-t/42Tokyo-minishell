@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 13:30:00 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/29 13:51:47 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/29 14:05:08 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,6 @@ void    do_close(int fd)
     if (close(fd) < 0)
     {
         fatal_error("close");
-        exit(1);
-    }
-}
-
-void    do_open(const char *pathname, int flags)
-{
-    if (open(pathname, flags) < 0)
-    {
-        fatal_error("open");
         exit(1);
     }
 }

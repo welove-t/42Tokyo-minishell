@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/29 13:51:30 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/29 14:05:02 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,7 +280,6 @@ void						error_file(char *filename);
 // WRAPPER FUNCTION
 // ------------------------------------------------
 void    do_close(int fd);
-void    do_open(const char *pathname, int flags);
 void    do_write(int fd, const void *buf,size_t count);
 
 
