@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:45:48 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/29 17:47:53 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/29 18:02:14 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,14 @@ int	search_bi_cmd(t_node *node, t_environ *environ)
 	char	**argv;
 
 	flag = 0;
-	// argv = string_to_array(&argc, node->args);
 	argv = token_list_to_array(node->args);
 	if (argv == NULL)
 		return (0);
+	if (argv[0] == NULL)
+	{
+		free_argv(argv);
+		return (0);
+	}
 	if (check_bi(argv[0]))
 	{
 		redirection(node->redirects);
