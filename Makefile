@@ -6,7 +6,7 @@
 #    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/26 10:45:17 by terabu           ###   ########.fr        #
+#    Updated: 2023/04/29 10:59:29 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(UTILS_DIR)/parser.c\
 		  $(UTILS_DIR)/parser_node_redirect.c\
 		  $(UTILS_DIR)/parser_make_tok.c\
+		  $(UTILS_DIR)/parser_check.c\
 		  $(UTILS_DIR)/expantion.c\
 		  $(UTILS_DIR)/heredoc.c\
 		  $(UTILS_DIR)/redirect.c\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 18:25:10 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/29 10:59:11 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,11 @@ struct						s_node
 	t_token					*args;
 	t_node					*redirects;
 	//REDIR
-	int						targetfd;
+	int						target_fd;
 	t_token					*filename;
 	t_token					*delimiter;
-	int						filefd;
-	int						stashed_targetfd;
+	int						file_fd;
+	int						stacktmp_fd;
 	//pipe
 	pid_t					pid;
 	int						pfd[2];
@@ -208,6 +208,9 @@ t_node						*redirect_in(t_token **rest, t_token *tok);
 t_node						*redirect_append(t_token **rest, t_token *tok);
 t_node						*redirect_heredoc(t_token **rest, t_token *tok);
 
+// parser-check
+bool	parser_check_pipe(t_node *node, t_token *tok);
+
 //heredoc
 void						do_heredoc(t_node *redir);
 
@@ -263,11 +266,9 @@ void						perror_prefix(void);
 void						fatal_error(char *msg);
 void						assert_error(char *msg);
 void						err_exit(char *location, char *msg, int status);
-void						todo(char *msg);
 void						tokenize_error(char *location, char **rest,
 								char *line, int flg);
-void						parse_error(char *location, t_token **rest,
-								t_token *tok);
+void						parse_error(t_token **rest, t_token *tok);
 void						xperror(const char *location);
 void						error_cmd(char *cmd);
 void						put_error_msg(char *error_msg);

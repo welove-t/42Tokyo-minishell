@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_matches_cmd.c                                  :+:      :+:    :+:   */
+/*   parser_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 13:23:59 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/28 10:21:11 by terabu           ###   ########.fr       */
+/*   Created: 2023/04/05 10:31:19 by terabu            #+#    #+#             */
+/*   Updated: 2023/04/29 11:44:09 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	line_matches_cmd(char *line, t_environ *environ)
+bool	parser_check_pipe(t_node *node, t_token *tok)
 {
-	t_token	*token;
-	t_node	*node;
+	t_token	*tmp;
 
-	token = tokenize(line);
-	if (g_global.syntax_error)
-		return ;
-	node = parse(token);
-	if (g_global.syntax_error)
-		return ;
-	expand(node);
-	execution(node, environ);
-	return ;
+	if (node->args == NULL || tok->next->kind != TK_WORD)
+	{
+		parse_error(&tok, tok);
+		return (false);
+	}
+	tmp = node->args;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	if (tmp->kind != TK_WORD)
+	{
+		parse_error(&tok, tok);
+		return (false);
+	}
+	return (true);
 }
