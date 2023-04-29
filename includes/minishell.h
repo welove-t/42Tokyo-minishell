@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/29 10:59:11 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/29 11:58:14 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,5 +275,12 @@ void						put_error_msg(char *error_msg);
 void						put_error_msg_endl(char *error_msg);
 void						put_error_char(char c);
 void						error_file(char *filename);
+
+// ------------------------------------------------
+// Destructors
+// ------------------------------------------------
+
+void	free_token(t_token *tok);
+
 
 #endif
