@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/27 18:20:27 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/29 12:18:38 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static t_token	*operator(char **rest, char *line)
 		i++;
 	}
 	assert_error("Unexpected operator");
-	exit(1);
+	return (NULL);
 }
 
 static t_token	*word(char **rest, char *line)
