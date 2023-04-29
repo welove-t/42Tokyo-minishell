@@ -6,6 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
+/*   Updated: 2023/04/29 14:54:34 by susasaki         ###   ########.fr       */
 /*   Updated: 2023/04/29 17:02:29 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -290,6 +291,7 @@ void						free_argv(char **args);
 // ------------------------------------------------
 void    do_close(int fd);
 void    do_write(int fd, const void *buf,size_t count);
-
+void    do_dup2(int oldfd, int newfd);
+void	do_pipe(int pipefd[2]);
 
 #endif
