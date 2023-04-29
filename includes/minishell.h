@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/28 10:28:11 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/29 10:59:11 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,9 @@ t_node						*redirect_out(t_token **rest, t_token *tok);
 t_node						*redirect_in(t_token **rest, t_token *tok);
 t_node						*redirect_append(t_token **rest, t_token *tok);
 t_node						*redirect_heredoc(t_token **rest, t_token *tok);
+
+// parser-check
+bool	parser_check_pipe(t_node *node, t_token *tok);
 
 //heredoc
 void						do_heredoc(t_node *redir);

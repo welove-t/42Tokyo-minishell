@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:31:19 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/28 10:26:50 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/29 11:00:55 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_node	*parse(t_token *tok)
 	{
 		if (is_operator(tok, "|"))
 		{
+			if (!parser_check_pipe(node, tok))
+				return (head);
 			append_tok(&node->args, new_token(NULL, TK_EOF));
 			append_node(&node->next, new_node(ND_SIMPLE_CMD, node));
 			node = node->next;
@@ -41,9 +43,9 @@ t_node	*new_node(t_node_kind kind, t_node *prev)
 {
 	t_node	*node;
 
-	node = calloc(1, sizeof(*node));
+	node = ft_calloc(1, sizeof(*node));
 	if (node == NULL)
-		perror("calloc");
+		fatal_error("calloc");
 	node->kind = kind;
 	node->prev = prev;
 	return (node);
