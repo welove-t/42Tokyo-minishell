@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 11:56:02 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/01 07:07:47 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/01 07:52:24 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	free_nodelist(t_node *node)
 		return ;
 	free_token(node->args);
 	free_token(node->filename);
+	free_token(node->delimiter);
 	free_nodelist(node->redirects);
 	free_nodelist(node->next);
 	free(node);
