@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:43:47 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/29 12:18:38 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/30 12:04:29 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_token	*new_token(char *word, t_token_kind kind)
 {
 	t_token	*tok;
 
-	tok = calloc(1, sizeof(*tok));
+	tok = ft_calloc(1, sizeof(*tok));
 	if (tok == NULL)
 		perror("calloc");
 	tok->word = word;
