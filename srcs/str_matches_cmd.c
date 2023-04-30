@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:23:59 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/29 16:32:34 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/30 14:04:31 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ void	line_matches_cmd(char *line, t_environ *environ)
 	}
 	expand(node);
 	execution(node, environ);
-	free_nodelist(node);
 	return ;
 }
