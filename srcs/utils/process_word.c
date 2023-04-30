@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:38:25 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 15:54:42 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/30 16:52:49 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,17 @@ void	append_char(char **s, char c)
 static void	process_quotes(char **p, char quote_char, char **new_word)
 {
 	(*p)++;
-	while (**p != quote_char)
+	if (**p == quote_char)
+		append_char(new_word, '\0');
+	else
 	{
-		if (**p == DOLLAR_SIGN && quote_char == DOUBLE_QUOTE_CHAR)
-			dollar_sign(p, new_word);
-		else
-			append_char(new_word, *(*p)++);
+		while (**p != quote_char)
+		{
+			if (**p == DOLLAR_SIGN && quote_char == DOUBLE_QUOTE_CHAR)
+				dollar_sign(p, new_word);
+			else
+				append_char(new_word, *(*p)++);
+		}
 	}
 	(*p)++;
 }
