@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/29 14:43:52 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/30 12:41:56 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	redirection(t_node *redir)
 {
 	g_global.flg_redir = 0;
 	open_redir_file(redir);
-	if (g_global.flg_redir != 0)
+	if (g_global.flg_redir != 0 || g_global.status == 1)
 		return ;
 	do_redirect(redir);
 }
