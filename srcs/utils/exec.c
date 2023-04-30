@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/30 18:32:13 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 07:08:00 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	execution(t_node *node, t_environ *environ)
 		pipex(node, cnt_node, environ);
 		waitpid_pipex(node, &wstatus);
 	}
-	finalize(node, wstatus);
+	finalize(wstatus);
 	// g_global.status = WEXITSTATUS(wstatus);
 	// delete_heredoc();
 }

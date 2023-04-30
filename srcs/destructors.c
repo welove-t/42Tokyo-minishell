@@ -6,16 +6,15 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 11:56:02 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/30 15:48:07 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/01 07:07:47 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	finalize(t_node *node, int wstatus)
+void	finalize(int wstatus)
 {
 	delete_heredoc();
-	free_nodelist(node);
 	set_wstatus(wstatus);
 }
 
