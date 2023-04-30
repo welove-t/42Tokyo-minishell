@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 11:56:02 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/30 14:09:14 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/30 15:48:07 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,12 @@ void	free_argv(char **args)
 
 void	set_wstatus(int wstatus)
 {
-	g_global.status = WEXITSTATUS(wstatus);
+	if (wstatus == SIGINT || wstatus == SIGQUIT)
+	{
+		g_global.status = 128 + wstatus;
+		if (wstatus == SIGQUIT)
+			put_error_msg_endl("Quit: 3");
+	}
+	else
+		g_global.status = WEXITSTATUS(wstatus);
 }
