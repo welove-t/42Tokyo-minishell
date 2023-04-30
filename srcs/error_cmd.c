@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:24 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/24 19:06:24 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/30 14:25:05 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	error_cmd(char *cmd)
 		put_error_msg(cmd);
 		put_error_msg_endl(": command not found");
 	}
-	exit(1);
+	exit(127);
 }
