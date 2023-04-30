@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
+#    By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/29 17:03:09 by terabu           ###   ########.fr        #
+#    Updated: 2023/04/30 15:16:11 by susasaki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(SOURCES_DIR)/error_file.c\
 		  $(SOURCES_DIR)/destructors.c\
 		  $(SOURCES_DIR)/signal.c\
+		  $(SOURCES_DIR)/signal2.c\
 		  $(BUILTIN_DIR)/cd.c\
 		  $(BUILTIN_DIR)/echo.c\
 		  $(BUILTIN_DIR)/env.c\

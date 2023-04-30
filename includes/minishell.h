@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/30 14:10:28 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/30 15:16:34 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,6 +253,7 @@ void						signal_backslash(void);
 void						signal_handler(int sig);
 int							signal_setget_status(int style, int sig);
 void						signal_handler_heredoc(int sig);
+void 						signal_handler_waiting_input(int sig);
 
 // ------------------------------------------------
 // pipe
