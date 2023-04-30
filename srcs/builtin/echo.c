@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:42:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 02:45:31 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 07:21:15 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ int	bi_echo(char **argv)
 	i = 1;
 	nflag = check_nflag(argv, &i);
 	print_arguments(argv, i, nflag);
+	g_global.status = 0;
 	return (0);
 }

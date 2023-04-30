@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/30 19:47:12 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 07:09:06 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,7 +277,7 @@ void						error_file(char *filename);
 // Destructors
 // ------------------------------------------------
 
-void						finalize(t_node *node, int wstatus);
+void						finalize(int wstatus);
 void						free_token(t_token *tok);
 void						free_nodelist(t_node *node);
 void						free_argv(char **args);
