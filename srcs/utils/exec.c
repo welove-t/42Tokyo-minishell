@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/30 14:10:47 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/30 18:32:13 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ void	exec_cmd(t_node *node)
 	{
 		if (cmd_line[0] != NULL)
 		{
-			signal(SIGINT, SIG_DFL);
+			//ctrl-c: 130
+			signal(SIGINT, signal_handler_waiting_input);
+			//ctrl-\: 131
+			signal(SIGQUIT, signal_handler_waiting_input);
 			if (execve(cmd_line[0], cmd_line, environ) == -1)
 				fatal_error("execv");
 		}

@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 22:15:31 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 12:05:26 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/30 19:47:42 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	bi_pwd(void)
 {
 	char	path[4096];
 
-	//MAXPATHについて詳しく調べる
-	//カレントディレクトリの場所をpathに代入
 	if (!getcwd(path, sizeof(path)))
 		return (-1);
 	printf("%s\n", path);

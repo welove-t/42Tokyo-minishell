@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:15:06 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/29 13:56:24 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/30 18:16:27 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,6 @@ void	do_heredoc(t_node *redir)
 			break ;
 		if (buff == NULL)
 			break ;
-		if (g_global.status == 1)
-		{
-			buff = NULL;
-			free(buff);
-			break ;
-		}
 		process_heredoc_line(buff, redir);
 		buff = NULL;
 		free(buff);
