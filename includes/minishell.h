@@ -6,10 +6,9 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/30 18:25:26 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/30 19:47:12 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -49,28 +48,27 @@ t_token						*new_token(char *word, t_token_kind kind);
 // グローバル変数の構造体
 struct						s_global
 {
-	//TODO:g_始まりを消す
-	bool						syntax_error;
-	int							status;
-	int							flg_redir;
+	bool					syntax_error;
+	int						status;
+	int						flg_redir;
 };
 // トークンの種類
 enum						e_token_kind
 {
-	TK_WORD,     // ワード
-	TK_RESERVED, // 記号
-	TK_OP,       // 制御文字
-	TK_EOF,      // 入力終わり
+	TK_WORD,
+	TK_RESERVED,
+	TK_OP,
+	TK_EOF,
 };
 
 // ノードの種類
 enum						e_node_kind
 {
 	ND_SIMPLE_CMD,
-	ND_REDIR_OUT,     //>
-	ND_REDIR_IN,      //<
-	ND_REDIR_APPEND,  //>>
-	ND_REDIR_HEREDOC, //<<
+	ND_REDIR_OUT,
+	ND_REDIR_IN,
+	ND_REDIR_APPEND,
+	ND_REDIR_HEREDOC,
 };
 
 // ノード
@@ -79,16 +77,13 @@ struct						s_node
 	t_node_kind				kind;
 	t_node					*next;
 	t_node					*prev;
-	//CMD
 	t_token					*args;
 	t_node					*redirects;
-	//REDIR
 	int						target_fd;
 	t_token					*filename;
 	t_token					*delimiter;
 	int						file_fd;
 	int						stacktmp_fd;
-	//pipe
 	pid_t					pid;
 	int						pfd[2];
 };
@@ -110,7 +105,7 @@ typedef struct s_environ
 //main.c
 
 //line_matches_cmd.c
-void						line_matches_cmd(char *line,t_environ *environ);
+void						line_matches_cmd(char *line, t_environ *environ);
 
 // init_environ_list
 int							first_strlen(char *str);
@@ -122,19 +117,19 @@ t_environ					*init_environ_list(void);
 // ------------------------------------------------
 
 //cd.c
-int	bi_cd(char **argv, int argc);
+int							bi_cd(char **argv, int argc);
 
 //echo.c
-int						bi_echo(char **argv);
+int							bi_echo(char **argv);
 
 //env.c
-int						bi_env(int argc,t_environ *environ);
+int							bi_env(int argc, t_environ *environ);
 
 //pwd.c
 int							bi_pwd(void);
 
 //exit.c
-int						bi_exit(char **argv);
+int							bi_exit(char **argv);
 
 //export_utils.c
 void						environ_nodeadd_back(t_environ *env,
@@ -148,10 +143,10 @@ void						bi_only_export_env(t_environ *env);
 int32_t						bi_export(t_environ *env, char **argv, int argc);
 
 // unset.c
-int						bi_unset(t_environ *environ, char **argv,int argc);
+int							bi_unset(t_environ *environ, char **argv, int argc);
 t_environ					*find_variable(t_environ *environ, char *str);
 
-int							search_bi_cmd(t_node *node,t_environ *environ);
+int							search_bi_cmd(t_node *node, t_environ *environ);
 
 // utils
 char						*get_cmd_array(char *cmd_line);
@@ -172,8 +167,8 @@ bool						is_metacharacter(char c);
 bool						is_word(const char *s);
 
 //heredoc
-void	do_heredoc(t_node *redir);
-void	delete_heredoc(void);
+void						do_heredoc(t_node *redir);
+void						delete_heredoc(void);
 
 // tokenizer-check-quote
 int							check_quote(char **line);
@@ -210,7 +205,7 @@ t_node						*redirect_append(t_token **rest, t_token *tok);
 t_node						*redirect_heredoc(t_token **rest, t_token *tok);
 
 // parser-check
-bool	parser_check_pipe(t_node *node, t_token *tok);
+bool						parser_check_pipe(t_node *node, t_token *tok);
 
 //heredoc
 void						do_heredoc(t_node *redir);
@@ -238,12 +233,10 @@ int							do_open_redir_out(char *filepath);
 int							do_open_redir_in(char *filepath);
 int							do_open_redir_append(char *filepath);
 
-
 // exec
 void						exec_cmd(t_node *node);
 void						execution(t_node *node, t_environ *environ);
 size_t						get_node_cnt(t_node *node);
-
 
 // ------------------------------------------------
 // signal
@@ -253,12 +246,13 @@ void						signal_backslash(void);
 void						signal_handler(int sig);
 int							signal_setget_status(int style, int sig);
 void						signal_handler_heredoc(int sig);
-void 						signal_handler_waiting_input(int sig);
+void						signal_handler_waiting_input(int sig);
 
 // ------------------------------------------------
 // pipe
 // ------------------------------------------------
-void						pipex(t_node *node, size_t cnt_node, t_environ *environ);
+void						pipex(t_node *node, size_t cnt_node,
+								t_environ *environ);
 void						waitpid_pipex(t_node *node, int *wstatus);
 void						pipex_utils(t_node *node, int flag);
 
@@ -289,13 +283,12 @@ void						free_nodelist(t_node *node);
 void						free_argv(char **args);
 void						set_wstatus(int wstatus);
 
-
 // ------------------------------------------------
 // WRAPPER FUNCTION
 // ------------------------------------------------
-void    do_close(int fd);
-void    do_write(int fd, const void *buf,size_t count);
-void    do_dup2(int oldfd, int newfd);
-void	do_pipe(int pipefd[2]);
+void						do_close(int fd);
+void						do_write(int fd, const void *buf, size_t count);
+void						do_dup2(int oldfd, int newfd);
+void						do_pipe(int pipefd[2]);
 
 #endif
