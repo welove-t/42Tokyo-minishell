@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/30 22:20:37 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 06:58:31 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(void)
 		// ctrl-Dが押されたら、EOFが代入され、NULLが入る。
 		if (input == NULL)
 			break ;
-		else if (strlen(input) == 0)
+		else if (ft_strlen(input) == 0)
 		{
 			//Enterの場合は空文字が入る
 		}
