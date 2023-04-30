@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 18:20:21 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/30 22:20:37 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ int	main(void)
 	{
 		signal(SIGINT, signal_handler);
 		input = readline("minishell> ");
-		// ctrl-Dが押されたら、EOFが代入され、whileから抜ける。
+		// ctrl-Dが押されたら、EOFが代入され、NULLが入る。
 		if (input == NULL)
 			break ;
-		if (input != NULL)
-			add_history(input);
-		//TODO:このif文いらないかも
-		if (input == NULL)
-			printf("\n");
+		else if (strlen(input) == 0)
+		{
+			//Enterの場合は空文字が入る
+		}
 		else
 		{
+			add_history(input);
 			line_matches_cmd(input, environ);
 		}
 		free(input);
