@@ -6,10 +6,10 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/29 14:54:34 by susasaki         ###   ########.fr       */
-/*   Updated: 2023/04/29 17:02:29 by terabu           ###   ########.fr       */
+/*   Updated: 2023/04/30 14:10:28 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -258,7 +258,7 @@ void						signal_handler_heredoc(int sig);
 // pipe
 // ------------------------------------------------
 void						pipex(t_node *node, size_t cnt_node,t_environ *environ);
-void						waitpid_pipex(t_node *node);
+void						waitpid_pipex(t_node *node, int *wstatus);
 
 // ------------------------------------------------
 // Error
@@ -281,9 +281,11 @@ void						error_file(char *filename);
 // Destructors
 // ------------------------------------------------
 
+void						finalize(t_node *node, int wstatus);
 void						free_token(t_token *tok);
 void						free_nodelist(t_node *node);
 void						free_argv(char **args);
+void						set_wstatus(int wstatus);
 
 
 // ------------------------------------------------

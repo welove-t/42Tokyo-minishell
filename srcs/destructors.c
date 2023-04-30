@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   destructors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 11:56:02 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/29 17:48:06 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/30 14:09:14 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	finalize(t_node *node, int wstatus)
+{
+	delete_heredoc();
+	free_nodelist(node);
+	set_wstatus(wstatus);
+}
 
 void	free_token(t_token *tok)
 {
@@ -47,4 +54,9 @@ void	free_argv(char **args)
 		i++;
 	}
 	free(args);
+}
+
+void	set_wstatus(int wstatus)
+{
+	g_global.status = WEXITSTATUS(wstatus);
 }

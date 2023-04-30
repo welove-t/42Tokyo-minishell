@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 15:45:00 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/29 14:47:35 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/04/30 14:14:46 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,12 @@ void	close_pipe(t_node *node, size_t i)
 	do_close(node->prev->pfd[1]);
 }
 
-void	waitpid_pipex(t_node *node)
+void	waitpid_pipex(t_node *node, int *wstatus)
 {
-	int	status;
-
 	while (node != NULL)
 	{
-		if (waitpid(node->pid, &status, 0) < 0)
-			perror("waitpid");
+		if (waitpid(node->pid, wstatus, 0) < 0)
+			fatal_error("waitpid");
 		node = node->next;
 	}
 }
