@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:52:38 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 13:49:18 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 13:54:33 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static int	cd_home(void)
 	return (0);
 }
 
-//return(-1)にする時に、エラーメッセージを出した方がいいかも
 int	bi_cd(char **argv, int argc)
 {
 	if (argc == 1)

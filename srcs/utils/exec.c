@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/01 14:50:21 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/01 15:30:21 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@ void	exec_cmd(t_node *node)
 	{
 		if (cmd_line[0] != NULL)
 		{
+			//ctrl-c: 130
+			signal(SIGINT, signal_handler_waiting_input);
+			//ctrl-\: 131
+			signal(SIGQUIT, signal_handler_waiting_input);
 			if (execve(cmd_line[0], cmd_line, environ) == -1)
 				error_exit(cmd_line[0]);
 				// fatal_error("execv");
