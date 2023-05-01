@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 14:27:04 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 02:45:36 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 09:41:07 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	bi_env(int argc, t_environ *environ)
 	if (argc > 1)
 	{
 		put_error_msg_endl("env: too many arguments");
+		g_global.status = 127;
 		return (-1);
 	}
 	while (tmp != NULL)
