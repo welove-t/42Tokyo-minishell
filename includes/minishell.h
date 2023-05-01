@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 14:47:32 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/01 15:42:10 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef enum e_token_kind	t_token_kind;
 typedef enum e_node_kind	t_node_kind;
 typedef struct stat			t_stat;
 typedef struct s_global		t_global;
+typedef struct s_environ	t_environ;
 t_global					g_global;
 
 t_token						*new_token(char *word, t_token_kind kind);
@@ -95,12 +96,12 @@ struct						s_token
 	t_token					*next;
 };
 
-typedef struct s_environ
+struct s_environ
 {
 	char					*name;
 	char					*value;
 	struct s_environ		*next;
-}							t_environ;
+};
 
 //main.c
 
@@ -234,9 +235,12 @@ int							do_open_redir_in(char *filepath);
 int							do_open_redir_append(char *filepath);
 
 // exec
-void						exec_cmd(t_node *node);
+void						exec_cmd(t_node *node, t_environ *mini_environ);
 void						execution(t_node *node, t_environ *environ);
+size_t						get_environ_cnt(t_environ *node);
 size_t						get_node_cnt(t_node *node);
+
+
 
 // ------------------------------------------------
 // signal
