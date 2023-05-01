@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:15:06 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/30 18:16:27 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 20:06:46 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	monitor_signal(void)
 	return (0);
 }
 
-static void	process_heredoc_line(char *str, t_node *redir)
+static void	process_heredoc_line(char *str, t_node *redir,t_environ *env)
 {
 	char	*new_word;
 
@@ -29,7 +29,7 @@ static void	process_heredoc_line(char *str, t_node *redir)
 	{
 		if (*str == DOLLAR_SIGN)
 		{
-			dollar_sign(&str, &new_word);
+			dollar_sign(&str, &new_word,env);
 			while (*new_word)
 				do_write(redir->file_fd, new_word++, 1);
 			if (new_word)
@@ -44,7 +44,7 @@ static void	process_heredoc_line(char *str, t_node *redir)
 	do_write(redir->file_fd, "\n", 1);
 }
 
-void	do_heredoc(t_node *redir)
+void	do_heredoc(t_node *redir,t_environ *env)
 {
 	char	*buff;
 
@@ -62,7 +62,7 @@ void	do_heredoc(t_node *redir)
 			break ;
 		if (buff == NULL)
 			break ;
-		process_heredoc_line(buff, redir);
+		process_heredoc_line(buff, redir,env);
 		buff = NULL;
 		free(buff);
 	}

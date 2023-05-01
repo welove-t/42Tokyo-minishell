@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_matches_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 13:23:59 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 07:20:49 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/01 19:16:58 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	line_matches_cmd(char *line, t_environ *environ)
 		free_nodelist(node);
 		return ;
 	}
-	expand(node);
+	expand(node,environ);
 	execution(node, environ);
 	free_nodelist(node);
 	return ;
