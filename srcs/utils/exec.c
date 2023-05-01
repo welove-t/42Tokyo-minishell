@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/01 07:08:00 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/01 14:46:46 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,14 @@ void	execution(t_node *node, t_environ *environ)
 	// delete_heredoc();
 }
 
+// void	printf_argv(char **argv)
+// {
+// 	for (int i = 0; argv[i]; i++)
+// 	{
+// 		dprintf(2, "argv[%d]:%s\n", i, argv[i]);
+// 	}
+// }
+
 void	exec_cmd(t_node *node)
 {
 	char	**cmd_line;
@@ -59,7 +67,9 @@ void	exec_cmd(t_node *node)
 	if (g_global.flg_redir != 0)
 		exit(EXIT_FAILURE);
 	cmd_line = token_list_to_array(node->args);
-	cmd_line[0] = get_cmd_array(ft_strtrim(cmd_line[0], " "));
+	// printf_argv(cmd_line);
+	// dprintf(2, "status:%d\n", g_global.status);
+	cmd_line[0] = get_cmd_array(cmd_line[0]);
 	if (g_global.status != 1)
 	{
 		if (cmd_line[0] != NULL)
@@ -69,7 +79,8 @@ void	exec_cmd(t_node *node)
 			//ctrl-\: 131
 			signal(SIGQUIT, signal_handler_waiting_input);
 			if (execve(cmd_line[0], cmd_line, environ) == -1)
-				fatal_error("execv");
+				error_exit(cmd_line[0]);
+				// fatal_error("execv");
 		}
 		else
 			error_cmd(node->args->word);
