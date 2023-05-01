@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:13 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 12:07:10 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 09:47:41 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	bi_unset(t_environ *environ, char **argv, int argc)
 	}
 	if (!is_valid_param_name(argv[1]))
 	{
+		g_global.status = 1;
 		return (-1);
 	}
 	var = find_variable(environ, argv[1]);
