@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_environ_list.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:04 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/25 19:28:56 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 15:46:39 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	first_strlen(char *str)
 	{
 		i++;
 	}
-	if (i == 0 || str[i] == '\0')
+	if (i == 0)
 		return (-1);
 	return (i);
 }
