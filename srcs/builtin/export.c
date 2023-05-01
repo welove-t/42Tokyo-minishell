@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 21:05:25 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 09:42:47 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	bi_export(t_environ *environ, char **argv, int argc)
 		if (name == NULL)
 		{
 			put_error_msg_endl("export: not a valid identifier");
+			g_global.status = 1;
 			return (-1);
 		}
 		var = find_variable(environ, name);
