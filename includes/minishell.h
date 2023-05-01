@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 07:09:06 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/01 14:47:32 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,6 +272,8 @@ void						put_error_msg(char *error_msg);
 void						put_error_msg_endl(char *error_msg);
 void						put_error_char(char c);
 void						error_file(char *filename);
+void						error_dir(char *dir);
+void						error_exit(char *cmd);
 
 // ------------------------------------------------
 // Destructors
