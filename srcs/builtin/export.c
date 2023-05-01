@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 15:15:40 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 15:51:26 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,19 @@ static void	override_val(t_environ *environ, t_environ *var, char *value)
 	{
 		if (environ->name == var->name)
 		{
-			environ->value = value;
+			if (environ->value != NULL)
+			{
+				free(environ->value);
+			}
+			environ->value = ft_strdup(value);
+			if (environ->value == NULL)
+				perror("strdup");
 			break ;
 		}
 		environ = environ->next;
 	}
 }
 
-//TODO: 環境変数のリストに追加だけではなく、**environの方にも追加する
 int	bi_export(t_environ *environ, char **argv, int argc)
 {
 	char		*name;
