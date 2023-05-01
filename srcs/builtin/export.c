@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 14:58:52 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 15:15:40 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ char	*make_name(char *str)
 	name = (char *)malloc(fir_len + 1);
 	if (!name)
 		fatal_error("malloc");
-	ft_strlcpy(name, str, fir_len);
+	ft_strlcpy(name, str, fir_len + 1);
+	// strncpy(name, str, fir_len);
 	name[fir_len] = '\0';
 	return (name);
 }
@@ -44,7 +45,8 @@ char	*make_value(char *str)
 	value = (char *)malloc(lat_len + 1);
 	if (!value)
 		fatal_error("malloc");
-	ft_strlcpy(value, str + fir_len + 1, lat_len);
+	ft_strlcpy(value, str + fir_len + 1, lat_len + 1);
+	// strncpy(value, str + fir_len + 1, lat_len);
 	value[lat_len] = '\0';
 	return (value);
 }
