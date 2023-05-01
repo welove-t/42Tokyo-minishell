@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 09:42:47 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 14:31:51 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@ char	*make_name(char *str)
 	char	*name;
 	int		fir_len;
 
+	if (!(('a' <= *str && *str <= 'z') || ('A' <= *str && *str <= 'Z')
+			|| *str == '_'))
+		return (NULL);
 	fir_len = first_strlen(str);
 	if (fir_len == -1)
 		return (NULL);
 	name = (char *)malloc(fir_len + 1);
 	if (!name)
-		fatal_error ("malloc");
+		fatal_error("malloc");
 	strncpy(name, str, fir_len);
 	name[fir_len] = '\0';
 	return (name);
@@ -40,7 +43,7 @@ char	*make_value(char *str)
 		return (NULL);
 	value = (char *)malloc(lat_len + 1);
 	if (!value)
-		fatal_error ("malloc");
+		fatal_error("malloc");
 	strncpy(value, str + fir_len + 1, lat_len);
 	value[lat_len] = '\0';
 	return (value);
@@ -62,6 +65,7 @@ void	bi_only_export_env(t_environ *env)
 	}
 }
 
+//TODO: メモリリークの原因
 static void	override_val(t_environ *environ, t_environ *var, char *value)
 {
 	while (environ != NULL)
@@ -75,6 +79,7 @@ static void	override_val(t_environ *environ, t_environ *var, char *value)
 	}
 }
 
+//TODO: 環境変数のリストに追加だけではなく、**environの方にも追加する
 int	bi_export(t_environ *environ, char **argv, int argc)
 {
 	char		*name;
