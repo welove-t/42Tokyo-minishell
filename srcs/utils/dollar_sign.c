@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_sign.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:40:25 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 18:21:57 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 13:53:26 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 static void	last_exit_status(char **new_word)
 {
 	char	*str;
+	char *begin;
 
 	str = ft_itoa(g_global.status);
-	while (*str != '\0')
-		append_char(new_word, *str++);
+	begin = str;
+	while (*begin != '\0')
+		append_char(new_word, *begin++);
+	free(str);
 }
 
 static void	expand_env(char **new_word, char *p)
