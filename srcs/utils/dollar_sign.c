@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:40:25 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 13:53:26 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 15:55:26 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static void	last_exit_status(char **new_word)
 	free(str);
 }
 
+
+
 static void	expand_env(char **new_word, char *p)
 {
 	char	*value;
@@ -33,6 +35,7 @@ static void	expand_env(char **new_word, char *p)
 		last_exit_status(new_word);
 		return ;
 	}
+	//TODO:リストから取得するようにする
 	value = getenv(p);
 	if (value == NULL)
 	{
