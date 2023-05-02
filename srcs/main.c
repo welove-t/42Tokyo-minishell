@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 06:58:31 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/02 12:38:46 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+// Debug用
+static void	debug_write_endstatus(void)
+{
+	FILE	*fd;
+
+	//ファイルを書き込みモードで開く
+	// fd = fopen("/Users/tanakasubaru/Dropbox/42tokyo/Rank03/minishell/end_status.txt", "w");
+	//相対パスの場合、そのプログラムを動かしている実行ファイルの場所からの指定
+	fd = fopen("end_status.txt", "w");
+
+	if (fd == NULL)
+	{
+		put_error_msg_endl("fopen");
+		return ;
+	}
+	if (fprintf(fd, "%d\n", g_global.status) < 0)
+	{
+		put_error_msg_endl("fprintf");
+		fclose(fd);
+		return ;
+	}
+	fclose(fd);
+}
 
 int	main(void)
 {
@@ -23,6 +47,7 @@ int	main(void)
 	while (1)
 	{
 		signal(SIGINT, signal_handler);
+		debug_write_endstatus();
 		input = readline("minishell> ");
 		// ctrl-Dが押されたら、EOFが代入され、NULLが入る。
 		if (input == NULL)

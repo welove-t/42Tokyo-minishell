@@ -10,3 +10,4 @@ srcs/a.out
 .heredoc
 test.c
 a.out
+end_status.txt
