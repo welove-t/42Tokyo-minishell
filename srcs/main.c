@@ -6,22 +6,22 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/02 12:38:46 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/02 12:47:15 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// Debug用
+/*
+Debug用: 終了ステータスをend_status.txtに書き込む
+別プロセスでminishellの階層で下記のコマンドを実行
+while true; do echo -n "Exit status: "; cat end_status.txt; sleep 1; done
+*/
 static void	debug_write_endstatus(void)
 {
 	FILE	*fd;
 
-	//ファイルを書き込みモードで開く
-	// fd = fopen("/Users/tanakasubaru/Dropbox/42tokyo/Rank03/minishell/end_status.txt", "w");
-	//相対パスの場合、そのプログラムを動かしている実行ファイルの場所からの指定
 	fd = fopen("end_status.txt", "w");
-
 	if (fd == NULL)
 	{
 		put_error_msg_endl("fopen");
@@ -49,13 +49,10 @@ int	main(void)
 		signal(SIGINT, signal_handler);
 		debug_write_endstatus();
 		input = readline("minishell> ");
-		// ctrl-Dが押されたら、EOFが代入され、NULLが入る。
 		if (input == NULL)
 			break ;
 		else if (ft_strlen(input) == 0)
-		{
-			//Enterの場合は空文字が入る
-		}
+			;
 		else
 		{
 			add_history(input);
