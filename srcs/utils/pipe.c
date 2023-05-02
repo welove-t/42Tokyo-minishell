@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 15:45:00 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/30 18:23:41 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/03 08:33:07 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	pipex(t_node *node, size_t cnt_node, t_environ *environ)
 			if (i != cnt_node - 1)
 				output_pipe_dup_close(node->pfd);
 			flag = search_bi_cmd(node, environ);
-			pipex_utils(node, flag);
+			pipex_utils(node, flag, environ);
 		}
 		else
 			close_pipe(node, i);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 19:19:20 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/03 08:32:59 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,7 +259,7 @@ void						signal_handler_waiting_input(int sig);
 void						pipex(t_node *node, size_t cnt_node,
 								t_environ *environ);
 void						waitpid_pipex(t_node *node, int *wstatus);
-void						pipex_utils(t_node *node, int flag);
+void						pipex_utils(t_node *node, int flag, t_environ *environ);
 
 // ------------------------------------------------
 // Error
