@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_bi_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:45:48 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/30 18:38:10 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 19:19:41 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	execute_builtin_command(t_node *node, char **argv,
 
 	if (check_bi(argv[0]))
 	{
-		redirection(node->redirects);
+		redirection(node->redirects,environ);
 		if (g_global.flg_redir == 1)
 		{
 			return (-1);

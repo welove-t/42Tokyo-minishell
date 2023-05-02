@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 15:51:26 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 20:32:13 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ char	*make_value(char *str)
 	if (!value)
 		fatal_error("malloc");
 	ft_strlcpy(value, str + fir_len + 1, lat_len + 1);
-	// strncpy(value, str + fir_len + 1, lat_len);
 	value[lat_len] = '\0';
 	return (value);
 }
@@ -70,17 +69,21 @@ void	bi_only_export_env(t_environ *env)
 //TODO: メモリリークの原因
 static void	override_val(t_environ *environ, t_environ *var, char *value)
 {
+	// printf("value = %s\n",value);
 	while (environ != NULL)
 	{
-		if (environ->name == var->name)
+		if (strcmp(environ->name, var->name) == 0)
 		{
 			if (environ->value != NULL)
-			{
 				free(environ->value);
+			if (value == NULL)
+				environ->value = NULL;
+			else
+			{
+				environ->value = ft_strdup(value);
+				if (environ->value == NULL)
+					perror("strdup");
 			}
-			environ->value = ft_strdup(value);
-			if (environ->value == NULL)
-				perror("strdup");
 			break ;
 		}
 		environ = environ->next;
@@ -109,7 +112,9 @@ int	bi_export(t_environ *environ, char **argv, int argc)
 		if (var != NULL)
 			override_val(environ, var, value);
 		else
-			environ_nodeadd_back(environ, environ_node_new(name, value));
+			environ_nodeadd_back(environ, environ_node_new(ft_strdup(name), ft_strdup(value)));
+		free(name);
+		free(value);
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 15:42:10 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/01 19:19:20 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ struct						s_global
 	bool					syntax_error;
 	int						status;
 	int						flg_redir;
+	t_environ				*minienv;
 };
 // トークンの種類
 enum						e_token_kind
@@ -168,7 +169,7 @@ bool						is_metacharacter(char c);
 bool						is_word(const char *s);
 
 //heredoc
-void						do_heredoc(t_node *redir);
+void						do_heredoc(t_node *redir,t_environ *env);
 void						delete_heredoc(void);
 
 // tokenizer-check-quote
@@ -209,25 +210,25 @@ t_node						*redirect_heredoc(t_token **rest, t_token *tok);
 bool						parser_check_pipe(t_node *node, t_token *tok);
 
 //heredoc
-void						do_heredoc(t_node *redir);
+void						do_heredoc(t_node *redir,t_environ *env);
 
 // expantion
-void						expand(t_node *node);
+void						expand(t_node *node,t_environ *env);
 
 // dollar_sign
-void						dollar_sign(char **p, char **new_word);
+void						dollar_sign(char **p, char **new_word,t_environ *env);
 
 // process_word
 void						append_char(char **s, char c);
-void						process_word_token(t_token *tok);
+void						process_word_token(t_token *tok,t_environ *env);
 
 // ------------------------------------------------
 // recirection
 // ------------------------------------------------
 
 // redirect
-void						redirection(t_node *redir);
-void						open_redir_file(t_node *redir);
+void						redirection(t_node *redir,t_environ *env);
+void						open_redir_file(t_node *redir,t_environ *env);
 void						do_redirect(t_node *redir);
 void						reset_redirect(t_node *redir);
 int							do_open_redir_out(char *filepath);
