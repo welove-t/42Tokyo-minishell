@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 20:32:13 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/03 16:48:56 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	*make_name(char *str)
 		fatal_error("malloc");
 	ft_strlcpy(name, str, fir_len + 1);
 	// strncpy(name, str, fir_len);
+	//TODO: ft_strlcpyで終端文字までコピーしているので、下記のコードは不必要かも
 	name[fir_len] = '\0';
 	return (name);
 }
@@ -66,7 +67,6 @@ void	bi_only_export_env(t_environ *env)
 	}
 }
 
-//TODO: メモリリークの原因
 static void	override_val(t_environ *environ, t_environ *var, char *value)
 {
 	// printf("value = %s\n",value);
@@ -109,6 +109,11 @@ int	bi_export(t_environ *environ, char **argv, int argc)
 		}
 		var = find_variable(environ, name);
 		value = make_value(argv[1]);
+		if (value == NULL)
+		{
+			value = malloc(1);
+			value[0] = '\0';
+		}
 		if (var != NULL)
 			override_val(environ, var, value);
 		else
