@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/03 09:56:01 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/03 14:52:29 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,9 @@ bool						is_word(const char *s);
 
 //heredoc
 void						do_heredoc(t_node *redir,t_environ *env);
-void						delete_heredoc(void);
+void						loop_node_delete_heredoc(t_node *node);
+void						delete_heredoc(char *filename);
+
 
 // tokenizer-check-quote
 int							check_quote(char **line);
@@ -211,6 +213,8 @@ bool						parser_check_pipe(t_node *node, t_token *tok);
 
 //heredoc
 void						do_heredoc(t_node *redir,t_environ *env);
+void						check_heredoc(t_node *node, t_environ *env);
+
 
 // expantion
 void						expand(t_node *node,t_environ *env);
@@ -287,7 +291,7 @@ void						error_exit(char *cmd);
 // Destructors
 // ------------------------------------------------
 
-void						finalize(int wstatus);
+void						finalize(t_node *node, int wstatus);
 void						free_token(t_token *tok);
 void						free_nodelist(t_node *node);
 void						free_argv(char **args);
@@ -300,5 +304,6 @@ void						do_close(int fd);
 void						do_write(int fd, const void *buf, size_t count);
 void						do_dup2(int oldfd, int newfd);
 void						do_pipe(int pipefd[2]);
+void						do_unlink(char *str);
 
 #endif
