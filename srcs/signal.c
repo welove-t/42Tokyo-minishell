@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 19:30:37 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 13:49:44 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/03 12:10:25 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	signal_handler_heredoc(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_global.flg_redir = 1;
 		g_global.status = 1;
 	}
 	return ;
