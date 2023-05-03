@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_sign.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:40:25 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/02 11:33:56 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/03 16:16:46 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ static char	*t_environ_getenv(char *name, t_environ *env)
 	{
 		if (ft_strcmp(env->name, name) == 0)
 		{
-			//TODO:strdup確保した方が良い。だが、メモリリークが発生する
 			value = env->value;
-			// value = ft_strdup(env->value);
 			break ;
 		}
 		env = env->next;
@@ -52,7 +50,6 @@ static void	expand_env(char **new_word, char *p, t_environ *env)
 		last_exit_status(new_word);
 		return ;
 	}
-	//TODO:リストから取得するようにする
 	value = t_environ_getenv(p, env);
 	if (value == NULL)
 	{
@@ -61,7 +58,6 @@ static void	expand_env(char **new_word, char *p, t_environ *env)
 	}
 	while (*value != '\0')
 		append_char(new_word, *value++);
-	// free(value);
 	return ;
 }
 
