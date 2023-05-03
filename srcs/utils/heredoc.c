@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:15:06 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/03 10:17:08 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/03 13:46:58 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,16 @@ void	do_heredoc(t_node *redir,t_environ *env)
 	// heredoc処理用にシグナルハンドラを設定
 	rl_event_hook = monitor_signal;
 	signal(SIGINT, signal_handler_heredoc);
-	while (g_global.status != 1)
+	while (g_global.status != 1 || g_global.flg_redir != 1)
 	{
 		buff = readline("heredoc> ");
-		if (!ft_strcmp(buff, redir->delimiter->word) || \
-			(ft_strlen(redir->delimiter->word) == 0 && ft_strlen(buff) == 0))
+		if (!ft_strcmp(buff, redir->delimiter->word))
 			break ;
 		if (buff == NULL)
 			break ;
 		process_heredoc_line(buff, redir,env);
-		buff = NULL;
 		free(buff);
+		buff = NULL;
 	}
 	/*
 	signal(SIGINT,シグナルハンドラ)が2つ使用されている場合、最後に設定した

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/01 19:19:21 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/03 12:25:46 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	stashfd(int fd)
 
 void	open_redir_file(t_node *redir,t_environ *env)
 {
-	if (redir == NULL)
+	if (redir == NULL || g_global.flg_redir != 0)
 		return ;
 	if (redir->kind == ND_REDIR_OUT)
 		redir->file_fd = do_open_redir_out(redir->filename->word);
