@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/03 08:32:59 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/03 09:56:01 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,9 @@ void						do_heredoc(t_node *redir,t_environ *env);
 
 // expantion
 void						expand(t_node *node,t_environ *env);
+void						delemiter_quote_check(t_token *tok);
+
+
 
 // dollar_sign
 void						dollar_sign(char **p, char **new_word,t_environ *env);
