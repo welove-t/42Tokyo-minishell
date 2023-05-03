@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:15:06 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/03 13:46:58 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/03 16:44:24 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void	do_heredoc(t_node *redir,t_environ *env)
 	while (g_global.status != 1 || g_global.flg_redir != 1)
 	{
 		buff = readline("heredoc> ");
-		if (!ft_strcmp(buff, redir->delimiter->word))
-			break ;
 		if (buff == NULL)
+			break ;
+		if (!ft_strcmp(buff, redir->delimiter->word))
 			break ;
 		process_heredoc_line(buff, redir,env);
 		free(buff);
@@ -76,8 +76,67 @@ void	do_heredoc(t_node *redir,t_environ *env)
 		free(buff);
 }
 
-void	delete_heredoc(void)
+void	delete_heredoc(char *filename)
 {
-	if (!access(".heredoc", R_OK))
-		unlink(".heredoc");
+	if (!access(filename, R_OK))
+		do_unlink(filename);
 }
+
+void	loop_node_delete_heredoc(t_node *node)
+{
+	t_node	*tmp;
+
+	if (node == NULL)
+		return ;
+	tmp = node;
+	while (tmp)
+	{
+		if (tmp->kind == ND_REDIR_HEREDOC && tmp->filename)
+			delete_heredoc(tmp->filename->word);
+		tmp = tmp->redirects;
+	}
+	loop_node_delete_heredoc(node->next);
+}
+
+void	open_heredoc(t_node *redir, t_environ *env, size_t i)
+{
+	char	*ci;
+
+	if (redir == NULL || g_global.flg_redir != 0
+		|| redir->kind != ND_REDIR_HEREDOC)
+		return ;
+	ci = ft_itoa(i);
+	redir->filename = new_token(NULL, TK_WORD);
+	redir->filename->word = ft_strjoin(".heredoc", ci);
+	free(ci);
+	delete_heredoc(redir->filename->word);
+	redir->file_fd = do_open_redir_append(redir->filename->word);
+	if (redir->file_fd < 0)
+	{
+		g_global.flg_redir = 1;
+		return ;
+	}
+	do_heredoc(redir, env);
+	do_close(redir->file_fd);
+	open_heredoc(redir->next, env, i);
+}
+
+void	check_heredoc(t_node *node, t_environ *env)
+{
+	size_t	i;
+	t_node	*tmp;
+
+	// if (get_node_cnt(node) > 1)
+	// 	return ;
+	i = 0;
+	tmp = node;
+	while (tmp)
+	{
+		open_heredoc(tmp->redirects, env, i);
+		if (g_global.flg_redir != 0)
+			break ;
+		tmp = tmp->next;
+		i++;
+	}
+}
+

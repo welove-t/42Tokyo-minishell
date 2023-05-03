@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/03 12:25:46 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/03 14:39:18 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	stashfd(int fd)
 	return (tmp_fd);
 }
 
-void	open_redir_file(t_node *redir,t_environ *env)
+void	open_redir_file(t_node *redir, t_environ *env)
 {
 	if (redir == NULL || g_global.flg_redir != 0)
 		return ;
@@ -44,11 +44,10 @@ void	open_redir_file(t_node *redir,t_environ *env)
 		redir->file_fd = do_open_redir_append(redir->filename->word);
 	else if (redir->kind == ND_REDIR_HEREDOC)
 	{
-		delete_heredoc();
-		redir->file_fd = do_open_redir_append(".heredoc");
-		do_heredoc(redir,env);
-		do_close(redir->file_fd);
-		redir->file_fd = do_open_redir_in(".heredoc");
+		// redir->file_fd = do_open_redir_append(".heredoc");
+		// do_heredoc(redir,env);
+		// do_close(redir->file_fd);
+		redir->file_fd = do_open_redir_in(redir->filename->word);
 	}
 	else
 		assert_error("open_redir_file");
@@ -58,7 +57,7 @@ void	open_redir_file(t_node *redir,t_environ *env)
 		return ;
 	}
 	redir->file_fd = stashfd(redir->file_fd);
-	open_redir_file(redir->next,env);
+	open_redir_file(redir->next, env);
 }
 
 void	do_redirect(t_node *redir)
