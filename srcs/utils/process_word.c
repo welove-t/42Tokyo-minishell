@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:38:25 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 19:15:50 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/03 17:06:41 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	append_char(char **s, char c)
 	*s = new;
 }
 
-static void	process_quotes(char **p, char quote_char, char **new_word,t_environ *env)
+static void	process_quotes(char **p, char quote_char, char **new_word,
+		t_environ *env)
 {
 	(*p)++;
 	if (**p == quote_char)
@@ -54,7 +55,7 @@ static void	process_quotes(char **p, char quote_char, char **new_word,t_environ 
 		while (**p != quote_char)
 		{
 			if (**p == DOLLAR_SIGN && quote_char == DOUBLE_QUOTE_CHAR)
-				dollar_sign(p, new_word,env);
+				dollar_sign(p, new_word, env);
 			else
 				append_char(new_word, *(*p)++);
 		}
@@ -62,16 +63,16 @@ static void	process_quotes(char **p, char quote_char, char **new_word,t_environ 
 	(*p)++;
 }
 
-static void	process_word_token_helper(char **p, char **new_word,t_environ *env)
+static void	process_word_token_helper(char **p, char **new_word, t_environ *env)
 {
 	while (**p && !is_metacharacter(**p))
 	{
 		if (**p == DOLLAR_SIGN)
-			dollar_sign(p, new_word,env);
+			dollar_sign(p, new_word, env);
 		else if (**p == SINGLE_QUOTE_CHAR)
-			process_quotes(p, SINGLE_QUOTE_CHAR, new_word,env);
+			process_quotes(p, SINGLE_QUOTE_CHAR, new_word, env);
 		else if (**p == DOUBLE_QUOTE_CHAR)
-			process_quotes(p, DOUBLE_QUOTE_CHAR, new_word,env);
+			process_quotes(p, DOUBLE_QUOTE_CHAR, new_word, env);
 		else
 			append_char(new_word, *(*p)++);
 	}
@@ -81,17 +82,17 @@ static void	process_word_token_helper(char **p, char **new_word,t_environ *env)
 quoteを除外してtok->wordを更新する
 quoteの開閉チェックはtokenizerで実施済みのため閉じられていることは保障されている
 */
-void	process_word_token(t_token *tok,t_environ *env)
+void	process_word_token(t_token *tok, t_environ *env)
 {
-	char	*new_word;
-	char	*p;
+	char *new_word;
+	char *p;
 
 	if (tok == NULL || tok->kind != TK_WORD || tok->word == NULL)
 		return ;
 	p = tok->word;
 	new_word = NULL;
-	process_word_token_helper(&p, &new_word,env);
+	process_word_token_helper(&p, &new_word, env);
 	free(tok->word);
 	tok->word = new_word;
-	process_word_token(tok->next,env);
+	process_word_token(tok->next, env);
 }
