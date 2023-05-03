@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   destructors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 11:56:02 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/29 17:48:06 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 07:52:24 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	finalize(int wstatus)
+{
+	delete_heredoc();
+	set_wstatus(wstatus);
+}
 
 void	free_token(t_token *tok)
 {
@@ -29,6 +35,7 @@ void	free_nodelist(t_node *node)
 		return ;
 	free_token(node->args);
 	free_token(node->filename);
+	free_token(node->delimiter);
 	free_nodelist(node->redirects);
 	free_nodelist(node->next);
 	free(node);
@@ -47,4 +54,16 @@ void	free_argv(char **args)
 		i++;
 	}
 	free(args);
+}
+
+void	set_wstatus(int wstatus)
+{
+	if (wstatus == SIGINT || wstatus == SIGQUIT)
+	{
+		g_global.status = 128 + wstatus;
+		if (wstatus == SIGQUIT)
+			put_error_msg_endl("Quit: 3");
+	}
+	else
+		g_global.status = WEXITSTATUS(wstatus);
 }

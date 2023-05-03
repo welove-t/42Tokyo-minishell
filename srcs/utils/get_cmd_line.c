@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:10:07 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/23 14:35:45 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/01 14:57:58 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*get_cmd_array(char *cmd_line)
 {
 	char	*r_str_array;
 
+	if (cmd_line == NULL || ft_strlen(cmd_line) == 0)
+		return (NULL);
 	r_str_array = NULL;
 	if (ft_strchr(cmd_line, '/'))
 		r_str_array = get_path(cmd_line);

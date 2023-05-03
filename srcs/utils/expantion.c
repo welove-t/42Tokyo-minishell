@@ -3,26 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   expantion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/23 18:40:21 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:00:27 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	expand_quote_removal(t_node *node)
+void	expand_quote_removal(t_node *node, t_environ *env)
 {
 	if (node == NULL)
 		return ;
-	process_word_token(node->args);
-	process_word_token(node->filename);
-	expand_quote_removal(node->redirects);
-	expand_quote_removal(node->next);
+	process_word_token(node->args, env);
+	process_word_token(node->filename, env);
+	delemiter_quote_check(node->delimiter);
+	expand_quote_removal(node->redirects, env);
+	expand_quote_removal(node->next, env);
 }
 
-void	expand(t_node *node)
+void	expand(t_node *node, t_environ *env)
 {
-	expand_quote_removal(node);
+	expand_quote_removal(node, env);
+}
+
+static void	remove_quotes(char **p, char quote_char, char **new_word)
+{
+	(*p)++;
+	if (**p == quote_char)
+		append_char(new_word, '\0');
+	else
+	{
+		while (**p != quote_char)
+			append_char(new_word, *(*p)++);
+	}
+	(*p)++;
+}
+
+void	delemiter_quote_check(t_token *tok)
+{
+	char	*new_word;
+	char	*p;
+
+	if (tok == NULL || tok->kind != TK_WORD || tok->word == NULL)
+		return ;
+	p = tok->word;
+	new_word = NULL;
+	while (*p && !is_metacharacter(*p))
+	{
+		if (*p == SINGLE_QUOTE_CHAR)
+			remove_quotes(&p, SINGLE_QUOTE_CHAR, &new_word);
+		else if (*p == DOUBLE_QUOTE_CHAR)
+			remove_quotes(&p, DOUBLE_QUOTE_CHAR, &new_word);
+		else
+			append_char(&new_word, *p++);
+	}
+	free(tok->word);
+	tok->word = new_word;
+	delemiter_quote_check(tok->next);
 }

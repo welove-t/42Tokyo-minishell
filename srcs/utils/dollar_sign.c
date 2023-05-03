@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:40:25 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 18:21:57 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/02 11:33:56 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,35 @@
 static void	last_exit_status(char **new_word)
 {
 	char	*str;
+	char	*begin;
 
 	str = ft_itoa(g_global.status);
-	while (*str != '\0')
-		append_char(new_word, *str++);
+	begin = str;
+	while (*begin != '\0')
+		append_char(new_word, *begin++);
+	free(str);
 }
 
-static void	expand_env(char **new_word, char *p)
+static char	*t_environ_getenv(char *name, t_environ *env)
+{
+	char	*value;
+
+	value = NULL;
+	while (env != NULL)
+	{
+		if (ft_strcmp(env->name, name) == 0)
+		{
+			//TODO:strdup確保した方が良い。だが、メモリリークが発生する
+			value = env->value;
+			// value = ft_strdup(env->value);
+			break ;
+		}
+		env = env->next;
+	}
+	return (value);
+}
+
+static void	expand_env(char **new_word, char *p, t_environ *env)
 {
 	char	*value;
 
@@ -30,7 +52,8 @@ static void	expand_env(char **new_word, char *p)
 		last_exit_status(new_word);
 		return ;
 	}
-	value = getenv(p);
+	//TODO:リストから取得するようにする
+	value = t_environ_getenv(p, env);
 	if (value == NULL)
 	{
 		append_char(new_word, '\0');
@@ -38,6 +61,7 @@ static void	expand_env(char **new_word, char *p)
 	}
 	while (*value != '\0')
 		append_char(new_word, *value++);
+	// free(value);
 	return ;
 }
 
@@ -59,7 +83,7 @@ int	handle_dollar_sign(char **p, char **exp_tmp)
 	return (0);
 }
 
-void	dollar_sign(char **p, char **new_word)
+void	dollar_sign(char **p, char **new_word, t_environ *env)
 {
 	char	*exp_tmp;
 
@@ -72,7 +96,7 @@ void	dollar_sign(char **p, char **new_word)
 				append_char(new_word, '$');
 			if (exp_tmp)
 			{
-				expand_env(new_word, exp_tmp);
+				expand_env(new_word, exp_tmp, env);
 				free(exp_tmp);
 				exp_tmp = NULL;
 			}

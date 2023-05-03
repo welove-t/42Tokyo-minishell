@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 21:05:25 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 20:32:13 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,17 @@ char	*make_name(char *str)
 	char	*name;
 	int		fir_len;
 
+	if (!(('a' <= *str && *str <= 'z') || ('A' <= *str && *str <= 'Z')
+			|| *str == '_'))
+		return (NULL);
 	fir_len = first_strlen(str);
 	if (fir_len == -1)
 		return (NULL);
 	name = (char *)malloc(fir_len + 1);
 	if (!name)
-		fatal_error ("malloc");
-	strncpy(name, str, fir_len);
+		fatal_error("malloc");
+	ft_strlcpy(name, str, fir_len + 1);
+	// strncpy(name, str, fir_len);
 	name[fir_len] = '\0';
 	return (name);
 }
@@ -40,8 +44,8 @@ char	*make_value(char *str)
 		return (NULL);
 	value = (char *)malloc(lat_len + 1);
 	if (!value)
-		fatal_error ("malloc");
-	strncpy(value, str + fir_len + 1, lat_len);
+		fatal_error("malloc");
+	ft_strlcpy(value, str + fir_len + 1, lat_len + 1);
 	value[lat_len] = '\0';
 	return (value);
 }
@@ -62,13 +66,24 @@ void	bi_only_export_env(t_environ *env)
 	}
 }
 
+//TODO: メモリリークの原因
 static void	override_val(t_environ *environ, t_environ *var, char *value)
 {
+	// printf("value = %s\n",value);
 	while (environ != NULL)
 	{
-		if (environ->name == var->name)
+		if (strcmp(environ->name, var->name) == 0)
 		{
-			environ->value = value;
+			if (environ->value != NULL)
+				free(environ->value);
+			if (value == NULL)
+				environ->value = NULL;
+			else
+			{
+				environ->value = ft_strdup(value);
+				if (environ->value == NULL)
+					perror("strdup");
+			}
 			break ;
 		}
 		environ = environ->next;
@@ -89,6 +104,7 @@ int	bi_export(t_environ *environ, char **argv, int argc)
 		if (name == NULL)
 		{
 			put_error_msg_endl("export: not a valid identifier");
+			g_global.status = 1;
 			return (-1);
 		}
 		var = find_variable(environ, name);
@@ -96,7 +112,9 @@ int	bi_export(t_environ *environ, char **argv, int argc)
 		if (var != NULL)
 			override_val(environ, var, value);
 		else
-			environ_nodeadd_back(environ, environ_node_new(name, value));
+			environ_nodeadd_back(environ, environ_node_new(ft_strdup(name), ft_strdup(value)));
+		free(name);
+		free(value);
 	}
 	return (0);
 }

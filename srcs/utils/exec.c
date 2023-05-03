@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/29 16:31:56 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/01 19:19:31 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	execution(t_node *node, t_environ *environ)
 {
 	size_t	cnt_node;
 	pid_t	pid;
+	int		wstatus;
 
+	wstatus = 0;
 	cnt_node = get_node_cnt(node);
 	//cmdが1つの場合
 	if (cnt_node <= 1)
@@ -35,39 +37,103 @@ void	execution(t_node *node, t_environ *environ)
 		if (pid < 0)
 			fatal_error("fork");
 		else if (pid == 0)
-			exec_cmd(node);
+			exec_cmd(node, environ);
 		else
-			wait(NULL);
+			wait(&wstatus);
 	}
 	else
 	{
 		pipex(node, cnt_node, environ);
-		waitpid_pipex(node);
+		waitpid_pipex(node, &wstatus);
 	}
-	delete_heredoc();
+	finalize(wstatus);
+	// g_global.status = WEXITSTATUS(wstatus);
+	// delete_heredoc();
 }
 
-void	exec_cmd(t_node *node)
-{
-	char	**cmd_line;
+// void	printf_argv(char **argv)
+// {
+// 	for (int i = 0; argv[i]; i++)
+// 	{
+// 		dprintf(2, "argv[%d]:%s\n", i, argv[i]);
+// 	}
+// }
 
-	redirection(node->redirects);
+// void	print_env(void)
+// {
+// 	t_environ	*tmp;
+
+// 	tmp = g_global.mini_environ;
+// 	while (tmp)
+// 	{
+// 		dprintf(2, "mini-env:")
+// 		tmp = tmp->next;
+// 	}
+// }
+
+char	**env_list_to_array(t_environ *environ)
+{
+	t_environ	*tmp_env;
+	size_t		i;
+	char		**list_env;
+	char		*tmp;
+
+	tmp_env = environ;
+	list_env = ft_calloc(get_environ_cnt(tmp_env) + 1, sizeof(char *));
+	if (!list_env)
+		fatal_error("calloc");
+	i = 0;
+	while (tmp_env)
+	{
+		tmp = ft_strjoin(tmp_env->name, "=");
+		list_env[i] = ft_strjoin(tmp, tmp_env->value);
+		tmp_env = tmp_env->next;
+		i++;
+	}
+	return (list_env);
+}
+
+void	exec_cmd(t_node *node, t_environ *mini_environ)
+{
+	char	**argv;
+
+	redirection(node->redirects,mini_environ);
 	if (g_global.flg_redir != 0)
 		exit(EXIT_FAILURE);
-	cmd_line = token_list_to_array(node->args);
-	cmd_line[0] = get_cmd_array(ft_strtrim(cmd_line[0], " "));
-	if (g_global.status != 1)
-	{
-		if (cmd_line[0] != NULL)
+	argv = token_list_to_array(node->args);
+	// printf_argv(argv);
+	// dprintf(2, "status:%d\n", g_global.status);
+	// printf_argv(env_list_to_array(mini_environ));
+	argv[0] = get_cmd_array(argv[0]);
+	// if (g_global.status != 1)
+	// {
+		if (argv[0] != NULL)
 		{
-			signal(SIGINT, SIG_DFL);
-			if (execve(cmd_line[0], cmd_line, environ) == -1)
-				fatal_error("execv");
+			//ctrl-c: 130
+			signal(SIGINT, signal_handler_waiting_input);
+			//ctrl-\: 131
+			signal(SIGQUIT, signal_handler_waiting_input);
+			if (execve(argv[0], argv, env_list_to_array(mini_environ)) == -1)
+				error_exit(argv[0]);
+
 		}
 		else
 			error_cmd(node->args->word);
-	}
+	// }
 	// reset_redirect(node->redirects);
+}
+
+size_t	get_environ_cnt(t_environ *node)
+{
+	size_t	cnt;
+
+	cnt = 0;
+	while (node != NULL)
+	{
+		cnt++;
+		node = node->next;
+	}
+	return (cnt);
 }
 
 size_t	get_node_cnt(t_node *node)

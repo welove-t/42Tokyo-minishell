@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:52:38 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/27 11:49:44 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 13:54:33 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ int	bi_cd(char **argv, int argc)
 	if (argc == 1)
 	{
 		if (cd_home() == 1)
+		{
+			g_global.status = 1;
 			return (-1);
+		}
 	}
 	else
 	{
@@ -54,11 +57,15 @@ int	bi_cd(char **argv, int argc)
 			if (chdir(argv[1]) == -1)
 			{
 				put_error_msg_endl("cd: could not change to HOME directory");
+				g_global.status = 1;
 				return (-1);
 			}
 		}
 		else
+		{
+			g_global.status = 1;
 			put_error_msg_endl("cd: No such file or directory");
+		}
 	}
 	return (0);
 }

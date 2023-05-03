@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:45:48 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/29 18:02:14 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 19:19:41 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,73 +56,42 @@ static int	search_bi_cmd_helper(int argc, char **argv, t_environ *environ)
 	return (flag);
 }
 
-// int	get_args_cnt(t_token *token)
-// {
-// 	int		cnt;
-// 	t_token	*tmp_token;
+static int	execute_builtin_command(t_node *node, char **argv,
+		t_environ *environ)
+{
+	int	flag;
 
-// 	cnt = 0;
-// 	tmp_token = token;
-// 	while (tmp_token->next != NULL)
-// 	{
-// 		tmp_token = tmp_token->next;
-// 		cnt++;
-// 	}
-// 	return (cnt);
-// }
-
-// char	**string_to_array(int *argc, t_token *token)
-// {
-// 	t_token	*tmp_token;
-// 	char	**argv;
-// 	int		i;
-
-// 	tmp_token = token;
-// 	if (tmp_token->word == NULL)
-// 		return (NULL);
-// 	*argc = get_args_cnt(tmp_token);
-// 	argv = malloc(sizeof(char *) * (*argc + 1));
-// 	if (argv == NULL)
-// 		fatal_error("malloc error");
-// 	i = 0;
-// 	while (tmp_token->word != NULL)
-// 	{
-// 		// tmp_token->wordをdupして、argvをに代入
-// 		argv[i] = ft_strdup(tmp_token->word);
-// 		tmp_token = tmp_token->next;
-// 		i++;
-// 	}
-// 	argv[i] = NULL;
-// 	return (argv);
-// }
+	if (check_bi(argv[0]))
+	{
+		redirection(node->redirects,environ);
+		if (g_global.flg_redir == 1)
+		{
+			return (-1);
+		}
+		flag = search_bi_cmd_helper((int)get_token_count(node->args), argv,
+				environ);
+		reset_redirect(node->redirects);
+		return (flag);
+	}
+	return (1);
+}
 
 int	search_bi_cmd(t_node *node, t_environ *environ)
 {
 	int		flag;
 	char	**argv;
 
-	flag = 0;
 	argv = token_list_to_array(node->args);
 	if (argv == NULL)
+	{
 		return (0);
+	}
 	if (argv[0] == NULL)
 	{
 		free_argv(argv);
 		return (0);
 	}
-	if (check_bi(argv[0]))
-	{
-		redirection(node->redirects);
-		if (g_global.flg_redir == 1)
-		{
-			free_argv(argv);
-			return (-1);
-		}
-		flag = search_bi_cmd_helper((int)get_token_count(node->args), argv, environ);
-		reset_redirect(node->redirects);
-	}
-	else
-		flag = 1;
+	flag = execute_builtin_command(node, argv, environ);
 	free_argv(argv);
 	return (flag);
 }

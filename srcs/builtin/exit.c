@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:49:00 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/28 23:30:14 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/01 13:48:04 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	bi_exit_multiple(char *str)
 	long	num;
 
 	num = 0;
-	if (int_overflow__check(str, &num) == 1)
+	if (int_overflow__check(str, &num) == 1 || *str == '\0')
 	{
 		put_error_msg_endl("exit: numeric argument required");
 		exit(255);
@@ -83,6 +83,7 @@ int	bi_exit(char **argv)
 		printf("exit\n");
 		exit(g_global.status);
 	}
+	bi_exit_multiple(argv[1]);
 	if (argv[1] && argv[2])
 	{
 		if (argv[1])
@@ -90,6 +91,7 @@ int	bi_exit(char **argv)
 		if (argv[2])
 		{
 			put_error_msg_endl("exit: too many arguments");
+			g_global.status = 1;
 			return (0);
 		}
 		else

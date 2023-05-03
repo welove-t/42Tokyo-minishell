@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:15:06 by susasaki          #+#    #+#             */
-/*   Updated: 2023/04/29 13:56:24 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/03 13:46:58 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	monitor_signal(void)
 	return (0);
 }
 
-static void	process_heredoc_line(char *str, t_node *redir)
+static void	process_heredoc_line(char *str, t_node *redir,t_environ *env)
 {
 	char	*new_word;
 
@@ -29,7 +29,7 @@ static void	process_heredoc_line(char *str, t_node *redir)
 	{
 		if (*str == DOLLAR_SIGN)
 		{
-			dollar_sign(&str, &new_word);
+			dollar_sign(&str, &new_word,env);
 			while (*new_word)
 				do_write(redir->file_fd, new_word++, 1);
 			if (new_word)
@@ -44,7 +44,7 @@ static void	process_heredoc_line(char *str, t_node *redir)
 	do_write(redir->file_fd, "\n", 1);
 }
 
-void	do_heredoc(t_node *redir)
+void	do_heredoc(t_node *redir,t_environ *env)
 {
 	char	*buff;
 
@@ -55,22 +55,16 @@ void	do_heredoc(t_node *redir)
 	// heredoc処理用にシグナルハンドラを設定
 	rl_event_hook = monitor_signal;
 	signal(SIGINT, signal_handler_heredoc);
-	while (g_global.status != 1)
+	while (g_global.status != 1 || g_global.flg_redir != 1)
 	{
 		buff = readline("heredoc> ");
 		if (!ft_strcmp(buff, redir->delimiter->word))
 			break ;
 		if (buff == NULL)
 			break ;
-		if (g_global.status == 1)
-		{
-			buff = NULL;
-			free(buff);
-			break ;
-		}
-		process_heredoc_line(buff, redir);
-		buff = NULL;
+		process_heredoc_line(buff, redir,env);
 		free(buff);
+		buff = NULL;
 	}
 	/*
 	signal(SIGINT,シグナルハンドラ)が2つ使用されている場合、最後に設定した

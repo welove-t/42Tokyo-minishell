@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   signal2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/05 22:15:31 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 13:45:56 by susasaki         ###   ########.fr       */
+/*   Created: 2023/04/30 15:12:34 by susasaki          #+#    #+#             */
+/*   Updated: 2023/05/01 15:30:02 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
-int	bi_pwd(void)
+void	signal_handler_waiting_input(int sig)
 {
-	char	path[PATH_MAX];
-
-	if (!getcwd(path, sizeof(path)))
+	if (sig == SIGINT)
 	{
-		put_error_msg_endl("getcwd: getcwd fail");
-		return (-1);
+		signal(SIGINT, SIG_DFL);
+		g_global.status = 130;
+		signal(SIGINT, signal_handler_waiting_input);
 	}
-	printf("%s\n", path);
-	return (0);
+	else if (sig == SIGQUIT)
+	{
+		signal(SIGQUIT, SIG_DFL);
+		g_global.status = 131;
+		signal(SIGQUIT, signal_handler_waiting_input);
+	}
 }

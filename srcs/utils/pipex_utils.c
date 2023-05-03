@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/05 22:15:31 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 13:45:56 by susasaki         ###   ########.fr       */
+/*   Created: 2023/04/30 18:23:04 by susasaki          #+#    #+#             */
+/*   Updated: 2023/05/03 08:33:30 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	bi_pwd(void)
+void	pipex_utils(t_node *node, int flag, t_environ *environ)
 {
-	char	path[PATH_MAX];
-
-	if (!getcwd(path, sizeof(path)))
-	{
-		put_error_msg_endl("getcwd: getcwd fail");
-		return (-1);
-	}
-	printf("%s\n", path);
-	return (0);
+	if (flag == -1)
+		exit(EXIT_FAILURE);
+	else if (flag == 0)
+		exit(EXIT_SUCCESS);
+	else
+		exec_cmd(node, environ);
 }

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/30 12:41:56 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/03 12:25:46 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	redirection(t_node *redir)
+void	redirection(t_node *redir,t_environ *env)
 {
 	g_global.flg_redir = 0;
-	open_redir_file(redir);
+	open_redir_file(redir,env);
 	if (g_global.flg_redir != 0 || g_global.status == 1)
 		return ;
 	do_redirect(redir);
@@ -32,9 +32,9 @@ int	stashfd(int fd)
 	return (tmp_fd);
 }
 
-void	open_redir_file(t_node *redir)
+void	open_redir_file(t_node *redir,t_environ *env)
 {
-	if (redir == NULL)
+	if (redir == NULL || g_global.flg_redir != 0)
 		return ;
 	if (redir->kind == ND_REDIR_OUT)
 		redir->file_fd = do_open_redir_out(redir->filename->word);
@@ -46,7 +46,7 @@ void	open_redir_file(t_node *redir)
 	{
 		delete_heredoc();
 		redir->file_fd = do_open_redir_append(".heredoc");
-		do_heredoc(redir);
+		do_heredoc(redir,env);
 		do_close(redir->file_fd);
 		redir->file_fd = do_open_redir_in(".heredoc");
 	}
@@ -58,7 +58,7 @@ void	open_redir_file(t_node *redir)
 		return ;
 	}
 	redir->file_fd = stashfd(redir->file_fd);
-	open_redir_file(redir->next);
+	open_redir_file(redir->next,env);
 }
 
 void	do_redirect(t_node *redir)
