@@ -6,7 +6,7 @@
 #    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/05/04 15:28:36 by terabu           ###   ########.fr        #
+#    Updated: 2023/05/04 15:33:09 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ TOKEN_DIR = ./srcs/tokenizer
 PARSER_DIR = ./srcs/parser
 EXPAND_DIR = ./srcs/expand
 REDIR_DIR = ./srcs/redirect
+HEREDOC_DIR = ./srcs/heredoc
 PIPE_DIR = ./srcs/pipe
 EXEC_DIR = ./srcs/exec
 SIGNAL_DIR = ./srcs/signal
@@ -60,7 +61,8 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(EXPAND_DIR)/expand_dollar_sign.c\
 		  $(EXPAND_DIR)/process_word.c\
 		  $(EXPAND_DIR)/expantion.c\
-		  $(UTILS_DIR)/heredoc.c\
+		  $(HEREDOC_DIR)/heredoc_delete.c\
+		  $(HEREDOC_DIR)/heredoc.c\
 		  $(REDIR_DIR)/redirect.c\
 		  $(REDIR_DIR)/redirect_open.c\
 		  $(EXEC_DIR)/exec_get_cmd.c\
@@ -72,7 +74,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 
 VPATH = $(SOURCES_DIR) $(UTILS_DIR) $(BUILTIN_DIR) $(ERROR_DIR) \
  		$(PARSER_DIR) $(REDIR_DIR) $(TOKEN_DIR) $(SIGNAL_DIR) $(PIPE_DIR) \
-		$(EXEC_DIR) $(WRAPPER_DIR) $(EXPAND_DIR)
+		$(EXEC_DIR) $(WRAPPER_DIR) $(EXPAND_DIR) $(HEREDOC_DIR)
 OBJS_DIR = objs
 OBJS = $(addprefix $(OBJS_DIR)/, $(notdir $(SOURCES:.c=.o)))
 LIBFT = -L$(LIBFT_DIR) -lft

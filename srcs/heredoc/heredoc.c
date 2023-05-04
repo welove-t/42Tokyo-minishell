@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:15:06 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 14:24:07 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 15:32:10 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,28 +70,6 @@ void	do_heredoc(t_node *redir,t_environ *env)
 		free(buff);
 }
 
-void	delete_heredoc(char *filename)
-{
-	if (!access(filename, R_OK))
-		do_unlink(filename);
-}
-
-void	loop_node_delete_heredoc(t_node *node)
-{
-	t_node	*tmp;
-
-	if (node == NULL)
-		return ;
-	tmp = node;
-	while (tmp)
-	{
-		if (tmp->kind == ND_REDIR_HEREDOC && tmp->filename)
-			delete_heredoc(tmp->filename->word);
-		tmp = tmp->redirects;
-	}
-	loop_node_delete_heredoc(node->next);
-}
-
 void	open_heredoc(t_node *redir, t_environ *env, size_t i)
 {
 	char	*ci;
@@ -120,8 +98,6 @@ void	check_heredoc(t_node *node, t_environ *env)
 	size_t	i;
 	t_node	*tmp;
 
-	// if (get_node_cnt(node) > 1)
-	// 	return ;
 	i = 0;
 	tmp = node;
 	while (tmp)
