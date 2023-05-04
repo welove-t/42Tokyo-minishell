@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:41:50 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:48:42 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ struct						s_node
 	pid_t					pid;
 	int						pfd[2];
 };
+
 // `word` is zero terminated string.
 struct						s_token
 {
@@ -103,11 +104,6 @@ struct s_environ
 	char					*value;
 	struct s_environ		*next;
 };
-
-//main.c
-
-//line_matches_cmd.c
-void						line_matches_cmd(char *line, t_environ *environ);
 
 // ------------------------------------------------
 // builtin
@@ -131,6 +127,7 @@ t_environ					*environ_node_new(char *name, char *value);
 // ------------------------------------------------
 // Error
 // ------------------------------------------------
+
 void						perror_prefix(void);
 void						fatal_error(char *msg);
 void						assert_error(char *msg);
@@ -149,7 +146,6 @@ void						error_exit(char *cmd);
 // ------------------------------------------------
 
 char						*get_cmd_array(char *cmd_line);
-// exec
 void						exec_cmd(t_node *node, t_environ *mini_environ);
 void						execution(t_node *node, t_environ *environ);
 
@@ -157,7 +153,6 @@ void						execution(t_node *node, t_environ *environ);
 // expand
 // ------------------------------------------------
 
-// expand
 void						expand(t_node *node,t_environ *env);
 void						append_char(char **s, char c);
 void						process_word_token(t_token *tok,t_environ *env);
@@ -176,19 +171,13 @@ void						check_heredoc(t_node *node, t_environ *env);
 // Parser
 // ------------------------------------------------
 
-// parser_check
 bool						parser_check_pipe(t_node *node, t_token *tok);
-
-// parser-make-tok
 t_token						*tokdup(t_token *tok);
 void						append_tok(t_token **tokens, t_token *tok);
-
-// parser-node-redirect
 t_node						*redirect_out(t_token **rest, t_token *tok);
 t_node						*redirect_in(t_token **rest, t_token *tok);
 t_node						*redirect_append(t_token **rest, t_token *tok);
 t_node						*redirect_heredoc(t_token **rest, t_token *tok);
-
 t_node						*parse(t_token *tok);
 t_node						*new_node(t_node_kind kind, t_node *prev);
 void						append_command_element(t_node *command,
@@ -207,17 +196,11 @@ void						pipex_utils(t_node *node, int flag, t_environ *environ);
 // ------------------------------------------------
 // recirection
 // ------------------------------------------------
-
-// redirect
 void						redirection(t_node *redir,t_environ *env);
 void						reset_redirect(t_node *redir);
 int							do_open_redir_out(char *filepath);
 int							do_open_redir_in(char *filepath);
 int							do_open_redir_append(char *filepath);
-
-
-
-
 
 // ------------------------------------------------
 // signal
@@ -234,22 +217,14 @@ int							signal_monitor(void);
 // tokenizer
 // ------------------------------------------------
 
-// tokenizer-main
 t_token						*tokenize(char *line);
 t_token						*new_token(char *word, t_token_kind kind);
-
-// tokenizer-check-literal
 bool						is_blank(char c);
 bool						is_keyword(const char *s, const char *keyword);
 bool						is_redirection_operator(const char *s);
 bool						is_metacharacter(char c);
 bool						is_word(const char *s);
-
-
-// tokenizer-check-quote
 int							check_quote(char **line);
-
-// tokenizer-utils
 size_t						get_token_count(t_token *token);
 char						**token_list_to_array(t_token *token);
 bool						consume_blank(char **rest, char *line);
@@ -274,6 +249,11 @@ void						free_token(t_token *tok);
 void						free_nodelist(t_node *node);
 void						free_argv(char **args);
 void						set_wstatus(int wstatus);
+
+
+// ------------------------------------------------
+// 
+// ------------------------------------------------
 
 //1_init_environ_list
 int							first_strlen(char *str);
