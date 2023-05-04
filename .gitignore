@@ -11,3 +11,4 @@ srcs/a.out
 test.c
 a.out
 end_status.txt
+tester.sh
