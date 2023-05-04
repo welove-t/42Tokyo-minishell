@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/03 16:48:56 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 10:41:32 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	override_val(t_environ *environ, t_environ *var, char *value)
 	// printf("value = %s\n",value);
 	while (environ != NULL)
 	{
-		if (strcmp(environ->name, var->name) == 0)
+		if (ft_strcmp(environ->name, var->name) == 0)
 		{
 			if (environ->value != NULL)
 				free(environ->value);
