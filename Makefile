@@ -6,7 +6,7 @@
 #    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/05/04 14:38:58 by terabu           ###   ########.fr        #
+#    Updated: 2023/05/04 14:43:32 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ TOKEN_DIR = ./srcs/tokenizer
 PARSER_DIR = ./srcs/parser
 REDIR_DIR = ./srcs/redirect
 PIPE_DIR = ./srcs/pipe
+EXEC_DIR = ./srcs/exec
 SIGNAL_DIR = ./srcs/signal
 BUILTIN_DIR = ./srcs/builtin
 LIBFT_DIR = ./srcs/lib/libft
@@ -46,7 +47,6 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(BUILTIN_DIR)/pwd.c\
 		  $(BUILTIN_DIR)/unset.c\
 		  $(UTILS_DIR)/dollar_sign.c\
-		  $(UTILS_DIR)/get_cmd_line.c\
 		  $(UTILS_DIR)/process_word.c\
 		  $(TOKEN_DIR)/tokenizer.c\
 		  $(TOKEN_DIR)/tokenizer_check_literal.c\
@@ -61,14 +61,16 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(UTILS_DIR)/heredoc.c\
 		  $(REDIR_DIR)/redirect.c\
 		  $(REDIR_DIR)/redirect_open.c\
-		  $(UTILS_DIR)/exec.c\
+		  $(EXEC_DIR)/exec_get_cmd.c\
+		  $(EXEC_DIR)/exec.c\
 		  $(PIPE_DIR)/pipe.c\
 		  $(PIPE_DIR)/pipex_utils.c\
 		  $(UTILS_DIR)/wrap_systemcall_1.c\
 		  $(UTILS_DIR)/wrap_systemcall_2.c\
 
 VPATH = $(SOURCES_DIR) $(UTILS_DIR) $(BUILTIN_DIR) $(ERROR_DIR) \
- 		$(PARSER_DIR) $(REDIR_DIR) $(TOKEN_DIR) $(SIGNAL_DIR) $(PIPE_DIR)
+ 		$(PARSER_DIR) $(REDIR_DIR) $(TOKEN_DIR) $(SIGNAL_DIR) $(PIPE_DIR) \
+		$(EXEC_DIR)
 OBJS_DIR = objs
 OBJS = $(addprefix $(OBJS_DIR)/, $(notdir $(SOURCES:.c=.o)))
 LIBFT = -L$(LIBFT_DIR) -lft

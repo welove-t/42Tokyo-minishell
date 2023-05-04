@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/03 16:32:14 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 14:45:11 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	execution(t_node *node, t_environ *environ)
 
 	wstatus = 0;
 	cnt_node = get_node_cnt(node);
-	//cmdが1つの場合
 	if (cnt_node <= 1)
 	{
 		/*
@@ -47,8 +46,6 @@ void	execution(t_node *node, t_environ *environ)
 		waitpid_pipex(node, &wstatus);
 	}
 	finalize(node, wstatus);
-	// g_global.status = WEXITSTATUS(wstatus);
-	// delete_heredoc();
 }
 
 // void	printf_argv(char **argv)
