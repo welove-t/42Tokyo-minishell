@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:48:29 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 14:30:37 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:05:46 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,45 @@ t_environ	*environ_node_new(char *name, char *value)
 	new->next = NULL;
 	return (new);
 }
+
+char	*make_name(char *str)
+{
+	char	*name;
+	int		fir_len;
+
+	if (!(('a' <= *str && *str <= 'z') || ('A' <= *str && *str <= 'Z')
+			|| *str == '_'))
+		return (NULL);
+	fir_len = first_strlen(str);
+	if (fir_len == -1)
+		return (NULL);
+	name = (char *)malloc(fir_len + 1);
+	if (!name)
+		fatal_error("malloc");
+	ft_strlcpy(name, str, fir_len + 1);
+	// strncpy(name, str, fir_len);
+	return (name);
+}
+
+char	*make_value(char *str)
+{
+	char	*value;
+	int		lat_len;
+	int		fir_len;
+
+	fir_len = first_strlen(str);
+	lat_len = latter_strlen(str);
+	if (lat_len == -1)
+		return (NULL);
+	value = (char *)malloc(lat_len + 1);
+	if (!value)
+		fatal_error("malloc");
+	ft_strlcpy(value, str + fir_len + 1, lat_len + 1);
+	value[lat_len] = '\0';
+	return (value);
+}
+
+
 
 // void	updata_environ(t_environ *env)
 // {
