@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:51:07 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:56:17 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 # define MINISHELL_H
 
 # include "../srcs/lib/libft/libft.h"
-# include <errno.h>
 # include <fcntl.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -26,6 +23,9 @@
 # include <sys/param.h>
 # include <sys/stat.h>
 # include <unistd.h>
+# include <errno.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # define SINGLE_QUOTE_CHAR '\''
 # define DOUBLE_QUOTE_CHAR '"'
 # define ERROR_PREFIX "minishell: "
