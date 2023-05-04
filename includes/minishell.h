@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/03 14:52:29 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 15:03:49 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,7 @@ void						signal_handler(int sig);
 int							signal_setget_status(int style, int sig);
 void						signal_handler_heredoc(int sig);
 void						signal_handler_waiting_input(int sig);
+int							signal_monitor(void);
 
 // ------------------------------------------------
 // pipe
@@ -274,11 +275,9 @@ void						pipex_utils(t_node *node, int flag, t_environ *environ);
 void						perror_prefix(void);
 void						fatal_error(char *msg);
 void						assert_error(char *msg);
-void						err_exit(char *location, char *msg, int status);
 void						tokenize_error(char *location, char **rest,
 								char *line, int flg);
 void						parse_error(t_token **rest, t_token *tok);
-void						xperror(const char *location);
 void						error_cmd(char *cmd);
 void						put_error_msg(char *error_msg);
 void						put_error_msg_endl(char *error_msg);
@@ -302,8 +301,10 @@ void						set_wstatus(int wstatus);
 // ------------------------------------------------
 void						do_close(int fd);
 void						do_write(int fd, const void *buf, size_t count);
+int							do_dup(int oldfd);
 void						do_dup2(int oldfd, int newfd);
 void						do_pipe(int pipefd[2]);
 void						do_unlink(char *str);
+
 
 #endif

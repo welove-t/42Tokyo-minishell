@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+         #
+#    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/30 18:24:07 by susasaki         ###   ########.fr        #
+#    Updated: 2023/05/04 15:54:22 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,20 +18,29 @@ CFLAGS = -Wall -Werror -Wextra $(INCLUDE)
 
 SOURCES_DIR = ./srcs
 UTILS_DIR = ./srcs/utils
+ERROR_DIR = ./srcs/error
+TOKEN_DIR = ./srcs/tokenizer
+PARSER_DIR = ./srcs/parser
+EXPAND_DIR = ./srcs/expand
+REDIR_DIR = ./srcs/redirect
+HEREDOC_DIR = ./srcs/heredoc
+PIPE_DIR = ./srcs/pipe
+EXEC_DIR = ./srcs/exec
+SIGNAL_DIR = ./srcs/signal
 BUILTIN_DIR = ./srcs/builtin
+WRAPPER_DIR = ./srcs/wrapper
 LIBFT_DIR = ./srcs/lib/libft
-SOURCES = $(SOURCES_DIR)/main.c\
-		  $(SOURCES_DIR)/str_matches_cmd.c\
-		  $(SOURCES_DIR)/init_environ_list.c\
-		  $(SOURCES_DIR)/error_general.c\
-		  $(SOURCES_DIR)/error_special.c\
-		  $(SOURCES_DIR)/error_tokenizer.c\
-		  $(SOURCES_DIR)/error_put.c\
-		  $(SOURCES_DIR)/error_cmd.c\
-		  $(SOURCES_DIR)/error_file.c\
-		  $(SOURCES_DIR)/destructors.c\
-		  $(SOURCES_DIR)/signal.c\
-		  $(SOURCES_DIR)/signal2.c\
+
+SOURCES = $(SOURCES_DIR)/0_main.c\
+		  $(SOURCES_DIR)/1_init_environ_list.c\
+		  $(SOURCES_DIR)/2_builtin_search.c\
+		  $(SOURCES_DIR)/3_destructors.c\
+		  $(ERROR_DIR)/error_exec.c\
+		  $(ERROR_DIR)/error_general.c\
+		  $(ERROR_DIR)/error_put.c\
+		  $(ERROR_DIR)/error_syntax.c\
+		  $(SIGNAL_DIR)/signal_handle.c\
+		  $(SIGNAL_DIR)/signal.c\
 		  $(BUILTIN_DIR)/cd.c\
 		  $(BUILTIN_DIR)/echo.c\
 		  $(BUILTIN_DIR)/env.c\
@@ -40,29 +49,31 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(BUILTIN_DIR)/export_utils.c\
 		  $(BUILTIN_DIR)/pwd.c\
 		  $(BUILTIN_DIR)/unset.c\
-		  $(UTILS_DIR)/dollar_sign.c\
-		  $(UTILS_DIR)/get_cmd_line.c\
-		  $(UTILS_DIR)/process_word.c\
-		  $(UTILS_DIR)/tokenizer.c\
-		  $(UTILS_DIR)/tokenizer_check_literal.c\
-		  $(UTILS_DIR)/tokenizer_check_quote.c\
-		  $(UTILS_DIR)/tokenizer_utils.c\
-		  $(UTILS_DIR)/search_bi_cmd.c\
-		  $(UTILS_DIR)/parser.c\
-		  $(UTILS_DIR)/parser_node_redirect.c\
-		  $(UTILS_DIR)/parser_make_tok.c\
-		  $(UTILS_DIR)/parser_check.c\
-		  $(UTILS_DIR)/expantion.c\
-		  $(UTILS_DIR)/heredoc.c\
-		  $(UTILS_DIR)/redirect.c\
-		  $(UTILS_DIR)/redirect_open.c\
-		  $(UTILS_DIR)/exec.c\
-		  $(UTILS_DIR)/pipe.c\
-		  $(UTILS_DIR)/pipex_utils.c\
-		  $(UTILS_DIR)/wrap_systemcall_1.c\
-		  $(UTILS_DIR)/wrap_systemcall_2.c\
+		  $(TOKEN_DIR)/tokenizer.c\
+		  $(TOKEN_DIR)/tokenizer_check_literal.c\
+		  $(TOKEN_DIR)/tokenizer_check_quote.c\
+		  $(TOKEN_DIR)/tokenizer_utils.c\
+		  $(PARSER_DIR)/parser.c\
+		  $(PARSER_DIR)/parser_node_redirect.c\
+		  $(PARSER_DIR)/parser_make_tok.c\
+		  $(PARSER_DIR)/parser_check.c\
+		  $(EXPAND_DIR)/expand_dollar_sign.c\
+		  $(EXPAND_DIR)/process_word.c\
+		  $(EXPAND_DIR)/expantion.c\
+		  $(HEREDOC_DIR)/heredoc_delete.c\
+		  $(HEREDOC_DIR)/heredoc.c\
+		  $(REDIR_DIR)/redirect.c\
+		  $(REDIR_DIR)/redirect_open.c\
+		  $(EXEC_DIR)/exec_get_cmd.c\
+		  $(EXEC_DIR)/exec.c\
+		  $(PIPE_DIR)/pipe.c\
+		  $(PIPE_DIR)/pipex_utils.c\
+		  $(WRAPPER_DIR)/wrap_systemcall_1.c\
+		  $(WRAPPER_DIR)/wrap_systemcall_2.c\
 
-VPATH = $(SOURCES_DIR) $(UTILS_DIR) $(BUILTIN_DIR)
+VPATH = $(SOURCES_DIR) $(UTILS_DIR) $(BUILTIN_DIR) $(ERROR_DIR) \
+ 		$(PARSER_DIR) $(REDIR_DIR) $(TOKEN_DIR) $(SIGNAL_DIR) $(PIPE_DIR) \
+		$(EXEC_DIR) $(WRAPPER_DIR) $(EXPAND_DIR) $(HEREDOC_DIR)
 OBJS_DIR = objs
 OBJS = $(addprefix $(OBJS_DIR)/, $(notdir $(SOURCES:.c=.o)))
 LIBFT = -L$(LIBFT_DIR) -lft

@@ -6,11 +6,11 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 19:30:37 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/03 12:10:25 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 14:26:24 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	signal_backslash(void)
 {
@@ -26,22 +26,10 @@ void	signal_c_cmd(void)
 	g_global.status = 1;
 }
 
-void	signal_handler(int sig)
+int	signal_monitor(void)
 {
-	// printf("signal_handlerが呼ばれた(%d)", sig);
-	if (sig == SIGINT)
-		signal_c_cmd();
-	else if (sig == SIGQUIT)
-		signal_backslash();
-	return ;
-}
-
-void	signal_handler_heredoc(int sig)
-{
-	if (sig == SIGINT)
-	{
-		g_global.flg_redir = 1;
-		g_global.status = 1;
-	}
-	return ;
+	if (g_global.status == 1)
+		rl_done = 1;
+	//0だと終了
+	return (0);
 }
