@@ -6,7 +6,7 @@
 #    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/05/04 14:26:52 by terabu           ###   ########.fr        #
+#    Updated: 2023/05/04 14:38:58 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ ERROR_DIR = ./srcs/error
 TOKEN_DIR = ./srcs/tokenizer
 PARSER_DIR = ./srcs/parser
 REDIR_DIR = ./srcs/redirect
+PIPE_DIR = ./srcs/pipe
 SIGNAL_DIR = ./srcs/signal
 BUILTIN_DIR = ./srcs/builtin
 LIBFT_DIR = ./srcs/lib/libft
@@ -61,13 +62,13 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(REDIR_DIR)/redirect.c\
 		  $(REDIR_DIR)/redirect_open.c\
 		  $(UTILS_DIR)/exec.c\
-		  $(UTILS_DIR)/pipe.c\
-		  $(UTILS_DIR)/pipex_utils.c\
+		  $(PIPE_DIR)/pipe.c\
+		  $(PIPE_DIR)/pipex_utils.c\
 		  $(UTILS_DIR)/wrap_systemcall_1.c\
 		  $(UTILS_DIR)/wrap_systemcall_2.c\
 
 VPATH = $(SOURCES_DIR) $(UTILS_DIR) $(BUILTIN_DIR) $(ERROR_DIR) \
- 		$(PARSER_DIR) $(REDIR_DIR) $(TOKEN_DIR) $(SIGNAL_DIR)
+ 		$(PARSER_DIR) $(REDIR_DIR) $(TOKEN_DIR) $(SIGNAL_DIR) $(PIPE_DIR)
 OBJS_DIR = objs
 OBJS = $(addprefix $(OBJS_DIR)/, $(notdir $(SOURCES:.c=.o)))
 LIBFT = -L$(LIBFT_DIR) -lft
