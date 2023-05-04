@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:49:00 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:52:50 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:58:04 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ static void	bi_exit_multiple(char *str)
 
 int	bi_exit(char **argv)
 {
-	g_global.status = 0;
 	if (argv[1] == NULL)
 	{
 		printf("exit\n");

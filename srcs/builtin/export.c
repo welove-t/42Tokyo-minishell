@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:52:40 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:14:25 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,32 @@ static void	override_val(t_environ *environ, t_environ *var, char *value)
 	}
 }
 
+static void	bi_export_utiles(t_environ *environ, char **argv, char *name)
+{
+	t_environ	*var;
+	char		*value;
+
+	var = find_variable(environ, name);
+	value = make_value(argv[1]);
+	if (value == NULL)
+	{
+		value = malloc(1);
+		value[0] = '\0';
+	}
+	if (var != NULL)
+		override_val(environ, var, value);
+	else
+	{
+		environ_nodeadd_back(environ, environ_node_new(ft_strdup(name), \
+			ft_strdup(value)));
+	}
+	free(name);
+	free(value);
+}
+
 int	bi_export(t_environ *environ, char **argv, int argc)
 {
-	char		*name;
-	char		*value;
-	t_environ	*var;
+	char	*name;
 
 	if (argc == 1)
 		bi_only_export_env(environ);
@@ -67,21 +88,7 @@ int	bi_export(t_environ *environ, char **argv, int argc)
 			g_global.status = 1;
 			return (-1);
 		}
-		var = find_variable(environ, name);
-		value = make_value(argv[1]);
-		if (value == NULL)
-		{
-			value = malloc(1);
-			value[0] = '\0';
-		}
-		if (var != NULL)
-			override_val(environ, var, value);
-		else
-			environ_nodeadd_back(environ, environ_node_new(ft_strdup(name),
-						ft_strdup(value)));
-		free(name);
-		free(value);
+		bi_export_utiles(environ, argv, name);
 	}
-	g_global.status = 0;
 	return (0);
 }
