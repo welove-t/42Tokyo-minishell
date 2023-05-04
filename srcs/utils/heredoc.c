@@ -6,19 +6,11 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:15:06 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 11:01:13 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 14:24:07 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static int	monitor_signal(void)
-{
-	if (g_global.status == 1)
-		rl_done = 1;
-	//0だと終了
-	return (0);
-}
 
 static void	process_heredoc_line(char *str, t_node *redir,t_environ *env)
 {
@@ -55,7 +47,7 @@ void	do_heredoc(t_node *redir,t_environ *env)
 	g_global.status = 0;
 	rl_done = 0;
 	// heredoc処理用にシグナルハンドラを設定
-	rl_event_hook = monitor_signal;
+	rl_event_hook = signal_monitor;
 	signal(SIGINT, signal_handler_heredoc);
 	while (g_global.status != 1 || g_global.flg_redir != 1)
 	{

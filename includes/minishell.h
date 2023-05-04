@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 13:49:28 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 14:22:54 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,7 @@ void						signal_handler(int sig);
 int							signal_setget_status(int style, int sig);
 void						signal_handler_heredoc(int sig);
 void						signal_handler_waiting_input(int sig);
+int							signal_monitor(void);
 
 // ------------------------------------------------
 // pipe

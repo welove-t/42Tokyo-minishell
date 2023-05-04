@@ -6,7 +6,7 @@
 #    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/05/04 14:17:04 by terabu           ###   ########.fr        #
+#    Updated: 2023/05/04 14:26:52 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,10 @@ ERROR_DIR = ./srcs/error
 TOKEN_DIR = ./srcs/tokenizer
 PARSER_DIR = ./srcs/parser
 REDIR_DIR = ./srcs/redirect
+SIGNAL_DIR = ./srcs/signal
 BUILTIN_DIR = ./srcs/builtin
 LIBFT_DIR = ./srcs/lib/libft
+
 SOURCES = $(SOURCES_DIR)/main.c\
 		  $(SOURCES_DIR)/str_matches_cmd.c\
 		  $(SOURCES_DIR)/init_environ_list.c\
@@ -32,8 +34,8 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(ERROR_DIR)/error_put.c\
 		  $(ERROR_DIR)/error_syntax.c\
 		  $(SOURCES_DIR)/destructors.c\
-		  $(SOURCES_DIR)/signal.c\
-		  $(SOURCES_DIR)/signal2.c\
+		  $(SIGNAL_DIR)/signal_handle.c\
+		  $(SIGNAL_DIR)/signal.c\
 		  $(BUILTIN_DIR)/cd.c\
 		  $(BUILTIN_DIR)/echo.c\
 		  $(BUILTIN_DIR)/env.c\
@@ -65,7 +67,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(UTILS_DIR)/wrap_systemcall_2.c\
 
 VPATH = $(SOURCES_DIR) $(UTILS_DIR) $(BUILTIN_DIR) $(ERROR_DIR) \
- 		$(PARSER_DIR) $(REDIR_DIR) $(TOKEN_DIR)
+ 		$(PARSER_DIR) $(REDIR_DIR) $(TOKEN_DIR) $(SIGNAL_DIR)
 OBJS_DIR = objs
 OBJS = $(addprefix $(OBJS_DIR)/, $(notdir $(SOURCES:.c=.o)))
 LIBFT = -L$(LIBFT_DIR) -lft
