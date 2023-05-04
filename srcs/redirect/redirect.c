@@ -18,7 +18,7 @@ static int	stashfd(int fd)
 
 	tmp_fd = do_dup(fd);
 	if (tmp_fd < 0)
-		fatal_error("fcntl");
+		fatal_error("dup");
 	do_close(fd);
 	return (tmp_fd);
 }

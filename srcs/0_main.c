@@ -76,6 +76,7 @@ static void	line_matches_cmd(char *line, t_environ *environ)
 	check_heredoc(node, environ);
 	if (check_syntax_error(token, node, 3))
 		return ;
+	g_global.status = 0;
 	execution(node, environ);
 	free_nodelist(node);
 	return ;
