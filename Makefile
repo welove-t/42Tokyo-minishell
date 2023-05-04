@@ -6,7 +6,7 @@
 #    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/05/04 14:07:31 by terabu           ###   ########.fr        #
+#    Updated: 2023/05/04 14:17:04 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ CFLAGS = -Wall -Werror -Wextra $(INCLUDE)
 SOURCES_DIR = ./srcs
 UTILS_DIR = ./srcs/utils
 ERROR_DIR = ./srcs/error
+TOKEN_DIR = ./srcs/tokenizer
 PARSER_DIR = ./srcs/parser
 REDIR_DIR = ./srcs/redirect
 BUILTIN_DIR = ./srcs/builtin
@@ -44,10 +45,10 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(UTILS_DIR)/dollar_sign.c\
 		  $(UTILS_DIR)/get_cmd_line.c\
 		  $(UTILS_DIR)/process_word.c\
-		  $(UTILS_DIR)/tokenizer.c\
-		  $(UTILS_DIR)/tokenizer_check_literal.c\
-		  $(UTILS_DIR)/tokenizer_check_quote.c\
-		  $(UTILS_DIR)/tokenizer_utils.c\
+		  $(TOKEN_DIR)/tokenizer.c\
+		  $(TOKEN_DIR)/tokenizer_check_literal.c\
+		  $(TOKEN_DIR)/tokenizer_check_quote.c\
+		  $(TOKEN_DIR)/tokenizer_utils.c\
 		  $(UTILS_DIR)/search_bi_cmd.c\
 		  $(PARSER_DIR)/parser.c\
 		  $(PARSER_DIR)/parser_node_redirect.c\
@@ -63,7 +64,8 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(UTILS_DIR)/wrap_systemcall_1.c\
 		  $(UTILS_DIR)/wrap_systemcall_2.c\
 
-VPATH = $(SOURCES_DIR) $(UTILS_DIR) $(BUILTIN_DIR) $(ERROR_DIR) $(PARSER_DIR) $(REDIR_DIR)
+VPATH = $(SOURCES_DIR) $(UTILS_DIR) $(BUILTIN_DIR) $(ERROR_DIR) \
+ 		$(PARSER_DIR) $(REDIR_DIR) $(TOKEN_DIR)
 OBJS_DIR = objs
 OBJS = $(addprefix $(OBJS_DIR)/, $(notdir $(SOURCES:.c=.o)))
 LIBFT = -L$(LIBFT_DIR) -lft
