@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/03 14:52:29 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 13:49:28 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,11 +274,9 @@ void						pipex_utils(t_node *node, int flag, t_environ *environ);
 void						perror_prefix(void);
 void						fatal_error(char *msg);
 void						assert_error(char *msg);
-void						err_exit(char *location, char *msg, int status);
 void						tokenize_error(char *location, char **rest,
 								char *line, int flg);
 void						parse_error(t_token **rest, t_token *tok);
-void						xperror(const char *location);
 void						error_cmd(char *cmd);
 void						put_error_msg(char *error_msg);
 void						put_error_msg_endl(char *error_msg);

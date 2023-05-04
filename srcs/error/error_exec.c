@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_cmd.c                                        :+:      :+:    :+:   */
+/*   error_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:24 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/03 15:58:05 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:54:44 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	error_cmd(char *cmd)
 {
@@ -41,6 +41,14 @@ void	error_dir(char *dir)
 	exit(126);
 }
 
+void	error_file(char *filename)
+{
+	perror_prefix();
+	put_error_msg(filename);
+	put_error_msg(": ");
+	put_error_msg_endl(strerror(errno));
+}
+
 void	error_exit(char *cmd)
 {
 	t_stat	cmd_stat;
@@ -52,6 +60,5 @@ void	error_exit(char *cmd)
 			error_dir(cmd);
 	}
 	put_error_msg_endl(strerror(errno));
-	// dprintf(2, "errno:%d\n", errno);
 	exit(errno);
 }

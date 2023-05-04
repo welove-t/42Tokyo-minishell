@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+         #
+#    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/04/30 18:24:07 by susasaki         ###   ########.fr        #
+#    Updated: 2023/05/04 13:54:53 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,17 +18,16 @@ CFLAGS = -Wall -Werror -Wextra $(INCLUDE)
 
 SOURCES_DIR = ./srcs
 UTILS_DIR = ./srcs/utils
+ERROR_DIR = ./srcs/error
 BUILTIN_DIR = ./srcs/builtin
 LIBFT_DIR = ./srcs/lib/libft
 SOURCES = $(SOURCES_DIR)/main.c\
 		  $(SOURCES_DIR)/str_matches_cmd.c\
 		  $(SOURCES_DIR)/init_environ_list.c\
-		  $(SOURCES_DIR)/error_general.c\
-		  $(SOURCES_DIR)/error_special.c\
-		  $(SOURCES_DIR)/error_tokenizer.c\
-		  $(SOURCES_DIR)/error_put.c\
-		  $(SOURCES_DIR)/error_cmd.c\
-		  $(SOURCES_DIR)/error_file.c\
+		  $(ERROR_DIR)/error_exec.c\
+		  $(ERROR_DIR)/error_general.c\
+		  $(ERROR_DIR)/error_put.c\
+		  $(ERROR_DIR)/error_syntax.c\
 		  $(SOURCES_DIR)/destructors.c\
 		  $(SOURCES_DIR)/signal.c\
 		  $(SOURCES_DIR)/signal2.c\
@@ -62,7 +61,7 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(UTILS_DIR)/wrap_systemcall_1.c\
 		  $(UTILS_DIR)/wrap_systemcall_2.c\
 
-VPATH = $(SOURCES_DIR) $(UTILS_DIR) $(BUILTIN_DIR)
+VPATH = $(SOURCES_DIR) $(UTILS_DIR) $(BUILTIN_DIR) $(ERROR_DIR)
 OBJS_DIR = objs
 OBJS = $(addprefix $(OBJS_DIR)/, $(notdir $(SOURCES:.c=.o)))
 LIBFT = -L$(LIBFT_DIR) -lft
