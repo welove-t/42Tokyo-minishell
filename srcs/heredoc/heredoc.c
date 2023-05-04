@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:15:06 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 15:32:10 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 17:24:08 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	do_heredoc(t_node *redir,t_environ *env)
 		free(buff);
 }
 
-void	open_heredoc(t_node *redir, t_environ *env, size_t i)
+static void	open_heredoc(t_node *redir, t_environ *env, size_t i)
 {
 	char	*ci;
 

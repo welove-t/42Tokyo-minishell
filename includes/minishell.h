@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:21:58 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:41:50 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,6 @@ struct s_environ
 //line_matches_cmd.c
 void						line_matches_cmd(char *line, t_environ *environ);
 
-// init_environ_list
-int							first_strlen(char *str);
-int							latter_strlen(char *str);
-t_environ					*init_environ_list(void);
-
 // ------------------------------------------------
 // builtin
 // ------------------------------------------------
@@ -168,22 +163,21 @@ void						append_char(char **s, char c);
 void						process_word_token(t_token *tok,t_environ *env);
 void						dollar_sign(char **p, char **new_word,t_environ *env);
 
+// ------------------------------------------------
+// heredoc
+// ------------------------------------------------
 
-
-
+void						loop_node_delete_heredoc(t_node *node);
+void						delete_heredoc(char *filename);
+void						do_heredoc(t_node *redir,t_environ *env);
+void						check_heredoc(t_node *node, t_environ *env);
 
 // ------------------------------------------------
 // Parser
 // ------------------------------------------------
 
-// parser-main
-t_node						*parse(t_token *tok);
-t_node						*new_node(t_node_kind kind, t_node *prev);
-void						append_node(t_node **node, t_node *elm);
-void						append_command_element(t_node *command,
-								t_token **rest,
-								t_token *tok);
-bool						is_operator(t_token *tok, char *op);
+// parser_check
+bool						parser_check_pipe(t_node *node, t_token *tok);
 
 // parser-make-tok
 t_token						*tokdup(t_token *tok);
@@ -195,13 +189,11 @@ t_node						*redirect_in(t_token **rest, t_token *tok);
 t_node						*redirect_append(t_token **rest, t_token *tok);
 t_node						*redirect_heredoc(t_token **rest, t_token *tok);
 
-// parser-check
-bool						parser_check_pipe(t_node *node, t_token *tok);
-
-//heredoc
-void						do_heredoc(t_node *redir,t_environ *env);
-void						check_heredoc(t_node *node, t_environ *env);
-
+t_node						*parse(t_token *tok);
+t_node						*new_node(t_node_kind kind, t_node *prev);
+void						append_command_element(t_node *command,
+								t_token **rest,
+								t_token *tok);
 
 // ------------------------------------------------
 // pipe
@@ -218,8 +210,6 @@ void						pipex_utils(t_node *node, int flag, t_environ *environ);
 
 // redirect
 void						redirection(t_node *redir,t_environ *env);
-void						open_redir_file(t_node *redir,t_environ *env);
-void						do_redirect(t_node *redir);
 void						reset_redirect(t_node *redir);
 int							do_open_redir_out(char *filepath);
 int							do_open_redir_in(char *filepath);
@@ -255,22 +245,14 @@ bool						is_redirection_operator(const char *s);
 bool						is_metacharacter(char c);
 bool						is_word(const char *s);
 
-//heredoc
-void						do_heredoc(t_node *redir,t_environ *env);
-void						loop_node_delete_heredoc(t_node *node);
-void						delete_heredoc(char *filename);
-
 
 // tokenizer-check-quote
 int							check_quote(char **line);
-bool						consume_single_quote(char **line);
-bool						consume_double_quote(char **line);
 
 // tokenizer-utils
 size_t						get_token_count(t_token *token);
 char						**token_list_to_array(t_token *token);
 bool						consume_blank(char **rest, char *line);
-bool						consume_double_quote(char **line);
 
 // ------------------------------------------------
 // WRAPPER FUNCTION
@@ -293,8 +275,14 @@ void						free_nodelist(t_node *node);
 void						free_argv(char **args);
 void						set_wstatus(int wstatus);
 
-//2_builtin_search.c
+//1_init_environ_list
+int							first_strlen(char *str);
+int							latter_strlen(char *str);
+t_environ					*init_environ_list(void);
+
+//2_builtin_search
 int							search_bi_cmd(t_node *node, t_environ *environ);
 
+//3_destructors
 
 #endif

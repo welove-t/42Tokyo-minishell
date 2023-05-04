@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:31:19 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/29 11:00:55 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 17:37:31 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+//リストの終端にノードを追加
+static void	append_node(t_node **node, t_node *elm)
+{
+	if (*node == NULL)
+	{
+		*node = elm;
+		return ;
+	}
+	append_node(&(*node)->next, elm);
+}
+
+// 制御文字のチェック
+static bool	is_operator(t_token *tok, char *op)
+{
+	if (tok->kind != TK_OP)
+		return (false);
+	return (ft_strcmp(tok->word, op) == 0);
+}
 
 // ノードリスト(通常コマンド用)の作成
 t_node	*parse(t_token *tok)
@@ -51,13 +70,6 @@ t_node	*new_node(t_node_kind kind, t_node *prev)
 	return (node);
 }
 
-// 制御文字のチェック
-bool	is_operator(t_token *tok, char *op)
-{
-	if (tok->kind != TK_OP)
-		return (false);
-	return (ft_strcmp(tok->word, op) == 0);
-}
 
 // トークンの種類ごとにノード追加
 void	append_command_element(t_node *command, t_token **rest, t_token *tok)
@@ -88,13 +100,3 @@ void	append_command_element(t_node *command, t_token **rest, t_token *tok)
 	*rest = tok;
 }
 
-//リストの終端にノードを追加
-void	append_node(t_node **node, t_node *elm)
-{
-	if (*node == NULL)
-	{
-		*node = elm;
-		return ;
-	}
-	append_node(&(*node)->next, elm);
-}
