@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:15:06 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/03 16:44:24 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 11:01:13 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static int	monitor_signal(void)
 static void	process_heredoc_line(char *str, t_node *redir,t_environ *env)
 {
 	char	*new_word;
+	char	*tmp;
 
 	new_word = NULL;
 	while (*str)
@@ -30,12 +31,13 @@ static void	process_heredoc_line(char *str, t_node *redir,t_environ *env)
 		if (*str == DOLLAR_SIGN)
 		{
 			dollar_sign(&str, &new_word,env);
-			while (*new_word)
-				do_write(redir->file_fd, new_word++, 1);
+			tmp = new_word;
+			while (*tmp)
+				do_write(redir->file_fd, tmp++, 1);
 			if (new_word)
 			{
-				new_word = NULL;
 				free(new_word);
+				new_word = NULL;
 			}
 		}
 		else
