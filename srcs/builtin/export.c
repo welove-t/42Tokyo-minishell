@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:05:45 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:52:40 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static void	bi_only_export_env(t_environ *env)
 
 static void	override_val(t_environ *environ, t_environ *var, char *value)
 {
-	// printf("value = %s\n",value);
 	while (environ != NULL)
 	{
 		if (ft_strcmp(environ->name, var->name) == 0)
@@ -78,7 +77,8 @@ int	bi_export(t_environ *environ, char **argv, int argc)
 		if (var != NULL)
 			override_val(environ, var, value);
 		else
-			environ_nodeadd_back(environ, environ_node_new(ft_strdup(name), ft_strdup(value)));
+			environ_nodeadd_back(environ, environ_node_new(ft_strdup(name),
+						ft_strdup(value)));
 		free(name);
 		free(value);
 	}

@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:31:19 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/04 17:37:31 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:51:35 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ t_node	*new_node(t_node_kind kind, t_node *prev)
 	return (node);
 }
 
-
 // トークンの種類ごとにノード追加
 void	append_command_element(t_node *command, t_token **rest, t_token *tok)
 {
@@ -99,4 +98,3 @@ void	append_command_element(t_node *command, t_token **rest, t_token *tok)
 	}
 	*rest = tok;
 }
-

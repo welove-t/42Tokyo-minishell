@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:45:48 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:42:15 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:51:20 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	execute_builtin_command(t_node *node, char **argv,
 
 	if (check_bi(argv[0]))
 	{
-		redirection(node->redirects,environ);
+		redirection(node->redirects, environ);
 		if (g_global.flg_redir == 1)
 		{
 			return (-1);

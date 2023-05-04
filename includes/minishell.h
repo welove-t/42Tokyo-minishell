@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:48:42 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:51:07 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 # define MINISHELL_H
 
 # include "../srcs/lib/libft/libft.h"
+# include <errno.h>
 # include <fcntl.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -23,9 +26,6 @@
 # include <sys/param.h>
 # include <sys/stat.h>
 # include <unistd.h>
-# include <errno.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # define SINGLE_QUOTE_CHAR '\''
 # define DOUBLE_QUOTE_CHAR '"'
 # define ERROR_PREFIX "minishell: "
@@ -98,7 +98,7 @@ struct						s_token
 	t_token					*next;
 };
 
-struct s_environ
+struct						s_environ
 {
 	char					*name;
 	char					*value;
@@ -153,10 +153,11 @@ void						execution(t_node *node, t_environ *environ);
 // expand
 // ------------------------------------------------
 
-void						expand(t_node *node,t_environ *env);
+void						expand(t_node *node, t_environ *env);
 void						append_char(char **s, char c);
-void						process_word_token(t_token *tok,t_environ *env);
-void						dollar_sign(char **p, char **new_word,t_environ *env);
+void						process_word_token(t_token *tok, t_environ *env);
+void						dollar_sign(char **p, char **new_word,
+								t_environ *env);
 
 // ------------------------------------------------
 // heredoc
@@ -164,7 +165,7 @@ void						dollar_sign(char **p, char **new_word,t_environ *env);
 
 void						loop_node_delete_heredoc(t_node *node);
 void						delete_heredoc(char *filename);
-void						do_heredoc(t_node *redir,t_environ *env);
+void						do_heredoc(t_node *redir, t_environ *env);
 void						check_heredoc(t_node *node, t_environ *env);
 
 // ------------------------------------------------
@@ -190,13 +191,13 @@ void						append_command_element(t_node *command,
 void						pipex(t_node *node, size_t cnt_node,
 								t_environ *environ);
 void						waitpid_pipex(t_node *node, int *wstatus);
-void						pipex_utils(t_node *node, int flag, t_environ *environ);
-
+void						pipex_utils(t_node *node, int flag,
+								t_environ *environ);
 
 // ------------------------------------------------
 // recirection
 // ------------------------------------------------
-void						redirection(t_node *redir,t_environ *env);
+void						redirection(t_node *redir, t_environ *env);
 void						reset_redirect(t_node *redir);
 int							do_open_redir_out(char *filepath);
 int							do_open_redir_in(char *filepath);
@@ -239,7 +240,6 @@ void						do_dup2(int oldfd, int newfd);
 void						do_pipe(int pipefd[2]);
 void						do_unlink(char *str);
 
-
 // ------------------------------------------------
 // Destructors
 // ------------------------------------------------
@@ -250,9 +250,8 @@ void						free_nodelist(t_node *node);
 void						free_argv(char **args);
 void						set_wstatus(int wstatus);
 
-
 // ------------------------------------------------
-// 
+//
 // ------------------------------------------------
 
 //1_init_environ_list

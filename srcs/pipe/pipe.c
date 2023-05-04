@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 15:45:00 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/04 17:34:56 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:51:32 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	pipex(t_node *node, size_t cnt_node, t_environ *environ)
 		i++;
 	}
 }
-
 
 void	waitpid_pipex(t_node *node, int *wstatus)
 {

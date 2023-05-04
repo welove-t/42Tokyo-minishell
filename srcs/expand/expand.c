@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/04 17:21:51 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:51:54 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,3 @@ void	expand(t_node *node, t_environ *env)
 {
 	expand_quote_removal(node, env);
 }
-
-

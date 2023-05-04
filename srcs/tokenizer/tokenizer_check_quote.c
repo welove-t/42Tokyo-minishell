@@ -6,12 +6,11 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:01:56 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/04 17:39:40 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:51:24 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 
 static bool	consume_single_quote(char **line)
 {
@@ -56,4 +55,3 @@ int	check_quote(char **line)
 	}
 	return (0);
 }
-

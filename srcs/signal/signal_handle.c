@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handle.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 15:12:34 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 14:26:16 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 17:51:29 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	signal_handler_waiting_input(int sig)
 
 void	signal_handler(int sig)
 {
-	// printf("signal_handlerが呼ばれた(%d)", sig);
 	if (sig == SIGINT)
 		signal_c_cmd();
 	else if (sig == SIGQUIT)

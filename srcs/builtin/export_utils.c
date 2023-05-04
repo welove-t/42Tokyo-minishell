@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:48:29 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:05:46 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:52:48 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ char	*make_name(char *str)
 	if (!name)
 		fatal_error("malloc");
 	ft_strlcpy(name, str, fir_len + 1);
-	// strncpy(name, str, fir_len);
 	return (name);
 }
 
@@ -73,38 +72,3 @@ char	*make_value(char *str)
 	value[lat_len] = '\0';
 	return (value);
 }
-
-
-
-// void	updata_environ(t_environ *env)
-// {
-// 	int			count;
-// 	char		**new_environ;
-// 	t_environ	*ptr;
-// 	int			i;
-
-// 	i = 0;
-// 	count = 0;
-// 	ptr = env;
-// 	while (ptr != NULL)
-// 	{
-// 		count++;
-// 		ptr = ptr->next;
-// 	}
-// 	new_environ = (char **)malloc((count + 1) * sizeof(char *));
-// 	if (!new_environ)
-// 		fatal_error("malloc");
-// 	new_environ[count] = NULL;
-// 	ptr = env;
-// 	while (i < count)
-// 	{
-// 		new_environ[i] = ft_strdup(ptr->name);
-// 		if (ptr->value != NULL)
-// 		{
-// 			new_environ[i] = ft_strjoin(new_environ[i], "=");
-// 			new_environ[i] = ft_strjoin(new_environ[i], ptr->value);
-// 		}
-// 		ptr = ptr->next;
-// 	}
-// 	env = *new_environ;
-// }

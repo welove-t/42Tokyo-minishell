@@ -6,12 +6,11 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/04 17:36:57 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:51:13 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 
 static int	stashfd(int fd)
 {
@@ -70,7 +69,6 @@ void	redirection(t_node *redir, t_environ *env)
 		return ;
 	do_redirect(redir);
 }
-
 
 // リストの逆からクローズ
 // 最終的に標準入力・出力に戻す

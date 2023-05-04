@@ -6,13 +6,13 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:15:06 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:24:08 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:52:16 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	process_heredoc_line(char *str, t_node *redir,t_environ *env)
+static void	process_heredoc_line(char *str, t_node *redir, t_environ *env)
 {
 	char	*new_word;
 	char	*tmp;
@@ -22,7 +22,7 @@ static void	process_heredoc_line(char *str, t_node *redir,t_environ *env)
 	{
 		if (*str == DOLLAR_SIGN)
 		{
-			dollar_sign(&str, &new_word,env);
+			dollar_sign(&str, &new_word, env);
 			tmp = new_word;
 			while (*tmp)
 				do_write(redir->file_fd, tmp++, 1);
@@ -38,7 +38,7 @@ static void	process_heredoc_line(char *str, t_node *redir,t_environ *env)
 	do_write(redir->file_fd, "\n", 1);
 }
 
-void	do_heredoc(t_node *redir,t_environ *env)
+void	do_heredoc(t_node *redir, t_environ *env)
 {
 	char	*buff;
 
@@ -46,7 +46,6 @@ void	do_heredoc(t_node *redir,t_environ *env)
 		return ;
 	g_global.status = 0;
 	rl_done = 0;
-	// heredoc処理用にシグナルハンドラを設定
 	rl_event_hook = signal_monitor;
 	signal(SIGINT, signal_handler_heredoc);
 	while (g_global.status != 1 || g_global.flg_redir != 1)
@@ -56,14 +55,10 @@ void	do_heredoc(t_node *redir,t_environ *env)
 			break ;
 		if (!ft_strcmp(buff, redir->delimiter->word))
 			break ;
-		process_heredoc_line(buff, redir,env);
+		process_heredoc_line(buff, redir, env);
 		free(buff);
 		buff = NULL;
 	}
-	/*
-	signal(SIGINT,シグナルハンドラ)が2つ使用されている場合、最後に設定した
-	シグナルハンドラが優先されるため、heredocを閉じるときにmainの方に戻してあげる。*/
-	// printf("シグナルハンドラをsignal_handlerに戻す\n");
 	rl_event_hook = NULL;
 	signal(SIGINT, signal_handler);
 	if (buff != NULL)
@@ -109,4 +104,3 @@ void	check_heredoc(t_node *node, t_environ *env)
 		i++;
 	}
 }
-
