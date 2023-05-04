@@ -6,7 +6,7 @@
 #    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/05/04 14:01:32 by terabu           ###   ########.fr        #
+#    Updated: 2023/05/04 14:07:31 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SOURCES_DIR = ./srcs
 UTILS_DIR = ./srcs/utils
 ERROR_DIR = ./srcs/error
 PARSER_DIR = ./srcs/parser
+REDIR_DIR = ./srcs/redirect
 BUILTIN_DIR = ./srcs/builtin
 LIBFT_DIR = ./srcs/lib/libft
 SOURCES = $(SOURCES_DIR)/main.c\
@@ -54,15 +55,15 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(PARSER_DIR)/parser_check.c\
 		  $(UTILS_DIR)/expantion.c\
 		  $(UTILS_DIR)/heredoc.c\
-		  $(UTILS_DIR)/redirect.c\
-		  $(UTILS_DIR)/redirect_open.c\
+		  $(REDIR_DIR)/redirect.c\
+		  $(REDIR_DIR)/redirect_open.c\
 		  $(UTILS_DIR)/exec.c\
 		  $(UTILS_DIR)/pipe.c\
 		  $(UTILS_DIR)/pipex_utils.c\
 		  $(UTILS_DIR)/wrap_systemcall_1.c\
 		  $(UTILS_DIR)/wrap_systemcall_2.c\
 
-VPATH = $(SOURCES_DIR) $(UTILS_DIR) $(BUILTIN_DIR) $(ERROR_DIR) $(PARSER_DIR)
+VPATH = $(SOURCES_DIR) $(UTILS_DIR) $(BUILTIN_DIR) $(ERROR_DIR) $(PARSER_DIR) $(REDIR_DIR)
 OBJS_DIR = objs
 OBJS = $(addprefix $(OBJS_DIR)/, $(notdir $(SOURCES:.c=.o)))
 LIBFT = -L$(LIBFT_DIR) -lft

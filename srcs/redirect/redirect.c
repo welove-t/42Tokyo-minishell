@@ -6,16 +6,16 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/03 14:39:18 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 14:06:09 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	redirection(t_node *redir,t_environ *env)
+void	redirection(t_node *redir, t_environ *env)
 {
 	g_global.flg_redir = 0;
-	open_redir_file(redir,env);
+	open_redir_file(redir, env);
 	if (g_global.flg_redir != 0 || g_global.status == 1)
 		return ;
 	do_redirect(redir);
@@ -43,12 +43,7 @@ void	open_redir_file(t_node *redir, t_environ *env)
 	else if (redir->kind == ND_REDIR_APPEND)
 		redir->file_fd = do_open_redir_append(redir->filename->word);
 	else if (redir->kind == ND_REDIR_HEREDOC)
-	{
-		// redir->file_fd = do_open_redir_append(".heredoc");
-		// do_heredoc(redir,env);
-		// do_close(redir->file_fd);
 		redir->file_fd = do_open_redir_in(redir->filename->word);
-	}
 	else
 		assert_error("open_redir_file");
 	if (redir->file_fd < 0)
