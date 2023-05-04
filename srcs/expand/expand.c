@@ -1,32 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expantion.c                                        :+:      :+:    :+:   */
+/*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:39:04 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/03 10:00:27 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 17:21:51 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	expand_quote_removal(t_node *node, t_environ *env)
-{
-	if (node == NULL)
-		return ;
-	process_word_token(node->args, env);
-	process_word_token(node->filename, env);
-	delemiter_quote_check(node->delimiter);
-	expand_quote_removal(node->redirects, env);
-	expand_quote_removal(node->next, env);
-}
-
-void	expand(t_node *node, t_environ *env)
-{
-	expand_quote_removal(node, env);
-}
 
 static void	remove_quotes(char **p, char quote_char, char **new_word)
 {
@@ -41,7 +25,7 @@ static void	remove_quotes(char **p, char quote_char, char **new_word)
 	(*p)++;
 }
 
-void	delemiter_quote_check(t_token *tok)
+static void	delemiter_quote_check(t_token *tok)
 {
 	char	*new_word;
 	char	*p;
@@ -63,3 +47,21 @@ void	delemiter_quote_check(t_token *tok)
 	tok->word = new_word;
 	delemiter_quote_check(tok->next);
 }
+
+static void	expand_quote_removal(t_node *node, t_environ *env)
+{
+	if (node == NULL)
+		return ;
+	process_word_token(node->args, env);
+	process_word_token(node->filename, env);
+	delemiter_quote_check(node->delimiter);
+	expand_quote_removal(node->redirects, env);
+	expand_quote_removal(node->next, env);
+}
+
+void	expand(t_node *node, t_environ *env)
+{
+	expand_quote_removal(node, env);
+}
+
+

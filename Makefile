@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
+#    By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/05/04 15:54:22 by terabu           ###   ########.fr        #
+#    Updated: 2023/05/04 17:14:32 by susasaki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,8 +58,8 @@ SOURCES = $(SOURCES_DIR)/0_main.c\
 		  $(PARSER_DIR)/parser_make_tok.c\
 		  $(PARSER_DIR)/parser_check.c\
 		  $(EXPAND_DIR)/expand_dollar_sign.c\
-		  $(EXPAND_DIR)/process_word.c\
-		  $(EXPAND_DIR)/expantion.c\
+		  $(EXPAND_DIR)/expand_word.c\
+		  $(EXPAND_DIR)/expand.c\
 		  $(HEREDOC_DIR)/heredoc_delete.c\
 		  $(HEREDOC_DIR)/heredoc.c\
 		  $(REDIR_DIR)/redirect.c\

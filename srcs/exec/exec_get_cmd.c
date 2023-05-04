@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_cmd_line.c                                     :+:      :+:    :+:   */
+/*   exec_get_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:10:07 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/01 14:57:58 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 17:15:55 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	*get_cmd(char *cmd);
-static char	*get_path(char *cmd);
-static int	get_env_index(const char *key, int index_start);
-
-char	*get_cmd_array(char *cmd_line)
+static int	get_env_index(const char *key, int index_start)
 {
-	char	*r_str_array;
+	int	i;
 
-	if (cmd_line == NULL || ft_strlen(cmd_line) == 0)
-		return (NULL);
-	r_str_array = NULL;
-	if (ft_strchr(cmd_line, '/'))
-		r_str_array = get_path(cmd_line);
-	else
-		r_str_array = get_cmd(cmd_line);
-	return (r_str_array);
+	i = 0;
+	while (environ[i])
+	{
+		if (!ft_strncmp(environ[i], key, index_start))
+			return (i);
+		i++;
+	}
+	return (0);
 }
 
 static char	*get_cmd(char *cmd)
@@ -59,16 +55,16 @@ static char	*get_path(char *cmd)
 	return (NULL);
 }
 
-static int	get_env_index(const char *key, int index_start)
+char	*get_cmd_array(char *cmd_line)
 {
-	int	i;
+	char	*r_str_array;
 
-	i = 0;
-	while (environ[i])
-	{
-		if (!ft_strncmp(environ[i], key, index_start))
-			return (i);
-		i++;
-	}
-	return (0);
+	if (cmd_line == NULL || ft_strlen(cmd_line) == 0)
+		return (NULL);
+	r_str_array = NULL;
+	if (ft_strchr(cmd_line, '/'))
+		r_str_array = get_path(cmd_line);
+	else
+		r_str_array = get_cmd(cmd_line);
+	return (r_str_array);
 }

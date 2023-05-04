@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:06:25 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:21:58 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,6 @@ void						put_error_msg(char *error_msg);
 void						put_error_msg_endl(char *error_msg);
 void						put_error_char(char c);
 void						error_file(char *filename);
-void						error_dir(char *dir);
 void						error_exit(char *cmd);
 
 // ------------------------------------------------
@@ -158,21 +157,19 @@ char						*get_cmd_array(char *cmd_line);
 // exec
 void						exec_cmd(t_node *node, t_environ *mini_environ);
 void						execution(t_node *node, t_environ *environ);
-size_t						get_environ_cnt(t_environ *node);
-size_t						get_node_cnt(t_node *node);
 
 // ------------------------------------------------
 // expand
 // ------------------------------------------------
 
-// expantion
+// expand
 void						expand(t_node *node,t_environ *env);
-void						delemiter_quote_check(t_token *tok);
-
-
-
-// dollar_sign
+void						append_char(char **s, char c);
+void						process_word_token(t_token *tok,t_environ *env);
 void						dollar_sign(char **p, char **new_word,t_environ *env);
+
+
+
 
 
 // ------------------------------------------------
@@ -205,9 +202,6 @@ bool						parser_check_pipe(t_node *node, t_token *tok);
 void						do_heredoc(t_node *redir,t_environ *env);
 void						check_heredoc(t_node *node, t_environ *env);
 
-// process_word
-void						append_char(char **s, char c);
-void						process_word_token(t_token *tok,t_environ *env);
 
 // ------------------------------------------------
 // pipe

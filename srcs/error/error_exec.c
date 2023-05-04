@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:24 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/04 13:54:44 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 17:08:12 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	error_cmd(char *cmd)
 	exit(127);
 }
 
-void	error_dir(char *dir)
+static void	error_dir(char *dir)
 {
 	put_error_msg(dir);
 	put_error_msg_endl(": is a directory");
