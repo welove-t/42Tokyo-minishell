@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 13:51:22 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:16:57 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ char	*make_name(char *str)
 		fatal_error("malloc");
 	ft_strlcpy(name, str, fir_len + 1);
 	// strncpy(name, str, fir_len);
-	//TODO: ft_strlcpyで終端文字までコピーしているので、下記のコードは不必要かも
-	name[fir_len] = '\0';
 	return (name);
 }
 
