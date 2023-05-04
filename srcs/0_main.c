@@ -1,16 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_matches_cmd.c                                  :+:      :+:    :+:   */
+/*   0_main.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 13:23:59 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/03 16:45:20 by terabu           ###   ########.fr       */
+/*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
+/*   Updated: 2023/05/04 15:59:33 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*
+Debug用: 終了ステータスをend_status.txtに書き込む
+別プロセスでminishellの階層で下記のコマンドを実行
+while true; do echo -n "Exit status: "; cat end_status.txt; sleep 1; done
+*/
+static void	debug_write_endstatus(void)
+{
+	FILE	*fd;
+
+	fd = fopen("end_status.txt", "w");
+	if (fd == NULL)
+	{
+		put_error_msg_endl("fopen");
+		return ;
+	}
+	if (fprintf(fd, "%d\n", g_global.status) < 0)
+	{
+		put_error_msg_endl("fprintf");
+		fclose(fd);
+		return ;
+	}
+	fclose(fd);
+}
 
 void	line_matches_cmd(char *line, t_environ *environ)
 {
@@ -42,4 +66,31 @@ void	line_matches_cmd(char *line, t_environ *environ)
 	execution(node, environ);
 	free_nodelist(node);
 	return ;
+}
+
+int	main(void)
+{
+	char		*input;
+	t_environ	*environ;
+
+	g_global.syntax_error = false;
+	signal(SIGQUIT, signal_handler);
+	environ = init_environ_list();
+	while (1)
+	{
+		signal(SIGINT, signal_handler);
+		debug_write_endstatus();
+		input = readline("minishell> ");
+		if (input == NULL)
+			break ;
+		else if (ft_strlen(input) == 0)
+			;
+		else
+		{
+			add_history(input);
+			line_matches_cmd(input, environ);
+		}
+		free(input);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/05/04 15:33:09 by terabu           ###   ########.fr        #
+#    Updated: 2023/05/04 15:54:22 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,14 +31,14 @@ BUILTIN_DIR = ./srcs/builtin
 WRAPPER_DIR = ./srcs/wrapper
 LIBFT_DIR = ./srcs/lib/libft
 
-SOURCES = $(SOURCES_DIR)/main.c\
-		  $(SOURCES_DIR)/str_matches_cmd.c\
-		  $(SOURCES_DIR)/init_environ_list.c\
+SOURCES = $(SOURCES_DIR)/0_main.c\
+		  $(SOURCES_DIR)/1_init_environ_list.c\
+		  $(SOURCES_DIR)/2_builtin_search.c\
+		  $(SOURCES_DIR)/3_destructors.c\
 		  $(ERROR_DIR)/error_exec.c\
 		  $(ERROR_DIR)/error_general.c\
 		  $(ERROR_DIR)/error_put.c\
 		  $(ERROR_DIR)/error_syntax.c\
-		  $(SOURCES_DIR)/destructors.c\
 		  $(SIGNAL_DIR)/signal_handle.c\
 		  $(SIGNAL_DIR)/signal.c\
 		  $(BUILTIN_DIR)/cd.c\
@@ -53,7 +53,6 @@ SOURCES = $(SOURCES_DIR)/main.c\
 		  $(TOKEN_DIR)/tokenizer_check_literal.c\
 		  $(TOKEN_DIR)/tokenizer_check_quote.c\
 		  $(TOKEN_DIR)/tokenizer_utils.c\
-		  $(UTILS_DIR)/search_bi_cmd.c\
 		  $(PARSER_DIR)/parser.c\
 		  $(PARSER_DIR)/parser_node_redirect.c\
 		  $(PARSER_DIR)/parser_make_tok.c\
