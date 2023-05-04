@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/04 14:06:09 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 15:01:43 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	stashfd(int fd)
 {
 	int	tmp_fd;
 
-	tmp_fd = dup(fd);
+	tmp_fd = do_dup(fd);
 	if (tmp_fd < 0)
 		fatal_error("fcntl");
 	do_close(fd);
