@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 10:41:32 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 13:51:22 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,6 @@ int	bi_export(t_environ *environ, char **argv, int argc)
 		free(name);
 		free(value);
 	}
+	g_global.status = 0;
 	return (0);
 }
