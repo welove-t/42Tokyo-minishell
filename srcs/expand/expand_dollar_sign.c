@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dollar_sign.c                                      :+:      :+:    :+:   */
+/*   expand_dollar_sign.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:40:25 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/03 16:16:46 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:16:48 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	expand_env(char **new_word, char *p, t_environ *env)
 	return ;
 }
 
-int	handle_dollar_sign(char **p, char **exp_tmp)
+static int	handle_dollar_sign(char **p, char **exp_tmp)
 {
 	(*p)++;
 	if (**p == ' ' || **p == '\t' || **p == '\0')

@@ -3,25 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/04 17:34:20 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 17:51:13 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	redirection(t_node *redir, t_environ *env)
-{
-	g_global.flg_redir = 0;
-	open_redir_file(redir, env);
-	if (g_global.flg_redir != 0 || g_global.status == 1)
-		return ;
-	do_redirect(redir);
-}
-
-int	stashfd(int fd)
+static int	stashfd(int fd)
 {
 	int	tmp_fd;
 
@@ -55,7 +46,7 @@ void	open_redir_file(t_node *redir, t_environ *env)
 	open_redir_file(redir->next, env);
 }
 
-void	do_redirect(t_node *redir)
+static void	do_redirect(t_node *redir)
 {
 	if (redir == NULL)
 		return ;
@@ -68,6 +59,15 @@ void	do_redirect(t_node *redir)
 	else
 		assert_error("do_redirect");
 	do_redirect(redir->next);
+}
+
+void	redirection(t_node *redir, t_environ *env)
+{
+	g_global.flg_redir = 0;
+	open_redir_file(redir, env);
+	if (g_global.flg_redir != 0 || g_global.status == 1)
+		return ;
+	do_redirect(redir);
 }
 
 // リストの逆からクローズ

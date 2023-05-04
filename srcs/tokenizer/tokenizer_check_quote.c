@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_check_quote.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 12:01:56 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/20 16:47:56 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 17:51:24 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static bool	consume_single_quote(char **line)
+{
+	(*line)++;
+	while (**line && **line != SINGLE_QUOTE_CHAR)
+		(*line)++;
+	if (**line == '\0')
+		return (false);
+	else
+		(*line)++;
+	return (true);
+}
+
+static bool	consume_double_quote(char **line)
+{
+	(*line)++;
+	while (**line && **line != DOUBLE_QUOTE_CHAR)
+		(*line)++;
+	if (**line == '\0')
+		return (false);
+	else
+		(*line)++;
+	return (true);
+}
 
 int	check_quote(char **line)
 {
@@ -30,28 +54,4 @@ int	check_quote(char **line)
 			(*line)++;
 	}
 	return (0);
-}
-
-bool	consume_single_quote(char **line)
-{
-	(*line)++;
-	while (**line && **line != SINGLE_QUOTE_CHAR)
-		(*line)++;
-	if (**line == '\0')
-		return (false);
-	else
-		(*line)++;
-	return (true);
-}
-
-bool	consume_double_quote(char **line)
-{
-	(*line)++;
-	while (**line && **line != DOUBLE_QUOTE_CHAR)
-		(*line)++;
-	if (**line == '\0')
-		return (false);
-	else
-		(*line)++;
-	return (true);
 }

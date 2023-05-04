@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:48:29 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 14:30:37 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:52:48 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,35 +37,38 @@ t_environ	*environ_node_new(char *name, char *value)
 	return (new);
 }
 
-// void	updata_environ(t_environ *env)
-// {
-// 	int			count;
-// 	char		**new_environ;
-// 	t_environ	*ptr;
-// 	int			i;
+char	*make_name(char *str)
+{
+	char	*name;
+	int		fir_len;
 
-// 	i = 0;
-// 	count = 0;
-// 	ptr = env;
-// 	while (ptr != NULL)
-// 	{
-// 		count++;
-// 		ptr = ptr->next;
-// 	}
-// 	new_environ = (char **)malloc((count + 1) * sizeof(char *));
-// 	if (!new_environ)
-// 		fatal_error("malloc");
-// 	new_environ[count] = NULL;
-// 	ptr = env;
-// 	while (i < count)
-// 	{
-// 		new_environ[i] = ft_strdup(ptr->name);
-// 		if (ptr->value != NULL)
-// 		{
-// 			new_environ[i] = ft_strjoin(new_environ[i], "=");
-// 			new_environ[i] = ft_strjoin(new_environ[i], ptr->value);
-// 		}
-// 		ptr = ptr->next;
-// 	}
-// 	env = *new_environ;
-// }
+	if (!(('a' <= *str && *str <= 'z') || ('A' <= *str && *str <= 'Z')
+			|| *str == '_'))
+		return (NULL);
+	fir_len = first_strlen(str);
+	if (fir_len == -1)
+		return (NULL);
+	name = (char *)malloc(fir_len + 1);
+	if (!name)
+		fatal_error("malloc");
+	ft_strlcpy(name, str, fir_len + 1);
+	return (name);
+}
+
+char	*make_value(char *str)
+{
+	char	*value;
+	int		lat_len;
+	int		fir_len;
+
+	fir_len = first_strlen(str);
+	lat_len = latter_strlen(str);
+	if (lat_len == -1)
+		return (NULL);
+	value = (char *)malloc(lat_len + 1);
+	if (!value)
+		fatal_error("malloc");
+	ft_strlcpy(value, str + fir_len + 1, lat_len + 1);
+	value[lat_len] = '\0';
+	return (value);
+}

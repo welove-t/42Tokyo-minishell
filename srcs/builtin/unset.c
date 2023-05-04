@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:13 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 14:01:19 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:52:29 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ t_environ	*find_variable(t_environ *environ, char *str)
 
 void	remove_variable(t_environ *environ, t_environ *var)
 {
-	t_environ *tmp;
+	t_environ	*tmp;
+
 	while (environ != NULL)
 	{
 		if (environ->next->name == var->name)

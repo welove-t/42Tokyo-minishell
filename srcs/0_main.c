@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   0_main.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:34:04 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 17:44:19 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static	bool	check_syntax_error(t_token *token, t_node *node, int flg)
 		return (false);
 }
 
-void	line_matches_cmd(char *line, t_environ *environ)
+static void	line_matches_cmd(char *line, t_environ *environ)
 {
 	t_token	*token;
 	t_node	*node;

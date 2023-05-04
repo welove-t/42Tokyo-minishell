@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_word.c                                     :+:      :+:    :+:   */
+/*   expand_word.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:38:25 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/03 17:06:41 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:51:52 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ quoteの開閉チェックはtokenizerで実施済みのため閉じられてい
 */
 void	process_word_token(t_token *tok, t_environ *env)
 {
-	char *new_word;
-	char *p;
+	char	*new_word;
+	char	*p;
 
 	if (tok == NULL || tok->kind != TK_WORD || tok->word == NULL)
 		return ;

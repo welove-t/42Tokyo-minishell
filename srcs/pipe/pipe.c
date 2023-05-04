@@ -3,18 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 15:45:00 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/04 14:39:19 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 17:51:32 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void		output_pipe_dup_close(int fd[2]);
-void		input_pipe_dup_close(int fd[2]);
-void		close_pipe(t_node *node, size_t i);
+static void	close_pipe(t_node *node, size_t i)
+{
+	if (i < 1)
+		return ;
+	do_close(node->prev->pfd[0]);
+	do_close(node->prev->pfd[1]);
+}
+
+static void	output_pipe_dup_close(int fd[2])
+{
+	do_close(fd[0]);
+	do_dup2(fd[1], STDOUT_FILENO);
+	do_close(fd[1]);
+}
+
+static void	input_pipe_dup_close(int fd[2])
+{
+	do_close(fd[1]);
+	do_dup2(fd[0], STDIN_FILENO);
+	do_close(fd[0]);
+}
 
 void	pipex(t_node *node, size_t cnt_node, t_environ *environ)
 {
@@ -42,28 +60,6 @@ void	pipex(t_node *node, size_t cnt_node, t_environ *environ)
 		node = node->next;
 		i++;
 	}
-}
-
-void	output_pipe_dup_close(int fd[2])
-{
-	do_close(fd[0]);
-	do_dup2(fd[1], STDOUT_FILENO);
-	do_close(fd[1]);
-}
-
-void	input_pipe_dup_close(int fd[2])
-{
-	do_close(fd[1]);
-	do_dup2(fd[0], STDIN_FILENO);
-	do_close(fd[0]);
-}
-
-void	close_pipe(t_node *node, size_t i)
-{
-	if (i < 1)
-		return ;
-	do_close(node->prev->pfd[0]);
-	do_close(node->prev->pfd[1]);
 }
 
 void	waitpid_pipex(t_node *node, int *wstatus)
