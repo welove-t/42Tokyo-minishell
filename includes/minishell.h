@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 14:22:54 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 15:03:49 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,8 +301,10 @@ void						set_wstatus(int wstatus);
 // ------------------------------------------------
 void						do_close(int fd);
 void						do_write(int fd, const void *buf, size_t count);
+int							do_dup(int oldfd);
 void						do_dup2(int oldfd, int newfd);
 void						do_pipe(int pipefd[2]);
 void						do_unlink(char *str);
+
 
 #endif
