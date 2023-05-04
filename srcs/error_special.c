@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:24 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/28 10:22:54 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 11:31:39 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	parse_error(t_token **rest, t_token *tok)
 	g_global.syntax_error = true;
 	perror_prefix();
 	put_error_msg_endl("syntax error !!");
+	g_global.status = 258;
 	while (tok && tok->kind != TK_EOF)
 		tok = tok->next;
 	*rest = tok;

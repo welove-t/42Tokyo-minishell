@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_tokenizer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:24 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/27 18:20:18 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:31:52 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	tokenize_error(char *location, char **rest, char *line, int flg)
 		put_error_msg("' in ");
 		put_error_msg_endl(location);
 	}
+	g_global.status = 258;
 	while (*line)
 		line++;
 	*rest = line;
