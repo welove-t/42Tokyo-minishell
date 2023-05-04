@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:13 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 15:39:53 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:01:19 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	bi_unset(t_environ *environ, char **argv, int argc)
 {
 	t_environ	*var;
 
+	g_global.status = 0;
 	if (argc < 2)
 	{
 		return (-1);
@@ -71,7 +72,6 @@ int	bi_unset(t_environ *environ, char **argv, int argc)
 	if (var == NULL)
 	{
 		put_error_msg_endl("unset: can't find variable");
-		g_global.status = 1;
 		return (-1);
 	}
 	remove_variable(environ, var);
