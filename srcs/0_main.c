@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   0_main.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/02 12:47:15 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:31:40 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,51 @@ static void	debug_write_endstatus(void)
 		return ;
 	}
 	fclose(fd);
+}
+
+static	bool	check_syntax_error(t_token *token, t_node *node, int flg)
+{
+	if (flg == 1 && g_global.syntax_error)
+	{
+		free_token(token);
+		return (true);
+	}
+	else if (flg == 2 && g_global.syntax_error)
+	{
+		free_nodelist(node);
+		return (true);
+	}
+	else if (flg == 3 && g_global.flg_redir)
+	{
+		loop_node_delete_heredoc(node);
+		free_nodelist(node);
+		g_global.flg_redir = 0;
+		return (true);
+	}
+	else
+		return (false);
+}
+
+void	line_matches_cmd(char *line, t_environ *environ)
+{
+	t_token	*token;
+	t_node	*node;
+
+	token = tokenize(line);
+	node = NULL;
+	if (check_syntax_error(token, node, 1))
+		return ;
+	node = parse(token);
+	free_token(token);
+	if (check_syntax_error(token, node, 2))
+		return ;
+	expand(node, environ);
+	check_heredoc(node, environ);
+	if (check_syntax_error(token, node, 3))
+		return ;
+	execution(node, environ);
+	free_nodelist(node);
+	return ;
 }
 
 int	main(void)

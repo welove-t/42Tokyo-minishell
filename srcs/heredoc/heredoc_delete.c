@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_special.c                                    :+:      :+:    :+:   */
+/*   heredoc_delete.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/08 12:58:24 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/04 11:31:39 by terabu           ###   ########.fr       */
+/*   Created: 2023/04/27 13:15:06 by susasaki          #+#    #+#             */
+/*   Updated: 2023/05/04 15:31:52 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	parse_error(t_token **rest, t_token *tok)
+void	delete_heredoc(char *filename)
 {
-	g_global.syntax_error = true;
-	perror_prefix();
-	put_error_msg_endl("syntax error !!");
-	g_global.status = 258;
-	while (tok && tok->kind != TK_EOF)
-		tok = tok->next;
-	*rest = tok;
+	if (!access(filename, R_OK))
+		do_unlink(filename);
 }
 
-void	xperror(const char *location)
+void	loop_node_delete_heredoc(t_node *node)
 {
-	perror_prefix();
-	perror(location);
+	t_node	*tmp;
+
+	if (node == NULL)
+		return ;
+	tmp = node;
+	while (tmp)
+	{
+		if (tmp->kind == ND_REDIR_HEREDOC && tmp->filename)
+			delete_heredoc(tmp->filename->word);
+		tmp = tmp->redirects;
+	}
+	loop_node_delete_heredoc(node->next);
 }

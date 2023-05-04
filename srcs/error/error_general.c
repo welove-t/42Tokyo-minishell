@@ -1,35 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_tokenizer.c                                  :+:      :+:    :+:   */
+/*   error_general.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 12:58:24 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/04 11:31:52 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 13:58:19 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	tokenize_error(char *location, char **rest, char *line, int flg)
+void	perror_prefix(void)
 {
-	g_global.syntax_error = true;
+	put_error_msg(ERROR_PREFIX);
+}
+
+void	fatal_error(char *msg)
+{
 	perror_prefix();
-	if (flg < 0)
-	{
-		put_error_msg("syntax error: ");
-		put_error_msg_endl(location);
-	}
-	else
-	{
-		put_error_msg("syntax error near unexpected character `");
-		put_error_char(*line);
-		put_error_msg("' in ");
-		put_error_msg_endl(location);
-	}
-	g_global.status = 258;
-	while (*line)
-		line++;
-	*rest = line;
+	put_error_msg("Fatal Error: ");
+	put_error_msg_endl(msg);
+	exit(1);
+}
+
+void	assert_error(char *msg)
+{
+	perror_prefix();
+	put_error_msg("Fatal Error: ");
+	put_error_msg_endl(msg);
+	exit(255);
 }

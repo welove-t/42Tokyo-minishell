@@ -6,19 +6,11 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:15:06 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 11:01:13 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 15:32:10 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static int	monitor_signal(void)
-{
-	if (g_global.status == 1)
-		rl_done = 1;
-	//0だと終了
-	return (0);
-}
 
 static void	process_heredoc_line(char *str, t_node *redir,t_environ *env)
 {
@@ -55,7 +47,7 @@ void	do_heredoc(t_node *redir,t_environ *env)
 	g_global.status = 0;
 	rl_done = 0;
 	// heredoc処理用にシグナルハンドラを設定
-	rl_event_hook = monitor_signal;
+	rl_event_hook = signal_monitor;
 	signal(SIGINT, signal_handler_heredoc);
 	while (g_global.status != 1 || g_global.flg_redir != 1)
 	{
@@ -76,28 +68,6 @@ void	do_heredoc(t_node *redir,t_environ *env)
 	signal(SIGINT, signal_handler);
 	if (buff != NULL)
 		free(buff);
-}
-
-void	delete_heredoc(char *filename)
-{
-	if (!access(filename, R_OK))
-		do_unlink(filename);
-}
-
-void	loop_node_delete_heredoc(t_node *node)
-{
-	t_node	*tmp;
-
-	if (node == NULL)
-		return ;
-	tmp = node;
-	while (tmp)
-	{
-		if (tmp->kind == ND_REDIR_HEREDOC && tmp->filename)
-			delete_heredoc(tmp->filename->word);
-		tmp = tmp->redirects;
-	}
-	loop_node_delete_heredoc(node->next);
 }
 
 void	open_heredoc(t_node *redir, t_environ *env, size_t i)
@@ -128,8 +98,6 @@ void	check_heredoc(t_node *node, t_environ *env)
 	size_t	i;
 	t_node	*tmp;
 
-	// if (get_node_cnt(node) > 1)
-	// 	return ;
 	i = 0;
 	tmp = node;
 	while (tmp)

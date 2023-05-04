@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   search_bi_cmd.c                                    :+:      :+:    :+:   */
+/*   2_builtin_search.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:45:48 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/01 19:19:41 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:55:29 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 static bool	check_bi(char *cmd)
 {
