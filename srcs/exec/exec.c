@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/04 14:45:11 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/04 16:45:07 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,6 @@ void	execution(t_node *node, t_environ *environ)
 	cnt_node = get_node_cnt(node);
 	if (cnt_node <= 1)
 	{
-		/*
-		node->args->wordの中にcdなどのコマンドが入っている。
-		fork()前にbuiltinか確認する。builtinだったら、forkしない
-		*/
-		//設定したビルトインコマンドがあったら、0が返ってくる
 		if (search_bi_cmd(node, environ) != 1)
 			return ;
 		signal(SIGINT, SIG_IGN);
@@ -94,30 +89,21 @@ void	exec_cmd(t_node *node, t_environ *mini_environ)
 {
 	char	**argv;
 
-	redirection(node->redirects,mini_environ);
+	redirection(node->redirects, mini_environ);
 	if (g_global.flg_redir != 0)
 		exit(EXIT_FAILURE);
 	argv = token_list_to_array(node->args);
-	// printf_argv(argv);
-	// dprintf(2, "status:%d\n", g_global.status);
-	// printf_argv(env_list_to_array(mini_environ));
 	argv[0] = get_cmd_array(argv[0]);
-	// if (g_global.status != 1)
-	// {
-		if (argv[0] != NULL)
-		{
-			//ctrl-c: 130
-			signal(SIGINT, signal_handler_waiting_input);
-			//ctrl-\: 131
-			signal(SIGQUIT, signal_handler_waiting_input);
-			if (execve(argv[0], argv, env_list_to_array(mini_environ)) == -1)
-				error_exit(argv[0]);
+	if (argv[0] != NULL)
+	{
+		signal(SIGINT, signal_handler_waiting_input);
+		signal(SIGQUIT, signal_handler_waiting_input);
+		if (execve(argv[0], argv, env_list_to_array(mini_environ)) == -1)
+			error_exit(argv[0]);
 
-		}
-		else
-			error_cmd(node->args->word);
-	// }
-	// reset_redirect(node->redirects);
+	}
+	else
+		error_cmd(node->args->word);
 }
 
 size_t	get_environ_cnt(t_environ *node)
