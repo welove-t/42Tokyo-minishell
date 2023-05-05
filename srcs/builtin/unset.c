@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:13 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 21:19:53 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/06 02:38:12 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@ t_environ	*find_variable(t_environ *environ, char *str)
 	return (NULL);
 }
 
+/*
 void	remove_variable(t_environ *environ, t_environ *var)
 {
 	t_environ	*tmp;
 
 	while (environ != NULL)
 	{
-		//TODO:if (environ->next && environ->next->name == var->name)したらセグフォは直るけど、unsetで削除できない
+		//TODO:先頭の要素を削除した時にセグフォ。unsetで削除できない
 		if (environ->next->name == var->name)
 		{
 			tmp = environ->next;
@@ -53,6 +54,42 @@ void	remove_variable(t_environ *environ, t_environ *var)
 		}
 		environ = environ->next;
 	}
+}
+*/
+
+void	remove_variable(t_environ **environ, t_environ *var)
+{
+	t_environ	*tmp;
+	t_environ	*fast;
+
+	fast = *environ;
+	//TODO: 先頭ノードを消しきれていない。
+	// 先頭ノードの場合
+	if ((*environ)->name == var->name)
+	{
+		tmp = *environ;
+		*environ = (*environ)->next;
+		free(tmp->name);
+		free(tmp->value);
+		free(tmp);
+		return;
+	}
+
+	// 2番目以降のノードを削除する場合
+	while ((*environ)->next != NULL)
+	{
+		if ((*environ)->next->name == var->name)
+		{
+			tmp = (*environ)->next;
+			(*environ)->next = (*environ)->next->next;
+			free(tmp->name);
+			free(tmp->value);
+			free(tmp);
+			break;
+		}
+		*environ = (*environ)->next;
+	}
+	*environ = fast;
 }
 
 int	bi_unset(t_environ *environ, char **argv, int argc)
@@ -81,6 +118,7 @@ int	bi_unset(t_environ *environ, char **argv, int argc)
 		put_error_msg_endl("unset: can't find variable");
 		return (-1);
 	}
-	remove_variable(environ, var);
+	remove_variable(&environ, var);
+	printf("environ->name = %s\n",environ->name);
 	return (0);
 }
