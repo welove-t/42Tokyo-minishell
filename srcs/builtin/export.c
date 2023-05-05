@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 18:14:25 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:00:20 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static void	bi_export_utiles(t_environ *environ, char **argv, char *name)
 	free(value);
 }
 
+//TODO:引数が3つ以上の時はエラーを吐くようにする。
 int	bi_export(t_environ *environ, char **argv, int argc)
 {
 	char	*name;

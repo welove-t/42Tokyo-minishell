@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/04 17:51:13 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:08:59 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	reset_redirect(t_node *redir)
 	if (redir == NULL)
 		return ;
 	reset_redirect(redir->next);
+	//TODO: ビルトインコマンドの時の、appendがセグフォが起こる
 	if (redir->kind == ND_REDIR_OUT || redir->kind == ND_REDIR_IN \
 		|| redir->kind == ND_REDIR_IN || redir->kind == ND_REDIR_HEREDOC)
 	{

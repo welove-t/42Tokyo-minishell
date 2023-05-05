@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:10:07 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/04 17:15:55 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:07:15 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static int	get_env_index(const char *key, int index_start)
 	i = 0;
 	while (environ[i])
 	{
+		//TODO: 環境変数リストの方から取得する
 		if (!ft_strncmp(environ[i], key, index_start))
 			return (i);
 		i++;

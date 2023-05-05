@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 18:10:56 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:51:59 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static void	line_matches_cmd(char *line, t_environ *environ)
 	check_heredoc(node, environ);
 	if (check_syntax_error(token, node, 3))
 		return ;
+	//TODO: ここで初期化するのをやめ、exit以外のビルとインコマンドが終了した時に終了ステータスを0にするようにする。
 	g_global.status = 0;
 	execution(node, environ);
 	free_nodelist(node);
@@ -105,5 +106,6 @@ int	main(void)
 		}
 		free(input);
 	}
+	//TODO: return(g_global_status) ctrl-dを押した時に終了ステータスを引き継ぎたいから
 	return (0);
 }

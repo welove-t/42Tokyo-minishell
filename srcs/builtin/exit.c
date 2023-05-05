@@ -6,12 +6,13 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:49:00 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:58:04 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:30:50 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+//TODO: ft_atoiをatolに修正して、フラグ判定をする
 static int	int_overflow__check(char *str, long *num)
 {
 	int	flag;
@@ -19,6 +20,7 @@ static int	int_overflow__check(char *str, long *num)
 
 	i = 0;
 	flag = 1;
+	//TODO: + 記号にも対応する
 	if (str[i] == '-')
 	{
 		flag = -1;
@@ -30,10 +32,13 @@ static int	int_overflow__check(char *str, long *num)
 		*num += str[i] - '0';
 		i++;
 	}
+	// TODO:ここの条件式を見直す必要あり。is_space()を使うと良いかも
+	// TODO: exit "42 hoge" の際にエラーを出力
 	if ((str[i] < '0' || '9' < str[i]) && str[i] != '\0' && str[i] != ' '
 		&& str[i] != '\t')
 		return (1);
 	*num *= flag;
+	//TODO: long型にする
 	if (*num < INT_MIN || INT_MAX < *num)
 		return (1);
 	return (0);
