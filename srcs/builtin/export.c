@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 21:17:57 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 23:02:18 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	bi_only_export_env(t_environ *env)
 	}
 }
 
+//TODO: 変数名= の時は上書き、変数名 のみは上書きされない
 static void	override_val(t_environ *environ, t_environ *var, char *value)
 {
 	while (environ != NULL)
