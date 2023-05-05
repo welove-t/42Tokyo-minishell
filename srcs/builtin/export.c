@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 21:14:12 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 21:17:57 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ static void	bi_export_utiles(t_environ *environ, char **argv, char *name)
 	free(value);
 }
 
-//TODO:引数が3つ以上の時はエラーを吐くようにする。
 int	bi_export(t_environ *environ, char **argv, int argc)
 {
 	char	*name;
@@ -94,7 +93,7 @@ int	bi_export(t_environ *environ, char **argv, int argc)
 	}
 	else
 	{
-		put_error_msg_endl("exit: too many arguments");
+		put_error_msg_endl("export: too many arguments");
 		g_global.status = 1;
 		return (-1);
 	}
