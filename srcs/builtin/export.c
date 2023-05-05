@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 23:26:52 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/06 00:00:35 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	bi_only_export_env(t_environ *env)
 	}
 }
 
-//TODO: 変数名= の時は上書き、変数名 のみは上書きされない
 static void	override_val(t_environ *environ, t_environ *var, char *value)
 {
 	while (environ != NULL)
@@ -63,9 +62,9 @@ static void	bi_export_utiles(t_environ *environ, char **argv, char *name)
 		value = malloc(1);
 		value[0] = '\0';
 	}
-	if (var != NULL)
+	if (argv[1][first_strlen(argv[1])] == '=' && var != NULL)
 		override_val(environ, var, value);
-	else
+	else if (var == NULL)
 	{
 		environ_nodeadd_back(environ, environ_node_new(ft_strdup(name), \
 			ft_strdup(value)));
