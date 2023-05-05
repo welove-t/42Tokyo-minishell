@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:49:00 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 16:30:50 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 20:24:08 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@ static int	int_overflow__check(char *str, long *num)
 
 	i = 0;
 	flag = 1;
-	//TODO: + 記号にも対応する
 	if (str[i] == '-')
 	{
 		flag = -1;
 		i++;
 	}
+	else if(str[i] == '+')
+		i++;
 	while ('0' <= str[i] && str[i] <= '9')
 	{
 		*num *= 10;
