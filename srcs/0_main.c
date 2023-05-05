@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 14:51:59 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 20:10:57 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 Debug用: 終了ステータスをend_status.txtに書き込む
 別プロセスでminishellの階層で下記のコマンドを実行
 while true; do echo -n "Exit status: "; cat end_status.txt; sleep 1; done
+*/
 static void	debug_write_endstatus(void)
 {
 	FILE	*fd;
@@ -34,7 +35,6 @@ static void	debug_write_endstatus(void)
 	}
 	fclose(fd);
 }
-*/
 
 static	bool	check_syntax_error(t_token *token, t_node *node, int flg)
 {
@@ -77,7 +77,7 @@ static void	line_matches_cmd(char *line, t_environ *environ)
 	if (check_syntax_error(token, node, 3))
 		return ;
 	//TODO: ここで初期化するのをやめ、exit以外のビルとインコマンドが終了した時に終了ステータスを0にするようにする。
-	g_global.status = 0;
+	// g_global.status = 0;
 	execution(node, environ);
 	free_nodelist(node);
 	return ;
@@ -94,6 +94,7 @@ int	main(void)
 	while (1)
 	{
 		signal(SIGINT, signal_handler);
+		debug_write_endstatus();
 		input = readline("minishell> ");
 		if (input == NULL)
 			break ;
@@ -107,5 +108,5 @@ int	main(void)
 		free(input);
 	}
 	//TODO: return(g_global_status) ctrl-dを押した時に終了ステータスを引き継ぎたいから
-	return (0);
+	return (g_global.status);
 }
