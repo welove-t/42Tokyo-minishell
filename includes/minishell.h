@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:56:17 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:32:05 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define SIG_GET 100
 # define SIG_SET 200
 
+//TODO: environは不要なため削除
 extern char					**environ;
 
 typedef struct s_token		t_token;
@@ -52,6 +53,7 @@ struct						s_global
 	bool					syntax_error;
 	int						status;
 	int						flg_redir;
+	//TODO: minienvを削除
 	t_environ				*minienv;
 };
 // トークンの種類

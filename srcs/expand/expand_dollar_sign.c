@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:40:25 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:16:48 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:36:33 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static void	expand_env(char **new_word, char *p, t_environ *env)
 static int	handle_dollar_sign(char **p, char **exp_tmp)
 {
 	(*p)++;
+	//TODO: $PWD$PATH をした時に二つが展開されるようにする
 	if (**p == ' ' || **p == '\t' || **p == '\0')
 		return (1);
 	else
