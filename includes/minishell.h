@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 19:54:04 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 23:27:00 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int							bi_export(t_environ *env, char **argv, int argc);
 int							bi_unset(t_environ *environ, char **argv, int argc);
 // utils
 char						*make_name(char *str);
+char						*make_name_export(char *str);
 char						*make_value(char *str);
 t_environ					*find_variable(t_environ *environ, char *str);
 void						environ_nodeadd_back(t_environ *env,

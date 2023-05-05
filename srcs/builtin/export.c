@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 23:02:18 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 23:26:52 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	bi_export(t_environ *environ, char **argv, int argc)
 		bi_only_export_env(environ);
 	else if (argc == 2)
 	{
-		name = make_name(argv[1]);
+		name = make_name_export(argv[1]);
 		if (name == NULL)
 		{
 			put_error_msg_endl("export: not a valid identifier");
