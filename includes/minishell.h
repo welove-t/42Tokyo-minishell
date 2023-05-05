@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 17:32:05 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 19:54:04 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ struct						s_global
 	bool					syntax_error;
 	int						status;
 	int						flg_redir;
-	//TODO: minienvを削除
-	t_environ				*minienv;
 };
 // トークンの種類
 enum						e_token_kind
