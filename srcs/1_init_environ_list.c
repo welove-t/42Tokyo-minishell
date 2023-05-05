@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:04 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 15:29:40 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 21:06:02 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	latter_strlen(char *str)
 		return (-1);
 	i++;
 	//TODO: スペースとタブの項目を消す
-	while (str[i] != ' ' && str[i] != '\t' && str[i] != '\0')
+	while (str[i] != '\0')
 	{
 		i++;
 		res++;

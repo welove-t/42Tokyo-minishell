@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 20:19:01 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 21:04:15 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,5 @@ int	main(void)
 		}
 		free(input);
 	}
-	//TODO: return(g_global_status) ctrl-dを押した時に終了ステータスを引き継ぎたいから
 	return (g_global.status);
 }

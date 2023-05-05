@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 19:56:11 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 21:14:12 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,12 @@ int	bi_export(t_environ *environ, char **argv, int argc)
 			return (-1);
 		}
 		bi_export_utiles(environ, argv, name);
+	}
+	else
+	{
+		put_error_msg_endl("exit: too many arguments");
+		g_global.status = 1;
+		return (-1);
 	}
 	return (0);
 }
