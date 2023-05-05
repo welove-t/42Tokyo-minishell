@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 14:27:04 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:52:54 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 19:55:34 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	bi_env(int argc, t_environ *environ)
 {
 	t_environ	*tmp;
 
+	g_global.status = 0;
 	tmp = environ;
 	if (argc > 1)
 	{

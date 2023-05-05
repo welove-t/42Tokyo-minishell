@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:52:38 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 18:07:52 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 19:55:24 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static int	change_directory(char **argv)
 
 int	bi_cd(char **argv, int argc)
 {
+	g_global.status = 0;
 	if (argc == 1)
 	{
 		if (cd_home() == 1)

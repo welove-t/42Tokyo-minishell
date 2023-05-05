@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 17:00:20 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 19:56:11 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	bi_export(t_environ *environ, char **argv, int argc)
 {
 	char	*name;
 
+	g_global.status = 0;
 	if (argc == 1)
 		bi_only_export_env(environ);
 	else if (argc == 2)

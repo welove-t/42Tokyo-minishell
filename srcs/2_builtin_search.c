@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:45:48 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:51:20 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 20:19:50 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int	search_bi_cmd_helper(int argc, char **argv, t_environ *environ)
 {
 	int	flag;
 
-	g_global.status = 0;
 	flag = 0;
 	if (ft_strcmp(argv[0], "pwd") == 0)
 		flag = bi_pwd();
