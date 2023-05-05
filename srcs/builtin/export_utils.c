@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:48:29 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:52:48 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:24:11 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*make_name(char *str)
 	char	*name;
 	int		fir_len;
 
+	//TODO: 2文字目以降はアルファベット+数字+_
 	if (!(('a' <= *str && *str <= 'z') || ('A' <= *str && *str <= 'Z')
 			|| *str == '_'))
 		return (NULL);

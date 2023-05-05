@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:13 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:52:29 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:00:23 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	remove_variable(t_environ *environ, t_environ *var)
 
 	while (environ != NULL)
 	{
+		//TODO:if (environ->next && environ->next->name == var->name)したらセグフォは直るけど、unsetで削除できない
 		if (environ->next->name == var->name)
 		{
 			tmp = environ->next;
@@ -54,6 +55,7 @@ void	remove_variable(t_environ *environ, t_environ *var)
 	}
 }
 
+//TODO:引数が3つ以上の時はエラーを吐くようにする。
 int	bi_unset(t_environ *environ, char **argv, int argc)
 {
 	t_environ	*var;
