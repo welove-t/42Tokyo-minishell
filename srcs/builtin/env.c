@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 14:27:04 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/07 14:20:11 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 15:04:29 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,6 @@ int	bi_env(int argc, t_environ *environ)
 		g_global.status = 127;
 		return (-1);
 	}
-	// printf("\x1b[31m");
-	// printf("test1\n");
-	// printf("environ->name = %s\n",environ->name);
-	// // printf("environ->value = %s\x1b[0m\n",environ->value);
-	// printf("\x1b[0m");
 	while (tmp != NULL)
 	{
 		printf("%s", tmp->name);

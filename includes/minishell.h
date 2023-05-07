@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/07 14:09:14 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 15:04:20 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,10 @@ int							bi_cd(char **argv, int argc);
 int							bi_echo(char **argv);
 int							bi_env(int argc, t_environ *environ);
 int							bi_pwd(void);
+int							int_overflow_check(char *str, long *num);
 int							bi_exit(char **argv);
 int							bi_export(t_environ *env, char **argv, int argc);
+void						remove_variable(t_environ *environ, t_environ *var);
 int							bi_unset(t_environ *environ, char **argv, int argc);
 // utils
 char						*make_name(char *str);

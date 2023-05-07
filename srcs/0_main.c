@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/07 14:23:23 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 15:17:12 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 Debug用: 終了ステータスをend_status.txtに書き込む
 別プロセスでminishellの階層で下記のコマンドを実行
 while true; do echo -n "Exit status: "; cat end_status.txt; sleep 1; done
-*/
 static void	debug_write_endstatus(void)
 {
 	FILE	*fd;
@@ -35,6 +34,7 @@ static void	debug_write_endstatus(void)
 	}
 	fclose(fd);
 }
+*/
 
 static	bool	check_syntax_error(t_token *token, t_node *node, int flg)
 {
@@ -93,7 +93,6 @@ int	main(void)
 	{
 		environ = g_global.env_head;
 		signal(SIGINT, signal_handler);
-		debug_write_endstatus();
 		input = readline("\x1b[32mminishell> \x1b[0m");
 		if (input == NULL)
 			break ;
