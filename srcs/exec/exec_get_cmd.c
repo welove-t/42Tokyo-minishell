@@ -3,51 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   exec_get_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:10:07 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/07 14:19:58 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 15:12:19 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-extern char **environ;
-
-static int	get_env_index(const char *key, int index_start)
+static char	*get_env_path(void)
 {
-	int	i;
+	t_environ	*env;
 
-	i = 0;
-	while (environ[i])
+	env = g_global.env_head;
+	while (env)
 	{
-		//TODO: 環境変数リストの方から取得する
-		if (!ft_strncmp(environ[i], key, index_start))
-			return (i);
-		i++;
+		if (!ft_strcmp(env->name, "PATH"))
+			return (env->value);
+		env = env->next;
 	}
-	return (0);
+	return (NULL);
 }
 
 static char	*get_cmd(char *cmd)
 {
-	int		i_env_path;
 	int		i;
 	char	**path_array;
 	char	*r_str_path;
 
-	cmd = ft_strjoin("/", cmd);
-	i_env_path = get_env_index("PATH=", 5);
-	path_array = ft_split(&environ[i_env_path][5], ':');
+	path_array = ft_split(get_env_path(), ':');
+	if (!path_array)
+		return (NULL);
 	i = 0;
+	cmd = ft_strjoin("/", cmd);
 	while (path_array[i])
 	{
-		r_str_path = ft_strjoin(path_array[i], cmd);
+		r_str_path = ft_strjoin(path_array[i++], cmd);
 		if (!access(r_str_path, X_OK))
+		{
+			free_argv(path_array);
 			return (r_str_path);
+		}
 		free(r_str_path);
-		i++;
 	}
+	free_argv(path_array);
 	return (NULL);
 }
 
