@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:13 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/07 14:22:44 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 14:27:05 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ t_environ	*remove_variable(t_environ *environ, t_environ *var)
 {
 	t_environ	*tmp;
 
-	//TODO: 先頭ノードを消しきれていない。
 	// 先頭ノードの場合
 	if (environ->name == var->name)
 	{
@@ -74,7 +73,6 @@ int	bi_unset(t_environ *environ, char **argv, int argc)
 	t_environ	*var;
 
 	g_global.status = 0;
-	// *environ = g_global.env_head;
 	if (argc < 2)
 	{
 		return (-1);
@@ -97,6 +95,5 @@ int	bi_unset(t_environ *environ, char **argv, int argc)
 		return (-1);
 	}
 	remove_variable(environ, var);
-	// printf("*environ->name = %s\n", (*environ)->name);
 	return (0);
 }
