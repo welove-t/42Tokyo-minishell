@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:13 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/07 14:27:05 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 15:04:14 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_environ	*find_variable(t_environ *environ, char *str)
 	tmp = environ;
 	while (tmp != NULL)
 	{
-		// printf("tmp->name=%s\n",tmp->name);
 		if (ft_strcmp(tmp->name, str) == 0)
 		{
 			return (tmp);
@@ -36,47 +35,13 @@ t_environ	*find_variable(t_environ *environ, char *str)
 	return (NULL);
 }
 
-t_environ	*remove_variable(t_environ *environ, t_environ *var)
-{
-	t_environ	*tmp;
-
-	// 先頭ノードの場合
-	if (environ->name == var->name)
-	{
-		tmp = environ;
-		environ = environ->next;
-		g_global.env_head = environ;
-		free(tmp->name);
-		free(tmp->value);
-		free(tmp);
-		return (environ);
-	}
-	// 2番目以降のノードを削除する場合
-	while (environ->next != NULL)
-	{
-		if (environ->next->name == var->name)
-		{
-			tmp = environ->next;
-			environ->next = environ->next->next;
-			free(tmp->name);
-			free(tmp->value);
-			free(tmp);
-			break ;
-		}
-		environ = environ->next;
-	}
-	return (environ);
-}
-
 int	bi_unset(t_environ *environ, char **argv, int argc)
 {
 	t_environ	*var;
 
 	g_global.status = 0;
 	if (argc < 2)
-	{
 		return (-1);
-	}
 	if (argc > 2)
 	{
 		put_error_msg_endl("unset: too many arguments");

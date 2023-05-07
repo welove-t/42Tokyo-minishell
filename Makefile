@@ -6,7 +6,7 @@
 #    By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/05/04 17:14:32 by susasaki         ###   ########.fr        #
+#    Updated: 2023/05/07 15:06:00 by susasaki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,9 +45,11 @@ SOURCES = $(SOURCES_DIR)/0_main.c\
 		  $(BUILTIN_DIR)/echo.c\
 		  $(BUILTIN_DIR)/env.c\
 		  $(BUILTIN_DIR)/exit.c\
+		  $(BUILTIN_DIR)/exit_utils.c\
 		  $(BUILTIN_DIR)/export.c\
 		  $(BUILTIN_DIR)/export_utils.c\
 		  $(BUILTIN_DIR)/pwd.c\
+		  $(BUILTIN_DIR)/unset_utils.c\
 		  $(BUILTIN_DIR)/unset.c\
 		  $(TOKEN_DIR)/tokenizer.c\
 		  $(TOKEN_DIR)/tokenizer_check_literal.c\

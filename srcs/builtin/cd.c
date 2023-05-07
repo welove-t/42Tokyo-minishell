@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:52:38 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 19:55:24 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 14:52:41 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,21 @@ static int	change_directory(char **argv)
 	return (0);
 }
 
+int	bi_cd_only(void)
+{
+	if (cd_home() == 1)
+	{
+		g_global.status = 1;
+		return (-1);
+	}
+	return (0);
+}
+
 int	bi_cd(char **argv, int argc)
 {
 	g_global.status = 0;
 	if (argc == 1)
-	{
-		if (cd_home() == 1)
-		{
-			g_global.status = 1;
-			return (-1);
-		}
-	}
+		return (bi_cd_only());
 	else
 	{
 		if (pathname_check(argv[1]) == 0)
