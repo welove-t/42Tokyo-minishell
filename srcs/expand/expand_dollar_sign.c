@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dollar_sign.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 18:40:25 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:16:48 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/06 13:19:08 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	handle_dollar_sign(char **p, char **exp_tmp)
 			append_char(exp_tmp, *((*p)++));
 		else
 		{
-			while (**p && !is_metacharacter(**p) && **p != '\"' && **p != '\'')
+			while (**p && !is_metacharacter(**p) && **p != '\"' && **p != '\'' && **p != DOLLAR_SIGN)
 				append_char(exp_tmp, *((*p)++));
 		}
 	}

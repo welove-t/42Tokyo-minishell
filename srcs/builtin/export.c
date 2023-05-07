@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:01:50 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 17:00:20 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/06 00:02:58 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ static void	bi_export_utiles(t_environ *environ, char **argv, char *name)
 		value = malloc(1);
 		value[0] = '\0';
 	}
-	if (var != NULL)
+	if (argv[1][first_strlen(argv[1])] == '=' && var != NULL)
 		override_val(environ, var, value);
-	else
+	else if (var == NULL)
 	{
 		environ_nodeadd_back(environ, environ_node_new(ft_strdup(name), \
 			ft_strdup(value)));
@@ -73,16 +73,16 @@ static void	bi_export_utiles(t_environ *environ, char **argv, char *name)
 	free(value);
 }
 
-//TODO:引数が3つ以上の時はエラーを吐くようにする。
 int	bi_export(t_environ *environ, char **argv, int argc)
 {
 	char	*name;
 
+	g_global.status = 0;
 	if (argc == 1)
 		bi_only_export_env(environ);
 	else if (argc == 2)
 	{
-		name = make_name(argv[1]);
+		name = make_name_export(argv[1]);
 		if (name == NULL)
 		{
 			put_error_msg_endl("export: not a valid identifier");
@@ -90,6 +90,12 @@ int	bi_export(t_environ *environ, char **argv, int argc)
 			return (-1);
 		}
 		bi_export_utiles(environ, argv, name);
+	}
+	else
+	{
+		put_error_msg_endl("export: too many arguments");
+		g_global.status = 1;
+		return (-1);
 	}
 	return (0);
 }

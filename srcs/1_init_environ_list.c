@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:04 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 15:29:40 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 14:18:31 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ int	latter_strlen(char *str)
 	if (str[i] == '\0')
 		return (-1);
 	i++;
-	//TODO: スペースとタブの項目を消す
-	while (str[i] != ' ' && str[i] != '\t' && str[i] != '\0')
+	while (str[i] != '\0')
 	{
 		i++;
 		res++;
@@ -79,6 +78,7 @@ t_environ	*populate_environ_list(t_environ *env_list, char **tmp)
 		{
 			env_list = new;
 			current = env_list;
+			g_global.env_head = current;
 			flag = 1;
 		}
 		else
@@ -96,6 +96,11 @@ t_environ	*init_environ_list(void)
 	char		**tmp;
 	t_environ	*env_list;
 
+	if (environ[0] == NULL)
+	{
+		g_global.env_head = NULL;
+		return (NULL);
+	}
 	tmp = environ;
 	env_list = NULL;
 	env_list = populate_environ_list(env_list, tmp);

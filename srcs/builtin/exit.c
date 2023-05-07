@@ -6,41 +6,45 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:49:00 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 16:30:50 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/05 21:03:18 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-//TODO: ft_atoiをatolに修正して、フラグ判定をする
 static int	int_overflow__check(char *str, long *num)
 {
 	int	flag;
 	int	i;
+	unsigned long long tmp_ll;
 
 	i = 0;
 	flag = 1;
-	//TODO: + 記号にも対応する
+	tmp_ll  = 0;
 	if (str[i] == '-')
 	{
 		flag = -1;
 		i++;
 	}
+	else if(str[i] == '+')
+		i++;
+	while(str[i] == ' ' || str[i] == '\t')
+		i++;
 	while ('0' <= str[i] && str[i] <= '9')
 	{
-		*num *= 10;
-		*num += str[i] - '0';
+		tmp_ll *= 10;
+		tmp_ll += str[i] - '0';
 		i++;
 	}
-	// TODO:ここの条件式を見直す必要あり。is_space()を使うと良いかも
-	// TODO: exit "42 hoge" の際にエラーを出力
-	if ((str[i] < '0' || '9' < str[i]) && str[i] != '\0' && str[i] != ' '
-		&& str[i] != '\t')
+	while(str[i] == ' ' || str[i] == '\t')
+		i++;
+	if (str[i] != '\0')
 		return (1);
-	*num *= flag;
-	//TODO: long型にする
-	if (*num < INT_MIN || INT_MAX < *num)
+	// ullを使う事で、unsigned long longを明示的にに示す
+	if ((LONG_MAX < tmp_ll && flag == 1) || 9223372036854775808ull < tmp_ll)
 		return (1);
+	tmp_ll *= flag;
+	*num = tmp_ll;
 	return (0);
 }
 

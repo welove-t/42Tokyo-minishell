@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:48:29 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 16:24:11 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 14:23:53 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@
 void	environ_nodeadd_back(t_environ *env, t_environ *new)
 {
 	if (env == NULL)
+	{
+		env = new;
+		g_global.env_head = env;
 		return ;
+	}
 	while (env->next != NULL)
 		env = env->next;
 	env->next = new;
@@ -37,12 +41,39 @@ t_environ	*environ_node_new(char *name, char *value)
 	return (new);
 }
 
+char	*make_name_export(char *str)
+{
+	char	*name;
+	int		fir_len;
+	int		i;
+
+	i = 0;
+	if (!(('a' <= *str && *str <= 'z') || ('A' <= *str && *str <= 'Z')
+			|| *str == '_'))
+		return (NULL);
+	fir_len = first_strlen(str);
+	if (fir_len == -1)
+		return (NULL);
+	while (i < fir_len)
+	{
+		if (!(('a' <= str[i] && str[i] <= 'z') || ('A' <= str[i]
+					&& str[i] <= 'Z') || str[i] == '_' || ('0' <= str[i]
+					&& str[i] <= '9')))
+			return (NULL);
+		i++;
+	}
+	name = (char *)malloc(fir_len + 1);
+	if (!name)
+		fatal_error("malloc");
+	ft_strlcpy(name, str, fir_len + 1);
+	return (name);
+}
+
 char	*make_name(char *str)
 {
 	char	*name;
 	int		fir_len;
 
-	//TODO: 2文字目以降はアルファベット+数字+_
 	if (!(('a' <= *str && *str <= 'z') || ('A' <= *str && *str <= 'Z')
 			|| *str == '_'))
 		return (NULL);

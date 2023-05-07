@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:56:17 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 14:09:14 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@
 # define SIG_GET 100
 # define SIG_SET 200
 
-extern char					**environ;
-
 typedef struct s_token		t_token;
 typedef struct s_node		t_node;
 typedef enum e_token_kind	t_token_kind;
@@ -52,7 +50,7 @@ struct						s_global
 	bool					syntax_error;
 	int						status;
 	int						flg_redir;
-	t_environ				*minienv;
+	t_environ				*env_head;
 };
 // トークンの種類
 enum						e_token_kind
@@ -118,6 +116,7 @@ int							bi_export(t_environ *env, char **argv, int argc);
 int							bi_unset(t_environ *environ, char **argv, int argc);
 // utils
 char						*make_name(char *str);
+char						*make_name_export(char *str);
 char						*make_value(char *str);
 t_environ					*find_variable(t_environ *environ, char *str);
 void						environ_nodeadd_back(t_environ *env,
