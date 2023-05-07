@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/07 13:40:20 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 14:23:23 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,10 @@ int	main(void)
 
 	g_global.syntax_error = false;
 	signal(SIGQUIT, signal_handler);
-	environ = init_environ_list();
+	init_environ_list();
 	while (1)
 	{
+		environ = g_global.env_head;
 		signal(SIGINT, signal_handler);
 		debug_write_endstatus();
 		input = readline("\x1b[32mminishell> \x1b[0m");

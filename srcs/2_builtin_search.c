@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:45:48 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/07 13:27:18 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 14:21:52 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,9 @@ static int	search_bi_cmd_helper(int argc, char **argv, t_environ *environ)
 	else if (ft_strcmp(argv[0], "export") == 0)
 		flag = bi_export(environ, argv, argc);
 	else if (ft_strcmp(argv[0], "unset") == 0)
-		flag = bi_unset(&environ, argv, argc);
+		flag = bi_unset(environ, argv, argc);
 	else
 		return (1);
-	// printf("\x1b[31m");
-	// printf("environ->name = %s,%%d = %d,%%c = %c\n",environ->name,*environ->name,*environ->name);
-	// printf("\x1b[0m");
 	return (flag);
 }
 

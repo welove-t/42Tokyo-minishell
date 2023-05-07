@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/07 13:23:07 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 14:09:14 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@
 # define DOLLAR_SIGN '$'
 # define SIG_GET 100
 # define SIG_SET 200
-
-//TODO: environは不要なため削除
-extern char					**environ;
 
 typedef struct s_token		t_token;
 typedef struct s_node		t_node;
@@ -116,7 +113,7 @@ int							bi_env(int argc, t_environ *environ);
 int							bi_pwd(void);
 int							bi_exit(char **argv);
 int							bi_export(t_environ *env, char **argv, int argc);
-int							bi_unset(t_environ **environ, char **argv, int argc);
+int							bi_unset(t_environ *environ, char **argv, int argc);
 // utils
 char						*make_name(char *str);
 char						*make_name_export(char *str);

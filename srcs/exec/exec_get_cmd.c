@@ -6,11 +6,13 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:10:07 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/05 16:07:15 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 14:19:58 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+extern char **environ;
 
 static int	get_env_index(const char *key, int index_start)
 {
