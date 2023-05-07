@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/07 14:33:12 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/07 16:34:32 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	redirection(t_node *redir, t_environ *env)
 {
 	g_global.flg_redir = 0;
 	open_redir_file(redir, env);
-	if (g_global.flg_redir != 0 || g_global.status == 1)
+	if (g_global.flg_redir != 0)
 		return ;
 	do_redirect(redir);
 }
