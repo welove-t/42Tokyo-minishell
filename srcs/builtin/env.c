@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 14:27:04 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/06 02:41:00 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 13:29:29 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	bi_env(int argc, t_environ *environ)
 {
 	t_environ	*tmp;
 
+	environ = g_global.env_head;
 	g_global.status = 0;
 	tmp = environ;
 	if (argc > 1)
@@ -24,8 +25,11 @@ int	bi_env(int argc, t_environ *environ)
 		g_global.status = 127;
 		return (-1);
 	}
-	printf("\x1b[31m");
-	printf("environ->name = %s\x1b[0m\n",environ->name);
+	// printf("\x1b[31m");
+	// printf("test1\n");
+	// printf("environ->name = %s\n",environ->name);
+	// // printf("environ->value = %s\x1b[0m\n",environ->value);
+	// printf("\x1b[0m");
 	while (tmp != NULL)
 	{
 		printf("%s", tmp->name);

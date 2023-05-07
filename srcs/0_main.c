@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:34:05 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 21:04:15 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 13:40:20 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	main(void)
 	{
 		signal(SIGINT, signal_handler);
 		debug_write_endstatus();
-		input = readline("minishell> ");
+		input = readline("\x1b[32mminishell> \x1b[0m");
 		if (input == NULL)
 			break ;
 		else if (ft_strlen(input) == 0)

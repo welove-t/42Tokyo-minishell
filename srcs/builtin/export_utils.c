@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:48:29 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 23:29:45 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 13:42:08 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,12 @@
 void	environ_nodeadd_back(t_environ *env, t_environ *new)
 {
 	if (env == NULL)
+	{
+		env = new;
+		g_global.env_head = env;
+		printf("env->name=%s\n",env->name);
 		return ;
+	}
 	while (env->next != NULL)
 		env = env->next;
 	env->next = new;

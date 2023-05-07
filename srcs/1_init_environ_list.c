@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 21:56:04 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/05 21:16:41 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 13:24:43 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ t_environ	*populate_environ_list(t_environ *env_list, char **tmp)
 		{
 			env_list = new;
 			current = env_list;
+			g_global.env_head = current;
 			flag = 1;
 		}
 		else
