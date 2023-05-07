@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/05 17:08:59 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/07 14:33:12 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,8 @@ void	reset_redirect(t_node *redir)
 	if (redir == NULL)
 		return ;
 	reset_redirect(redir->next);
-	//TODO: ビルトインコマンドの時の、appendがセグフォが起こる
 	if (redir->kind == ND_REDIR_OUT || redir->kind == ND_REDIR_IN \
-		|| redir->kind == ND_REDIR_IN || redir->kind == ND_REDIR_HEREDOC)
+		|| redir->kind == ND_REDIR_APPEND || redir->kind == ND_REDIR_HEREDOC)
 	{
 		do_close(redir->file_fd);
 		do_close(redir->target_fd);
