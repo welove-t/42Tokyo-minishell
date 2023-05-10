@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:31:19 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/29 11:44:09 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/10 14:52:30 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	parser_check_pipe(t_node *node, t_token *tok)
 {
 	t_token	*tmp;
 
-	if (node->args == NULL || tok->next->kind != TK_WORD)
+	if (node->args == NULL || tok->next->kind == TK_EOF)
 	{
 		parse_error(&tok, tok);
 		return (false);
