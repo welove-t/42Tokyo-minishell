@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:35:10 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/11 10:14:35 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/11 11:08:48 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,8 @@ void						pipex_utils(t_node *node, int flag,
 // ------------------------------------------------
 // recirection
 // ------------------------------------------------
-void						redirection(t_node *redir, t_environ *env);
+void						redirection(t_node *redir);
+void						open_redir_file(t_node *redir);
 void						reset_redirect(t_node *redir);
 void						close_fd(t_node *redir);
 int							do_open_redir_out(char *filepath);

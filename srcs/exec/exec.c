@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 13:38:03 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/04 17:12:41 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/11 11:01:46 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	exec_cmd(t_node *node, t_environ *mini_environ)
 {
 	char	**argv;
 
-	redirection(node->redirects, mini_environ);
+	redirection(node->redirects);
 	if (g_global.flg_redir != 0)
 		exit(EXIT_FAILURE);
 	argv = token_list_to_array(node->args);
