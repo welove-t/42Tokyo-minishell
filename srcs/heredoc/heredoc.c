@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:15:06 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/04 17:52:16 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/11 09:23:39 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	check_heredoc(t_node *node, t_environ *env)
 
 	i = 0;
 	tmp = node;
+	g_global.flg_redir = 0;
 	while (tmp)
 	{
 		open_heredoc(tmp->redirects, env, i);
