@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2_builtin_search.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:45:48 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/07 14:21:52 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/11 09:52:15 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static int	execute_builtin_command(t_node *node, char **argv,
 		redirection(node->redirects, environ);
 		if (g_global.flg_redir == 1)
 		{
+			close_fd(node->redirects);
 			return (-1);
 		}
 		flag = search_bi_cmd_helper((int)get_token_count(node->args), argv,
