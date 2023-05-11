@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+         #
+#    By: terabu <terabu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/24 14:24:24 by subarunrun        #+#    #+#              #
-#    Updated: 2023/05/07 15:06:00 by susasaki         ###   ########.fr        #
+#    Updated: 2023/05/11 09:47:51 by terabu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ SOURCES = $(SOURCES_DIR)/0_main.c\
 		  $(HEREDOC_DIR)/heredoc_delete.c\
 		  $(HEREDOC_DIR)/heredoc.c\
 		  $(REDIR_DIR)/redirect.c\
-		  $(REDIR_DIR)/redirect_open.c\
+		  $(REDIR_DIR)/redirect_fd.c\
 		  $(EXEC_DIR)/exec_get_cmd.c\
 		  $(EXEC_DIR)/exec.c\
 		  $(PIPE_DIR)/pipe.c\

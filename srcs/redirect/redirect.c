@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/07 16:34:32 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/11 10:15:45 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	open_redir_file(t_node *redir, t_environ *env)
 		g_global.flg_redir = 1;
 		return ;
 	}
-	redir->file_fd = stashfd(redir->file_fd);
+	// redir->file_fd = stashfd(redir->file_fd);
 	open_redir_file(redir->next, env);
 }
 
@@ -68,20 +68,4 @@ void	redirection(t_node *redir, t_environ *env)
 	if (g_global.flg_redir != 0)
 		return ;
 	do_redirect(redir);
-}
-
-// リストの逆からクローズ
-// 最終的に標準入力・出力に戻す
-void	reset_redirect(t_node *redir)
-{
-	if (redir == NULL)
-		return ;
-	reset_redirect(redir->next);
-	if (redir->kind == ND_REDIR_OUT || redir->kind == ND_REDIR_IN \
-		|| redir->kind == ND_REDIR_APPEND || redir->kind == ND_REDIR_HEREDOC)
-	{
-		do_close(redir->file_fd);
-		do_close(redir->target_fd);
-		do_dup2(redir->stacktmp_fd, redir->target_fd);
-	}
 }

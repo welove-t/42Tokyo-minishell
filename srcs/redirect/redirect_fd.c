@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect_open.c                                    :+:      :+:    :+:   */
+/*   redirect_fd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: susasaki <susasaki@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/04/29 13:55:55 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/11 10:12:39 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,3 +43,28 @@ int	do_open_redir_append(char *filepath)
 		error_file(filepath);
 	return (fd);
 }
+
+// リストの逆からクローズ
+// 最終的に標準入力・出力に戻す
+void	reset_redirect(t_node *redir)
+{
+	if (redir == NULL)
+		return ;
+	reset_redirect(redir->next);
+	if (redir->kind == ND_REDIR_OUT || redir->kind == ND_REDIR_IN \
+		|| redir->kind == ND_REDIR_APPEND || redir->kind == ND_REDIR_HEREDOC)
+	{
+		do_close(redir->file_fd);
+		do_close(redir->target_fd);
+		do_dup2(redir->stacktmp_fd, redir->target_fd);
+	}
+}
+
+void	close_fd(t_node *redir)
+{
+	if (redir == NULL || redir->file_fd <= 0)
+		return ;
+	do_close(redir->file_fd);
+	close_fd(redir->next);
+}
+
