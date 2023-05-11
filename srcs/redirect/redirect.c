@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/11 10:15:45 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/11 11:01:25 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	stashfd(int fd)
 	return (tmp_fd);
 }
 
-void	open_redir_file(t_node *redir, t_environ *env)
+void	open_redir_file(t_node *redir)
 {
 	if (redir == NULL || g_global.flg_redir != 0)
 		return ;
@@ -43,7 +43,7 @@ void	open_redir_file(t_node *redir, t_environ *env)
 		return ;
 	}
 	// redir->file_fd = stashfd(redir->file_fd);
-	open_redir_file(redir->next, env);
+	open_redir_file(redir->next);
 }
 
 static void	do_redirect(t_node *redir)
@@ -61,10 +61,10 @@ static void	do_redirect(t_node *redir)
 	do_redirect(redir->next);
 }
 
-void	redirection(t_node *redir, t_environ *env)
+void	redirection(t_node *redir)
 {
 	g_global.flg_redir = 0;
-	open_redir_file(redir, env);
+	open_redir_file(redir);
 	if (g_global.flg_redir != 0)
 		return ;
 	do_redirect(redir);
