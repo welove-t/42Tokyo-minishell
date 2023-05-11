@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:45:48 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/11 11:05:13 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/11 11:09:54 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,11 @@ int	search_bi_cmd(t_node *node, t_environ *environ)
 	}
 	if (argv[0] == NULL)
 	{
+		if (node->redirects != NULL)
+		{
+			open_redir_file(node->redirects);
+			close_fd(node->redirects);
+		}
 		free_argv(argv);
 		return (0);
 	}
