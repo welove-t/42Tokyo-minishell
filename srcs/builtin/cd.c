@@ -6,7 +6,7 @@
 /*   By: susasaki <susasaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:52:38 by susasaki          #+#    #+#             */
-/*   Updated: 2023/05/07 14:52:41 by susasaki         ###   ########.fr       */
+/*   Updated: 2023/05/10 14:41:16 by susasaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	change_directory(char **argv)
 {
 	if (chdir(argv[1]) == -1)
 	{
-		put_error_msg_endl("cd: could not change to HOME directory");
+		put_error_msg_endl("cd: No such file or directory");
 		return (1);
 	}
 	return (0);
