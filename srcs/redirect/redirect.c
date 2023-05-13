@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/11 11:01:25 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/13 11:10:39 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	open_redir_file(t_node *redir)
 		g_global.flg_redir = 1;
 		return ;
 	}
-	// redir->file_fd = stashfd(redir->file_fd);
 	open_redir_file(redir->next);
 }
 
