@@ -6,7 +6,7 @@
 /*   By: terabu <terabu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:37:22 by terabu            #+#    #+#             */
-/*   Updated: 2023/05/11 10:12:39 by terabu           ###   ########.fr       */
+/*   Updated: 2023/05/13 11:10:33 by terabu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,3 @@ void	close_fd(t_node *redir)
 	do_close(redir->file_fd);
 	close_fd(redir->next);
 }
-
